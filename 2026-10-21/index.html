@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Daily Brief · Wednesday Edition · October 21, 2026</title>
+<style>
+  :root{
+    --bg:#000; --s1:#16161a; --s2:#1f1f25; --s3:#2a2a31;
+    --tx:#fff; --t2:#8a8a93; --t3:#5d5d66;
+    --blue:#3d7bff; --green:#2fd27a; --greenbg:rgba(47,210,122,.14);
+    --red:#ff5c5c; --redbg:rgba(255,92,92,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+  .app{max-width:460px;margin:0 auto;padding:12px 16px 48px}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{font-weight:600;color:#fff}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0}
+  .me{width:36px;height:36px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .search{flex:1;margin:0 10px;height:36px;border-radius:18px;background:var(--s1);color:var(--t2);font-size:14px;display:flex;align-items:center;padding:0 14px;gap:8px}
+  .search svg{width:15px;height:15px;stroke:var(--t2)}
+  .toppill{background:var(--s1);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#d6d6dc}
+  .tz{font-size:12px;color:var(--t2);font-weight:600}
+
+  /* hero balance */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero .cap{font-size:14px;color:var(--t2);font-weight:500}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:8px 0 6px}
+  .hero .dt{font-size:15px;color:var(--t2);font-weight:500}
+  .pillbtn{display:inline-block;margin-top:16px;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px}
+
+  /* actions */
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 28px;text-align:center}
+  .actions a{color:var(--tx);font-size:12px;font-weight:500;text-decoration:none}
+  .actions .ic{width:52px;height:52px;border-radius:50%;background:var(--s2);display:grid;place-items:center;margin:0 auto 8px}
+  .actions svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;scrollbar-width:none;
+         position:sticky;top:0;background:var(--bg);z-index:5}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;text-decoration:none}
+  .chip.on{background:#fff;color:#000}
+  .chip:hover{text-decoration:none}
+
+  /* surfaces */
+  .card{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .sec{margin:32px 0 12px;display:flex;align-items:baseline;justify-content:space-between;padding:0 4px}
+  .sec h2{font-size:22px;font-weight:700;letter-spacing:-.025em}
+  .sec .ct{font-size:13px;color:var(--t2);font-weight:500}
+  .lbl{display:inline-block;background:var(--s3);color:#d6d6dc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;letter-spacing:.01em}
+
+  .lead p{font-size:16px;line-height:1.5;color:#e9e9ee;letter-spacing:-.005em}
+  .lead p + p{margin-top:12px;color:var(--t2)}
+
+  /* balance tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .tile{background:var(--s1);border-radius:24px;padding:18px}
+  .tile .k{font-size:13px;color:var(--t2);font-weight:500}
+  .tile .v{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-top:6px}
+  .tile .s{font-size:12px;color:var(--t2);margin-top:2px}
+  .tile .s.g{color:var(--green)} .tile .s.r{color:var(--red)}
+
+  /* feature cards */
+  .feat{background:var(--s1);border-radius:28px;padding:24px 22px 22px;margin-bottom:12px}
+  .feat h3{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:14px 0 8px}
+  .by{font-size:13px;color:var(--t2);margin-bottom:16px}
+  .feat p,.story p{color:#c9c9d0;margin-bottom:12px}
+  .feat p:last-of-type,.story p:last-of-type{margin-bottom:0}
+  .take{background:var(--s2);border-radius:18px;padding:14px 16px;margin-top:16px;font-size:14px;color:#e2e2e8}
+  .take b{display:block;font-size:12px;color:var(--t2);font-weight:600;margin-bottom:2px}
+  .cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600}
+  .cta + .cta{margin-left:16px}
+
+  /* scenario list (inside card) */
+  .scen{background:var(--s2);border-radius:20px;padding:4px 16px;margin:16px 0}
+  .scen .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
+  .scen .r + .r{box-shadow:0 -1px 0 rgba(255,255,255,.06)}
+  .scen .n{font-size:14px;font-weight:600}
+  .scen .d{font-size:12px;color:var(--t2);margin-top:1px;line-height:1.35}
+  .scen .a{font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .scen .cap{font-size:12px;color:var(--t2);padding:10px 0 4px}
+
+  /* story cards */
+  .story{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .story h3{font-size:19px;font-weight:700;letter-spacing:-.022em;line-height:1.22;margin-bottom:10px}
+  .story .k{font-size:12px;color:var(--t2);font-weight:600;margin-bottom:8px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stat{background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:#fff}
+
+  /* transaction list */
+  .tx{background:var(--s1);border-radius:24px;padding:6px 0;margin-bottom:12px}
+  .tx .day{font-size:13px;color:var(--t2);font-weight:600;padding:12px 20px 4px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 20px;color:var(--tx);text-decoration:none}
+  .row:hover{background:var(--s2);text-decoration:none}
+  .av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff}
+  .mid{flex:1;min-width:0}
+  .mid .n{font-size:15px;font-weight:600}
+  .mid .s{font-size:13px;color:var(--t2);line-height:1.35;margin-top:1px}
+  .amt{text-align:right;flex:none}
+  .amt .a{font-size:16px;font-weight:700;letter-spacing:-.02em}
+  .amt .s{font-size:12px;color:var(--t2)}
+
+  /* stocks */
+  .stk .row{cursor:default}
+  .stk .row:hover{background:none}
+  .px{font-size:13px;color:var(--t2);margin-top:1px}
+  .pct{flex:none;font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;min-width:74px;text-align:center}
+  .up{color:var(--green);background:var(--greenbg)}
+  .dn{color:var(--red);background:var(--redbg)}
+  .nt{color:#d6d6dc;background:var(--s3)}
+
+  /* ahead */
+  .ahead .row{align-items:flex-start}
+  .when{flex:none;width:48px;height:48px;border-radius:14px;background:var(--s2);text-align:center;padding-top:6px}
+  .when .m{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .when .d{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+
+  footer{font-size:11.5px;color:var(--t3);text-align:center;padding:28px 12px 0;line-height:1.5}
+
+  @media (min-width:600px){
+    body{padding-top:24px}
+    .app{background:#0b0b0f;border-radius:40px;padding:16px 20px 40px;margin-bottom:40px}
+    .chips{background:#0b0b0f;margin:0 -20px 8px;padding-left:20px;padding-right:20px;border-radius:0}
+  }
+</style>
+</head>
+<body>
+<main class="app">
+
+  <div class="top">
+    <div class="me">MR</div>
+    <div class="toppill">Wednesday Edition · Wed 21 Oct</div>
+    <div class="tz">ART</div>
+  </div>
+
+  <section class="hero">
+    <div class="cap">Wednesday edition · Tuesday and overnight</div>
+    <h1>Daily Brief</h1>
+    <div class="dt">October 21, 2026 · Tue 07:00 → Wed 07:00 ART</div>
+    <span class="pillbtn">10 min read</span>
+  </section>
+
+  <nav class="actions">
+    <a href="#featured"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div>Featured</a>
+    <a href="#ai"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>Agents</a>
+    <a href="#deals"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Deals</a>
+    <a href="#markets"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>Markets</a>
+  </nav>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Mastercard agent demo</div><div class="v num">9 → 1</div><div class="s">9 payments · 2 merchants · 1 budget</div></div>
+    <div class="tile"><div class="k">Anthropic compute, next years</div><div class="v num">$750B</div><div class="s">Draft S-1 via WSJ · $450B committed</div></div>
+    <div class="tile"><div class="k">SpaceX Q3 net income</div><div class="v num">$4.4B</div><div class="s g num">Rev $14.58B · +9.9% premarket</div></div>
+    <div class="tile"><div class="k">Riesgo país, Tuesday</div><div class="v num">672</div><div class="s r num">Touched 710 intraday · −3 at close</div></div>
+  </div>
+
+  <div class="card lead">
+    <span class="lbl">Tuesday, in two lines</span>
+    <p style="margin-top:14px">Agent payments moved from "who's liable?" to working plumbing. Mastercard opened early access to Agent Pay for Machines, where an agent pays other services out of one approved budget using signed x402 vouchers. Visa, BILL and Billtrust went live with agents paying real supplier invoices, and Evervault shipped tokens that let an agent check out on any site without seeing the card. PayPal's CEO added the reality check: meaningful agentic volume isn't expected before 2028.</p>
+    <p>On the money side, Anthropic's draft IPO filing (via the WSJ) shows $450B of mostly non-cancelable compute contracts and room for up to $750B more, while OpenAI is reportedly rushing a ~$30B raise before Anthropic lists. SpaceX's AI-driven quarter calmed the tech selloff. Salesforce agreed to buy Braze for $5.66B, and in Argentina country risk briefly broke 700 before closing at 672.</p>
+  </div>
+
+  <div class="chips">
+    <a class="chip on" href="#featured">Featured</a>
+    <a class="chip" href="#ai">AI &amp; agents</a>
+    <a class="chip" href="#startups">Startups</a>
+    <a class="chip" href="#ops">Ops &amp; commerce</a>
+    <a class="chip" href="#deals">Deals</a>
+    <a class="chip" href="#markets">Markets</a>
+    <a class="chip" href="#argentina">Argentina</a>
+    <a class="chip" href="#global">Global</a>
+    <a class="chip" href="#ahead">Ahead</a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec" id="featured"><h2>Featured</h2><span class="ct">2 stories</span></div>
+
+  <article class="feat">
+    <span class="lbl">Agent-to-agent payments · Money20/20 day 3</span>
+    <h3>Agents start paying agents: Mastercard, Visa and Evervault ship the plumbing</h3>
+    <div class="by">Mastercard newsroom and PYMNTS, Oct 20 · Visa/BILL/Billtrust release, Oct 20 · Evervault via Business Wire · Mural via PR Newswire · Payments Dive</div>
+    <div class="meta"><span class="stat">"402 Payment Required"</span><span class="stat">Signed vouchers, settled later</span><span class="stat num">PayPal: not meaningful until 2028</span></div>
+    <p>Yesterday's brief was about who carries the loss when an agent pays. Tuesday was about how the payment actually happens. <strong>Mastercard</strong> opened early access to <strong>Agent Pay for Machines</strong>, built on x402, the open protocol where a paid service answers a request with HTTP "402 Payment Required." The model: a business gives an agent a task and a spending limit. When the agent hits a paid service, it signs a payment voucher, "a secure promise to pay within its approved limit." The provider verifies it and delivers, and vouchers can be bundled and redeemed later. That runs off-chain at machine speed, with no account, API key or invoice per vendor. Mastercard's line: "Payments aren't the hard part. Authority is."</p>
+    <p>The demo at Cloudflare Connect: marketing agency <strong>Hype</strong> asks an agent, running on a platform like Amazon Bedrock AgentCore, to plan a protein-bar campaign. The agent finds registered providers through a discovery service, proposes a plan (social research from AIsa, images through Cloudflare AI Gateway), and Hype approves the budget. Result: nine payments, two independent merchants, one budget. Coinbase supplies the wallet, Base settles on-chain, and BVNK acts as the agent wallet using Mastercard's Global Money Platform, so sellers can be paid in fiat or stablecoins. Pilots ran with Cloudflare, Ant International, AIsa, Base, BVNK, Coinbase and Hype. Developers now get buyer- and seller-side APIs, a sandbox and docs.</p>
+    <p><strong>Visa</strong> showed the B2B version, and it's live. With <strong>BILL</strong> and <strong>Billtrust</strong>, a BILL Payment Agent registered in Visa's Trusted Agent Protocol and Agentic Directory pays supplier invoices through Billtrust portals using tokenized cards, with controls tied to the buyer's approved payment instruction. Visa says agent authentication "can satisfy the site protections historically provided by CAPTCHA," with no separate agent login. For sites that haven't adopted any protocol, <strong>Evervault</strong> launched Browser Tokens: short-lived stand-ins for card numbers and passwords that pass Luhn and BIN checks, and are swapped for the real value only at a hostname the developer approved. Ramp and Natural are early customers. Natural's Walt Leung pitched it as a way to scale agentic commerce "without waiting for every merchant to adopt new protocols." On the treasury side, <strong>Mural</strong> raised a $15M Series A led by Tether for accounts that "people and agents" hold, with limits, approved counterparties and approvals on larger payments. It has processed $2.1B across 128 countries.</p>
+    <p>The counterweight came from <strong>PayPal</strong> CEO Enrique Lores, who said agentic commerce won't drive meaningful sales until 2028: "the amount of commerce that is done through agents in '26, or that will be done in '27, is going to be relatively small." PayPal is betting that trust, its original e-commerce edge, matters even more when agents shop.</p>
+    <div class="scen">
+      <div class="cap">Four ways an agent paid on Tuesday</div>
+      <div class="r"><div><div class="n">Agent → API/data/compute vendors</div><div class="d">Mastercard Agent Pay for Machines · x402 vouchers</div></div><div class="a num">Early access</div></div>
+      <div class="r"><div><div class="n">Agent → supplier invoice portal</div><div class="d">Visa TAP + BILL + Billtrust · tokenized card</div></div><div class="a num" style="color:var(--green)">Live pilot</div></div>
+      <div class="r"><div><div class="n">Agent → any merchant checkout</div><div class="d">Evervault Browser Tokens · no protocol needed</div></div><div class="a num" style="color:var(--green)">Live</div></div>
+      <div class="r"><div><div class="n">Consumer agent → retailer, at scale</div><div class="d">PayPal: meaningful volume not before 2028</div></div><div class="a num" style="color:var(--red)">Later</div></div>
+    </div>
+    <div class="take"><b>Why it matters</b>The machine-to-machine side is arriving before the consumer side. Agents buying data, models, compute and B2B services within a budget is happening now; agents buying sneakers for people is a 2028 story by PayPal's own estimate. That points to where a new company can get real volume first. The building blocks are taking shape: a mandate (task + budget + allowed counterparties), discovery of who sells what, a voucher that promises payment, and settlement in whatever currency the seller wants. Mastercard's discovery service and directory are the first open marketplace for agent services. Building there early (as a seller agents can find, or as the layer that writes and checks mandates) is cheaper than waiting for consumer checkout to settle on a standard.</div>
+    <a class="cta" href="https://www.mastercard.com/global/en/news-and-trends/press/2026/october/Mastercard-Agent-Pay-for-Machines-in-action.html">Mastercard →</a><a class="cta" href="https://www.pymnts.com/news/artificial-intelligence/2026/mastercard-debuts-tool-to-help-ai-agents-purchase-digital-services/">PYMNTS →</a><a class="cta" href="https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.22856.html">Visa →</a><a class="cta" href="https://www.businesswire.com/news/home/20261020664529/en/Evervault-Launches-Browser-Tokens-Enabling-Secure-Agentic-Payments">Evervault →</a><a class="cta" href="https://www.prnewswire.com/news-releases/mural-raises-28-million-total-to-power-fintechs-and-agentic-finance-302914128.html">Mural →</a><a class="cta" href="https://www.paymentsdive.com/news/paypal-isnt-agile-enough-ceo-says/833449/">Payments Dive →</a>
+  </article>
+
+  <article class="feat">
+    <span class="lbl">AI capital · IPO race</span>
+    <h3>Anthropic's draft S-1 shows the bill for AI: $450B committed, up to $750B more</h3>
+    <div class="by">WSJ exclusive via Bloomberg/Business Standard, Oct 20–21 · Reuters via Investing.com · SpaceX Q3, WSJ and Investing.com</div>
+    <div class="meta"><span class="stat num">H1 net loss $80.7B ($72B accounting)</span><span class="stat num">H1 compute ~$9B</span><span class="stat num">OpenAI: ~$30B at $1.4T+</span></div>
+    <p>The Wall Street Journal saw <strong>Anthropic</strong>'s confidential draft IPO prospectus. Key numbers: about $450B of compute agreements over the next seven to ten years, mostly non-cancelable, including $111B with Google Cloud, $110B with AWS and $31B with Microsoft, plus up to $750B of further compute spending including deals still in negotiation. It spent close to $9B on compute and infrastructure in the first half, against $7.3B in all of 2025. The first-half net loss was $80.7B, but $72B of that is accounting charges on convertible notes and similar instruments, not cash. Bloomberg separately reported that Anthropic told investors it was profitable on an adjusted basis in Q3, with an 85% gross margin and positive free cash flow. Marketing could start as soon as the week of Nov 9. Risk factors include models showing "self-preserving" behavior and political resistance to US data centers.</p>
+    <p>Reuters reports that <strong>OpenAI</strong> is trying to lock in about $30B, at a valuation that could top $1.4T, before Anthropic's numbers invite comparisons. SoftBank and MGX are in talks. OpenAI is pitching $50B of annualized revenue, rising to $70B by year-end. And <strong>SpaceX</strong> gave the market the proof it wanted: Q3 revenue of $14.58B versus ~$13B expected, net income of $4.4B, and $7.6B from its AI ("Super Intelligence") division. Musk said SpaceX and Tesla have formed committees to study combining, with no agreement yet. SpaceX traded 9.9% higher premarket; ING called it "evidence that AI-related demand remains very real."</p>
+    <div class="take"><b>Why it matters</b>Last week's worry was who pays for AI infrastructure. Anthropic's filing answers part of it: the labs themselves, through long contracts the clouds can borrow against, which is why Nscale-style deals keep coming. For builders, it means model and compute prices are set by firms with hundred-billion-dollar fixed costs that need volume. Expect aggressive pricing and bundling for agent workloads, and treat any single model vendor as a commodity input you can switch. The IPO also produces the first audited view of what frontier AI costs and earns, which every investor in your next round will use as a benchmark.</div>
+    <a class="cta" href="https://www.business-standard.com/technology/artificial-intelligence/anthropic-may-spend-750-billion-on-computing-costs-as-ipo-plans-advance-126102100107_1.html">Bloomberg on WSJ →</a><a class="cta" href="https://www.wsj.com/tech/ai/anthropic-revenue-growth-ipo-accaf0f1">WSJ →</a><a class="cta" href="https://finance.yahoo.com/technology/ai/articles/openai-races-raise-30-bln-013303188.html">OpenAI (Reuters) →</a><a class="cta" href="https://www.investing.com/news/stock-market-news/afterhours-movers-nflx-spcx-smci-isrg-cof-ual-pega-432SI-4961130">SpaceX numbers →</a><a class="cta" href="https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-10-20-2026">WSJ live →</a>
+  </article>
+
+  <!-- AI -->
+  <div class="sec" id="ai"><h2>AI &amp; agents</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">Microsoft Security · SecurityWeek · Oct 20</div>
+    <h3>Microsoft says treat agents as insiders, and gives them zero permissions by default</h3>
+    <div class="meta"><span class="stat">Dynamic Permissions</span><span class="stat">Agent risk score</span><span class="stat num">60 agent types detected</span></div>
+    <p>Microsoft extended Project Perception with controls aimed at the agents companies run themselves. <strong>Dynamic Permissions</strong> start an agent with no or minimal access, grant it per task, and let it expire as the task changes. High-impact actions need human review. <strong>Dynamic Agent Risk</strong> keeps a live risk score from identity, data, endpoint, network and runtime signals, including whether the agent is drifting from what the user intended. Conditional Access can then cut it to read-only, narrow its data, require approval, or halt it. Guardian Agents investigate and contain. Defender now detects 60 kinds of local agents, including Claude Code, Codex and Copilot. "Frontier models, regardless of their origin, cannot be trusted," said security chief Hayete Gallot, meaning they're unpredictable rather than malicious.</p>
+    <p style="color:var(--t2)">This is the enterprise version of the payments mandate: task-scoped, expiring authority with an approval step. If your agent will run inside corporate customers, design it to request narrow, per-task permissions. It'll pass security review faster.</p>
+    <a class="cta" href="https://www.securityweek.com/microsoft-targets-rogue-ai-agents-with-dynamic-permissions-risk-scoring/">SecurityWeek →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">DHS · DeepSeek · CNBC · Oct 20</div>
+    <h3>US bars DeepSeek, and anything built on it, from civilian federal systems</h3>
+    <p>A Homeland Security order issued in July and made public Monday requires civilian federal agencies to remove DeepSeek technology and stop buying it, <strong>including third-party products built on its models</strong>. DHS cited possible transfers of government data to China and security weaknesses in the models. China's foreign ministry said it would protect its companies' rights. On the same day, DeepSeek open-sourced DeepInfer, the inference stack it uses in production.</p>
+    <p style="color:var(--t2)">The "built on" clause matters for startups. If you sell to US government or regulated buyers, a cheap open-weight Chinese model deep in your stack can disqualify the whole product. Keep model choice swappable and documented.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/10/20/us-deepseek-federal-agency-ban.html">CNBC →</a><a class="cta" href="https://www.investing.com/news/stock-market-news/deepseek-opensources-deepinfer-software-to-curb-ai-deployment-costs-4960336">DeepInfer →</a>
+  </article>
+
+  <!-- STARTUPS -->
+  <div class="sec" id="startups"><h2>Startups</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">Daytona · Tech.eu · Oct 20</div>
+    <h3>Daytona becomes a unicorn selling agents "a safe place to fail"</h3>
+    <div class="meta"><span class="stat num">$60M Series B</span><span class="stat num">$1B valuation</span><span class="stat num">25x run rate since Jan</span></div>
+    <p><strong>Daytona</strong>, founded in 2023 by a Croatian team, provides isolated sandboxes (Linux, Windows, macOS) where agents run code and tools through one API, and can pause, resume or branch without losing progress. FirstMark led, with angels including Patrick Collison, Tobi Lütke, Olivier Pomel and Aravind Srinivas. Customers include Anthropic, OpenAI, Nvidia, Cursor and Cognition. It says run-rate revenue grew 25x between January and September. CEO Ivan Burazin: "Companies are going to manage thousands of digital employees, and each one needs a safe place to fail."</p>
+    <p style="color:var(--t2)">Isolation is becoming a default line item in the agent stack, alongside the security and payment controls above.</p>
+    <a class="cta" href="https://tech.eu/2026/10/20/daytona-hits-1b-valuation-with-60m-series-b-for-ai-agent-cloud/">Tech.eu →</a><a class="cta" href="https://www.daytona.io/dotfiles/daytona-raises-60m-series-b-to-build-the-agent-cloud">Daytona →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Arda · CNBC · Oct 20</div>
+    <h3>Ex-OpenAI research chief Bob McGrew's Arda raises $160M to speed up factory lines</h3>
+    <p><strong>Arda</strong> came out of stealth with a $160M Series A at a $1.5B valuation. Its software turns product designs and CAD files into assembly sequences, work instructions and station layouts, and updates the plan when the design changes. It's already deployed at Anduril. Altimeter, Accel and Khosla co-led, per reports.</p>
+    <p style="color:var(--t2)">For anyone who has shipped hardware, the slow part between a design freeze and a stable line is real money. It's a sign investors will pay for AI in operations, not just software.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/10/20/ex-openai-executive-builds-1point5-billion-ai-manufacturing-startup-arda.html">CNBC →</a><a class="cta" href="https://www.businesswire.com/news/home/20261020574393/en/Arda-Emerges-from-Stealth-to-Speed-Up-American-Manufacturing">Arda →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Eka Robotics · TechCrunch · Oct 20</div>
+    <h3>Eka raises $150M for robot hands that feel force</h3>
+    <p>Cambridge, Mass.-based <strong>Eka Robotics</strong> raised a $150M Series A led by a16z and F-Prime at a reported $1.45B valuation. Its "vision-force-action" model combines camera input with force feedback so robots can handle variable tasks, such as inserting wires, that pure vision struggles with. The money goes to the model and customer deployments.</p>
+    <a class="cta" href="https://techcrunch.com/2026/10/20/eka-is-worth-1-45-billion-thanks-to-a-physical-ai-model-that-has-experts-raving/">TechCrunch →</a><a class="cta" href="https://siliconangle.com/2026/10/20/eka-robotics-nets-150m-at-a-1-45b-valuation-for-robot-hands-that-sense-force/">SiliconANGLE →</a>
+  </article>
+
+  <!-- OPS -->
+  <div class="sec" id="ops"><h2>Ops &amp; commerce</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">Salesforce · Braze · Oct 20</div>
+    <h3>Salesforce buys Braze for $5.66B to bring real-time B2C engagement to Agentforce</h3>
+    <div class="meta"><span class="stat num">$47.50 / share cash</span><span class="stat">Closes in FY2028</span></div>
+    <p><strong>Salesforce</strong> will pay $47.50 a share in cash for <strong>Braze</strong>, the customer-engagement platform behind app push, in-app, email, SMS and WhatsApp journeys for big consumer brands. Salesforce says Braze's event-streaming engine and AI decisioning will plug into Data 360, Marketing Cloud and Agentforce, as marketers "need agentic solutions that can understand customers, make decisions, and act in real time." Bloomberg noted the deal fills a gap in a marketing suite increasingly seen as outdated.</p>
+    <p style="color:var(--t2)">Brand-to-customer messaging is consolidating into the same platforms building agents. When a shopper's agent talks to a brand's agent, this is the layer the brand side will run on. For DTC operators, expect bundling pressure on Braze pricing after close.</p>
+    <a class="cta" href="https://www.salesforce.com/news/press-releases/2026/10/20/salesforce-signs-definitive-agreement-to-acquire-braze/">Salesforce →</a><a class="cta" href="https://www.wsj.com/business/deals/salesforce-to-buy-customer-engagement-platform-for-nearly-5-7-billion-aba17cfe">WSJ →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Shippo · e-commerce.news · Oct 20</div>
+    <h3>Shippo: 85% of merchants were overpaying for shipping, and agents are now buying labels</h3>
+    <p>Ahead of peak, <strong>Shippo</strong> says 85% of merchants shipping 100+ labels a month had a cheaper option available, with average potential savings of 22%. In 44% of those cases, the cheaper service would also have arrived sooner (July platform data). It's pushing its Estimate API (delivery dates at checkout, which it says are 90%+ accurate), AI cost dashboards with weekly alerts, and scan-to-print packing. Its MCP connections, which let merchants compare rates, buy labels and track parcels from inside Claude or ChatGPT, are growing 138% month over month. Shippo moved about 440M packages in the last 12 months, up 39%.</p>
+    <p style="color:var(--t2)">Shipping is one of the first operational jobs being handed to agents through MCP. A 22% cost gap is the kind of number an agent can close automatically.</p>
+    <a class="cta" href="https://e-commerce.news/story/shippo-expands-ai-shipping-tools-before-peak-holiday-rush">e-commerce.news →</a><a class="cta" href="https://goshippo.com/blog/shippo-expands-ai-powered-shipping-capabilities-ahead-of-peak-season">Shippo →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Ceva Logistics · CMA CGM · Oct 20</div>
+    <h3>Ceva folds Colis Privé into Paack, building a 150M-parcel European last-mile brand</h3>
+    <p>CMA CGM's <strong>Ceva Logistics</strong> will roll its French parcel network Colis Privé into <strong>Paack</strong>, the Spanish-Portuguese delivery startup it bought in August, reversing the original plan for Colis Privé to absorb Paack. The combined network handles about 150M parcels a year across France, Spain, Portugal, Belgium and Luxembourg, with 17,000 pickup points. Paack's tech (route optimization, delivery slots, returns) will run the whole network, and the rebrand starts in January.</p>
+    <p style="color:var(--t2)">A startup's software ends up running the incumbent. Cross-border e-commerce in southern Europe now has one more pan-regional carrier to quote against.</p>
+    <a class="cta" href="https://thelogisticnews.com/ceva-logistics-unifies-colis-prive-and-paack-under-a-single-european-delivery-brand/">The Logistic News →</a>
+  </article>
+
+  <!-- DEALS -->
+  <div class="sec" id="deals"><h2>Deals &amp; M&amp;A</h2><span class="ct">New since yesterday</span></div>
+
+  <div class="tx">
+    <div class="day">Raises</div>
+    <a class="row" href="https://www.cnbc.com/2026/10/20/ex-openai-executive-builds-1point5-billion-ai-manufacturing-startup-arda.html"><div class="av" style="background:#3d7bff">A</div><div class="mid"><div class="n">Arda</div><div class="s">Altimeter · Accel · Khosla · @ $1.5B</div></div><div class="amt"><div class="a num">$160M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://techcrunch.com/2026/10/20/eka-is-worth-1-45-billion-thanks-to-a-physical-ai-model-that-has-experts-raving/"><div class="av" style="background:#2e7d4f">E</div><div class="mid"><div class="n">Eka Robotics</div><div class="s">a16z + F-Prime · @ $1.45B</div></div><div class="amt"><div class="a num">$150M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://techcrunch.com/2026/10/20/spacex-alums-aviation-startup-reliable-robotics-lands-115m-topping-1b-valuation/"><div class="av" style="background:#0f8fa8">R</div><div class="mid"><div class="n">Reliable Robotics</div><div class="s">Nimble (lead) · $90M equity + $25M SVB debt · &gt;$1B</div></div><div class="amt"><div class="a num">$115M</div><div class="s">Series D ext.</div></div></a>
+    <a class="row" href="https://www.startup.eu/archive/2026-10-20"><div class="av" style="background:#b03a3a">B</div><div class="mid"><div class="n">Blackwall</div><div class="s">AVP (lead) · Tallinn cybersecurity · @ $2.2B</div></div><div class="amt"><div class="a num">$100M</div><div class="s">Series C</div></div></a>
+    <a class="row" href="https://tech.eu/2026/10/20/daytona-hits-1b-valuation-with-60m-series-b-for-ai-agent-cloud/"><div class="av" style="background:#d9622b">D</div><div class="mid"><div class="n">Daytona</div><div class="s">FirstMark (lead) · agent sandboxes · @ $1B</div></div><div class="amt"><div class="a num">$60M</div><div class="s">Series B</div></div></a>
+    <a class="row" href="https://www.globenewswire.com/news-release/2026/10/20/3384598/0/en/applied-ai-company-baba-raises-40-million-series-a-to-improve-the-medicare-experience.html"><div class="av" style="background:#6d7a2a">B</div><div class="mid"><div class="n">Baba</div><div class="s">FirstMark (lead) · CVS Health Ventures · Medicare care</div></div><div class="amt"><div class="a num">$40M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://www.alleywatch.com/2026/10/the-alleywatch-startup-daily-funding-report-10-20-2026/"><div class="av" style="background:#8a4fb0">P</div><div class="mid"><div class="n">Prism Data</div><div class="s">Story Ventures (lead) · cash-flow underwriting</div></div><div class="amt"><div class="a num">$20M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://www.prnewswire.com/news-releases/mural-raises-28-million-total-to-power-fintechs-and-agentic-finance-302914128.html"><div class="av" style="background:#2a6f6f">M</div><div class="mid"><div class="n">Mural</div><div class="s">Tether (lead) · accounts for people and agents</div></div><div class="amt"><div class="a num">$15M</div><div class="s">Series A</div></div></a>
+    <div class="day">M&amp;A and mega-rounds</div>
+    <a class="row" href="https://www.salesforce.com/news/press-releases/2026/10/20/salesforce-signs-definitive-agreement-to-acquire-braze/"><div class="av" style="background:#3d7bff">B</div><div class="mid"><div class="n">Braze → Salesforce</div><div class="s">$47.50/share all cash · close FY2028</div></div><div class="amt"><div class="a num">$5.66B</div><div class="s">EV</div></div></a>
+    <a class="row" href="https://finance.yahoo.com/technology/ai/articles/openai-races-raise-30-bln-013303188.html"><div class="av" style="background:#2a2a31">O</div><div class="mid"><div class="n">OpenAI</div><div class="s">SoftBank, MGX in talks · &gt;$1.4T valuation</div></div><div class="amt"><div class="a num">~$30B</div><div class="s">Reported</div></div></a>
+    <a class="row" href="https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-10-20-2026"><div class="av" style="background:#1f1f25">S</div><div class="mid"><div class="n">SpaceX × Tesla</div><div class="s">Special committees formed · no agreement</div></div><div class="amt"><div class="a num">Study</div><div class="s">Musk, Q3 call</div></div></a>
+  </div>
+
+  <!-- MARKETS -->
+  <div class="sec" id="markets"><h2>Markets</h2><span class="ct">Tue close · Wed snapshot</span></div>
+
+  <div class="tx stk">
+    <div class="day">Tuesday close · Oct 20</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPX</div><div class="mid"><div class="n">S&amp;P 500</div><div class="px num">7,712.57 · 400+ members up</div></div><span class="pct up num">+0.3%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">DJI</div><div class="mid"><div class="n">Dow Jones</div><div class="px num">52,495.88 · 3M +5%, Northrop +4%</div></div><span class="pct up num">+1.0%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">NDX</div><div class="mid"><div class="n">Nasdaq 100</div><div class="px num">29,490.28 · chips −0.4%</div></div><span class="pct dn num">−0.1%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">RUT</div><div class="mid"><div class="n">Russell 2000</div><div class="px num">Small caps lead</div></div><span class="pct up num">+1.7%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BRN</div><div class="mid"><div class="n">Brent settle</div><div class="px num">$108.79 · WTI $101.79 (−1.8%)</div></div><span class="pct dn num">−0.7%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">10Y</div><div class="mid"><div class="n">US 10-year</div><div class="px num">5.11% · 2Y 4.78% · 30Y 5.42%</div></div><span class="pct nt num">Bonds up</span></div>
+    <div class="day">Wednesday snapshot · ~06:17 ART</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPCX</div><div class="mid"><div class="n">SpaceX premarket</div><div class="px num">Netflix −6.4% · SMCI +12% early</div></div><span class="pct up num">+9.9%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">KOSPI</div><div class="mid"><div class="n">Kospi</div><div class="px num">Elice +30% after −32% debut</div></div><span class="pct up num">+3.3%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SXXP</div><div class="mid"><div class="n">Stoxx 600</div><div class="px num">EssilorLuxottica, Adidas up</div></div><span class="pct up num">+0.4%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">NQ</div><div class="mid"><div class="n">Nasdaq 100 futures</div><div class="px num">S&amp;P futures flat · Dow futures −0.1%</div></div><span class="pct up num">+0.3%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BRN</div><div class="mid"><div class="n">Brent crude</div><div class="px num">$110 · Hormuz tanker attacks</div></div><span class="pct up num">+1.1%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">10Y</div><div class="mid"><div class="n">US 10-year</div><div class="px num">5.12% · Bund 3.41% · Gilt 5.41%</div></div><span class="pct nt num">Flat</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BTC</div><div class="mid"><div class="n">Bitcoin</div><div class="px num">$83,448.57 · ether $2,461.32</div></div><span class="pct up num">+0.9%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">EUR</div><div class="mid"><div class="n">EUR / USD</div><div class="px num">$1.1217 · yen 158.13</div></div><span class="pct dn num">−0.2%</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">Wall Street · Oct 20–21</div>
+    <h3>SpaceX and Super Micro calm the AI trade; Netflix and oil are the drags</h3>
+    <div class="meta"><span class="pct up" style="min-width:0;padding:5px 10px;font-size:12px">SpaceX +9.9% pre</span><span class="pct dn" style="min-width:0;padding:5px 10px;font-size:12px">Netflix −6.4% pre</span><span class="stat">Meta, Tesla report today</span></div>
+    <p>Tuesday was broad but not tech-led: the Dow gained 1% on 3M's beat-and-raise and Northrop, small caps rose 1.7%, and chips slipped. After the bell, SpaceX's quarter and Super Micro's preliminary beat flipped the tone, and Asia followed, with the Kospi up about 3% and Elice, Monday's flop, up 30%. <strong>Netflix</strong> beat on Q3 (EPS $0.87, revenue $13.44B) but guided to a fourth straight quarter of slowing growth, and Bloomberg says its ad business is on pace for $300M less than expected. United guided low on jet fuel, the FAA certified Boeing's 737 MAX 10, and DayOne Data Centers is weighing delaying or shrinking its US IPO.</p>
+    <p style="color:var(--t2)">Oil is the drag. Brent is back at $110 after Iran's Revolutionary Guards said mines disabled two tankers using "unauthorized" Hormuz routes. Goldman says crude freight now runs above $20 a barrel, against $3 a year ago, which feeds straight into fuel and shipping costs. The French–German 10-year spread is approaching 160bp.</p>
+    <a class="cta" href="https://finance.yahoo.com/markets/stocks/articles/p-500-dow-gain-earnings-234757218.html">Close (Stocktwits) →</a><a class="cta" href="https://www.swissinfo.ch/eng/asian-shares%2C-us-futures-rise-on-ai-trade-revival%3A-markets-wrap/92248255">Bloomberg wrap →</a><a class="cta" href="https://www.investing.com/news/stock-market-news/afterhours-movers-nflx-spcx-smci-isrg-cof-ual-pega-432SI-4961130">After-hours →</a><a class="cta" href="https://www.cnbc.com/2026/10/21/oil-price-today-wti-brent-rise-on-middle-east-worries.html">CNBC oil →</a><a class="cta" href="https://apnews.com/article/stocks-markets-rates-oil-earnings-ai-4fa93685cd49e51e7ff0d840fdd38b0d">AP Asia →</a>
+  </article>
+
+  <!-- ARGENTINA -->
+  <div class="sec" id="argentina"><h2>Argentina</h2><span class="ct">Tuesday close</span></div>
+
+  <div class="tx stk">
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">MERV</div><div class="mid"><div class="n">MSCI Merval</div><div class="px num">97,942 · Globant ADR +3.8%</div></div><span class="pct dn num">−0.3%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">RP</div><div class="mid"><div class="n">Riesgo país</div><div class="px num">672 bp · 710 intraday, high since Oct 2025</div></div><span class="pct up num">−3 bp</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">MAY</div><div class="mid"><div class="n">Dólar mayorista</div><div class="px num">$1,525 · BNA $1,545</div></div><span class="pct nt num">+$0.50</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">BLUE</div><div class="mid"><div class="n">Dólar blue</div><div class="px num">$1,570 · nominal record (ties Jul 28)</div></div><span class="pct nt num">+$10</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">CCL</div><div class="mid"><div class="n">Contado con liqui</div><div class="px num">$1,633 · record</div></div><span class="pct nt num">Record</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">Buenos Aires · Oct 20</div>
+    <h3>Country risk breaks 700, then buyers step in</h3>
+    <p>Dollar bonds opened down about 1.5% and JP Morgan's index hit 710 at 10:15, its highest since Oct 24, 2025. Bargain hunters drawn by high yields after seven losing sessions reversed the move, and it closed at 672, ending a seven-day climb. Hard-dollar bonds are still down about 5% over the month, more than 6% for the long end, against a 2026 low of 403 in July. The central bank bought $103M, and gross reserves are $50.20B. The Finance Secretariat swapped $3.90B of the D30O6 dollar-linked bond early (73% of the outstanding amount) to reduce FX volatility before its Oct 27 fixing. Adcap notes higher US Treasury yields are now flowing through to Argentine corporate credit, up 74bp on average in a month.</p>
+    <p style="color:var(--t2)">The wholesale rate is still 27% below the band ceiling of $1,940.30, but the blue and CCL both set nominal records. Year-end dollar futures are at $1,590.50.</p>
+    <a class="cta" href="https://www.infobae.com/economia/2026/10/20/jornada-financiera-el-riesgo-pais-cerro-a-la-baja-tras-superar-los-700-puntos-y-el-dolar-subio-por-tercer-dia-consecutivo/">Infobae →</a><a class="cta" href="https://www.c5n.com/economia/riesgo-pais-acciones-bonos-argentinos-martes-20-octubre-2026">C5N →</a><a class="cta" href="https://www.rava.com/cotizaciones/historico/riesgo-pais/2026/10/20/">Rava →</a>
+  </article>
+
+  <!-- GLOBAL -->
+  <div class="sec" id="global"><h2>Global</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">UK · Saudi Arabia · Iran · Oct 20</div>
+    <h3>UK sends Typhoons to defend Saudi Arabia; Iran's mediation offer goes unanswered</h3>
+    <p>Britain will fly defensive counter-air missions with RAF Typhoons to protect Saudi cities and infrastructure from Houthi drones and missiles. It won't strike the Houthis, and it's extending air-to-air refueling for Saudi operations. Defence Secretary Wes Streeting called the attacks, including on Riyadh's airport, "absolutely despicable." Iran said neither Riyadh nor the Houthis had answered its offer to mediate, and warned that Egyptian intervention would complicate the conflict. Egypt's parliament vote is now set for Oct 26. In the Gulf, the IRGC said its mines halted tankers using routes it calls unauthorized.</p>
+    <p style="color:var(--t2)">This adds up to a wider war around the world's two main oil chokepoints, the Red Sea and Hormuz. It's why freight and fuel costs, not just crude, are the line to watch for anyone landing goods from Asia.</p>
+    <a class="cta" href="https://www.aljazeera.com/news/2026/10/20/uk-to-deploy-raf-fighter-jets-to-defend-saudi-arabia-from-houthi-attacks">Al Jazeera →</a><a class="cta" href="https://www.gov.uk/government/news/operational-update-20-october-uk-military-support-to-the-kingdom-of-saudi-arabia">GOV.UK →</a><a class="cta" href="https://www.yahoo.com/news/world/articles/iran-says-saudi-arabia-houthis-212805889.html">Iran (Reuters) →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Europe · Oct 21</div>
+    <h3>Europe's optimism fades as oil and politics weigh</h3>
+    <p>Strategists polled by Bloomberg now see the Stoxx 600 ending the year at 645, less than 1% above Tuesday's close, as high oil feeds inflation and bond yields stay elevated. The French–German 10-year spread is near 160bp, up from 150bp at the start of the week, after the riots and curfews. Adidas raised its outlook after booking US tariff refunds.</p>
+    <a class="cta" href="https://www.swissinfo.ch/eng/asian-shares%2C-us-futures-rise-on-ai-trade-revival%3A-markets-wrap/92248255">Bloomberg →</a>
+  </article>
+
+  <!-- AHEAD -->
+  <div class="sec" id="ahead"><h2>Ahead</h2><span class="ct">ART dates</span></div>
+  <div class="tx ahead">
+    <div class="row"><div class="when"><div class="m">Oct</div><div class="d">21</div></div><div class="mid"><div class="n">Meta and Tesla results</div><div class="s" style="white-space:normal">After SpaceX, the next AI-spending test, plus any read on the SpaceX–Tesla committees. Money20/20 closes.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Oct</div><div class="d">26</div></div><div class="mid"><div class="n">Egypt parliament vote on Saudi support</div><div class="s" style="white-space:normal">Delayed twice already.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Oct</div><div class="d">27</div></div><div class="mid"><div class="n">D30O6 dollar-linked fixing · FOMC Oct 27–28</div><div class="s" style="white-space:normal">Most of the bond was swapped early on Tuesday.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">9</div></div><div class="mid"><div class="n">Anthropic IPO marketing could begin</div><div class="s" style="white-space:normal">Week of Nov 9 per Bloomberg, trading before US Thanksgiving. OpenAI wants its round closed first.</div></div></div>
+  </div>
+
+  <footer>Prepared for Matias Ricci · Wednesday edition, Oct 21, 2026 · as of 07:00 ART (UTC−3)<br>Covers news since Tuesday's brief. US index levels and oil settles are Tuesday closes (US close 17:00 ART). The Wednesday snapshot is Bloomberg's 10:17 a.m. London (06:17 ART) wrap; the Kospi move is from AP. Prices differ by source and minute. Anthropic figures come from a draft prospectus reported by the WSJ and could change; OpenAI's round is reported, not confirmed. Startup revenue and growth figures are company claims. Iranian and Houthi claims are unverified.</footer>
+</main>
+</body>
+</html>
