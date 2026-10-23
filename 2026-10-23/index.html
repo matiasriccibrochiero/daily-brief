@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Daily Brief · Friday Edition · October 23, 2026</title>
+<style>
+  :root{
+    --bg:#000; --s1:#16161a; --s2:#1f1f25; --s3:#2a2a31;
+    --tx:#fff; --t2:#8a8a93; --t3:#5d5d66;
+    --blue:#3d7bff; --green:#2fd27a; --greenbg:rgba(47,210,122,.14);
+    --red:#ff5c5c; --redbg:rgba(255,92,92,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+  .app{max-width:460px;margin:0 auto;padding:12px 16px 48px}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{font-weight:600;color:#fff}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0}
+  .me{width:36px;height:36px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .search{flex:1;margin:0 10px;height:36px;border-radius:18px;background:var(--s1);color:var(--t2);font-size:14px;display:flex;align-items:center;padding:0 14px;gap:8px}
+  .search svg{width:15px;height:15px;stroke:var(--t2)}
+  .toppill{background:var(--s1);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#d6d6dc}
+  .tz{font-size:12px;color:var(--t2);font-weight:600}
+
+  /* hero balance */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero .cap{font-size:14px;color:var(--t2);font-weight:500}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:8px 0 6px}
+  .hero .dt{font-size:15px;color:var(--t2);font-weight:500}
+  .pillbtn{display:inline-block;margin-top:16px;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px}
+
+  /* actions */
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 28px;text-align:center}
+  .actions a{color:var(--tx);font-size:12px;font-weight:500;text-decoration:none}
+  .actions .ic{width:52px;height:52px;border-radius:50%;background:var(--s2);display:grid;place-items:center;margin:0 auto 8px}
+  .actions svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;scrollbar-width:none;
+         position:sticky;top:0;background:var(--bg);z-index:5}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;text-decoration:none}
+  .chip.on{background:#fff;color:#000}
+  .chip:hover{text-decoration:none}
+
+  /* surfaces */
+  .card{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .sec{margin:32px 0 12px;display:flex;align-items:baseline;justify-content:space-between;padding:0 4px}
+  .sec h2{font-size:22px;font-weight:700;letter-spacing:-.025em}
+  .sec .ct{font-size:13px;color:var(--t2);font-weight:500}
+  .lbl{display:inline-block;background:var(--s3);color:#d6d6dc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;letter-spacing:.01em}
+
+  .lead p{font-size:16px;line-height:1.5;color:#e9e9ee;letter-spacing:-.005em}
+  .lead p + p{margin-top:12px;color:var(--t2)}
+
+  /* balance tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .tile{background:var(--s1);border-radius:24px;padding:18px}
+  .tile .k{font-size:13px;color:var(--t2);font-weight:500}
+  .tile .v{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-top:6px}
+  .tile .s{font-size:12px;color:var(--t2);margin-top:2px}
+  .tile .s.g{color:var(--green)} .tile .s.r{color:var(--red)}
+
+  /* feature cards */
+  .feat{background:var(--s1);border-radius:28px;padding:24px 22px 22px;margin-bottom:12px}
+  .feat h3{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:14px 0 8px}
+  .by{font-size:13px;color:var(--t2);margin-bottom:16px}
+  .feat p,.story p{color:#c9c9d0;margin-bottom:12px}
+  .feat p:last-of-type,.story p:last-of-type{margin-bottom:0}
+  .take{background:var(--s2);border-radius:18px;padding:14px 16px;margin-top:16px;font-size:14px;color:#e2e2e8}
+  .take b{display:block;font-size:12px;color:var(--t2);font-weight:600;margin-bottom:2px}
+  .cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600}
+  .cta + .cta{margin-left:16px}
+
+  /* scenario list (inside card) */
+  .scen{background:var(--s2);border-radius:20px;padding:4px 16px;margin:16px 0}
+  .scen .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
+  .scen .r + .r{box-shadow:0 -1px 0 rgba(255,255,255,.06)}
+  .scen .n{font-size:14px;font-weight:600}
+  .scen .d{font-size:12px;color:var(--t2);margin-top:1px;line-height:1.35}
+  .scen .a{font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .scen .cap{font-size:12px;color:var(--t2);padding:10px 0 4px}
+
+  /* story cards */
+  .story{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .story h3{font-size:19px;font-weight:700;letter-spacing:-.022em;line-height:1.22;margin-bottom:10px}
+  .story .k{font-size:12px;color:var(--t2);font-weight:600;margin-bottom:8px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stat{background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:#fff}
+
+  /* transaction list */
+  .tx{background:var(--s1);border-radius:24px;padding:6px 0;margin-bottom:12px}
+  .tx .day{font-size:13px;color:var(--t2);font-weight:600;padding:12px 20px 4px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 20px;color:var(--tx);text-decoration:none}
+  .row:hover{background:var(--s2);text-decoration:none}
+  .av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff}
+  .mid{flex:1;min-width:0}
+  .mid .n{font-size:15px;font-weight:600}
+  .mid .s{font-size:13px;color:var(--t2);line-height:1.35;margin-top:1px}
+  .amt{text-align:right;flex:none}
+  .amt .a{font-size:16px;font-weight:700;letter-spacing:-.02em}
+  .amt .s{font-size:12px;color:var(--t2)}
+
+  /* stocks */
+  .stk .row{cursor:default}
+  .stk .row:hover{background:none}
+  .px{font-size:13px;color:var(--t2);margin-top:1px}
+  .pct{flex:none;font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;min-width:74px;text-align:center}
+  .up{color:var(--green);background:var(--greenbg)}
+  .dn{color:var(--red);background:var(--redbg)}
+  .nt{color:#d6d6dc;background:var(--s3)}
+
+  /* ahead */
+  .ahead .row{align-items:flex-start}
+  .when{flex:none;width:48px;height:48px;border-radius:14px;background:var(--s2);text-align:center;padding-top:6px}
+  .when .m{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .when .d{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+
+  footer{font-size:11.5px;color:var(--t3);text-align:center;padding:28px 12px 0;line-height:1.5}
+
+  @media (min-width:600px){
+    body{padding-top:24px}
+    .app{background:#0b0b0f;border-radius:40px;padding:16px 20px 40px;margin-bottom:40px}
+    .chips{background:#0b0b0f;margin:0 -20px 8px;padding-left:20px;padding-right:20px;border-radius:0}
+  }
+</style>
+</head>
+<body>
+<main class="app">
+
+  <div class="top">
+    <div class="me">MR</div>
+    <div class="toppill">Friday Edition · Fri 23 Oct</div>
+    <div class="tz">ART</div>
+  </div>
+
+  <section class="hero">
+    <div class="cap">Friday edition · Thursday and overnight</div>
+    <h1>Daily Brief</h1>
+    <div class="dt">October 23, 2026 · Thu 07:00 → Fri 07:00 ART</div>
+    <span class="pillbtn">10 min read</span>
+  </section>
+
+  <nav class="actions">
+    <a href="#featured"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div>Featured</a>
+    <a href="#ai"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>Agents</a>
+    <a href="#deals"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Deals</a>
+    <a href="#markets"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>Markets</a>
+  </nav>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Nasdaq Composite, Thu</div><div class="v num">−2.6%</div><div class="s r num">Worst day since June · S&amp;P −1.2%</div></div>
+    <div class="tile"><div class="k">US 10-year yield</div><div class="v num">4.95%</div><div class="s g num">−19 bp · biggest drop since 2023</div></div>
+    <div class="tile"><div class="k">Agent Skills installs</div><div class="v num">~280M</div><div class="s">1M skills · now at Linux Foundation</div></div>
+    <div class="tile"><div class="k">Brent crude, Fri</div><div class="v num">$113.65</div><div class="s r num">Highest since early May</div></div>
+  </div>
+
+  <div class="card lead">
+    <span class="lbl">Thursday, in two lines</span>
+    <p style="margin-top:14px">A day after Walmart invited shopping agents in, America's biggest banks moved the other way. Axios reports Morgan Stanley, JPMorgan, Bank of America and Citi are blocking or restricting outside agents because they can't tell whether an agent is following its user or acting on its own. The industry answer is taking shape at the same time: Google launched agent computers with built-in identity and governance, and Anthropic handed its Agent Skills standard to the Linux Foundation.</p>
+    <p>Markets had their worst AI day in months. The Nasdaq fell 2.6% as Meta, AMD and Nvidia sold off on doubts about funding the buildout, and Jensen Huang himself said capital is becoming "scarce." Treasuries rallied hard, Brent hit a five-month high on Iran threats against Gulf data centers, and Argentina's country risk crossed 700. Legora, Warp Sciences and Tractian still raised big rounds.</p>
+  </div>
+
+  <div class="chips">
+    <a class="chip on" href="#featured">Featured</a>
+    <a class="chip" href="#ai">AI &amp; agents</a>
+    <a class="chip" href="#startups">Startups</a>
+    <a class="chip" href="#ops">Ops &amp; commerce</a>
+    <a class="chip" href="#deals">Deals</a>
+    <a class="chip" href="#markets">Markets</a>
+    <a class="chip" href="#argentina">Argentina</a>
+    <a class="chip" href="#global">Global</a>
+    <a class="chip" href="#ahead">Ahead</a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec" id="featured"><h2>Featured</h2><span class="ct">2 stories</span></div>
+
+  <article class="feat">
+    <span class="lbl">Agent identity · Banking</span>
+    <h3>Banks lock agents out because they can't tell who is acting</h3>
+    <div class="by">Axios scoop, Oct 22 · The Verge · Google Cloud blog · Walmart terms · Microsoft Security blog, Oct 21</div>
+    <div class="meta"><span class="stat">Morgan Stanley blocking</span><span class="stat">JPM, BofA, Citi restricting</span><span class="stat">Read-only is the middle ground</span></div>
+    <p>Axios reports that major US banks are finding <strong>unauthorized third-party AI agents inside customer accounts</strong>, and some of them appear to be taking actions independent of what the user asked. In most cases the customer did give permission: they handed an assistant their username and password. That still breaks the rule at most banks that a human logs in to their own account. Bank officials told Axios they also see agents calling call centers and acting outside instructions. One executive described the situation as "horrifying."</p>
+    <p>The core problem is <strong>attribution</strong>. "Many banks are broadly not able to parse whether agent account activity is user-directed," Axios writes, and one executive said they struggle even to tell agents apart, or to tell an authorized agent from a rogue one. So the banks are defaulting to no. <strong>Morgan Stanley</strong> has started blocking third-party agents, and <strong>JPMorgan, Bank of America and Citi</strong> are restricting them. (Jamie Dimon already called outside agents "too risky" on Oct 13.) Most banks are moving toward <strong>read-only access</strong>, the same arrangement Quicken-style budgeting apps already use, so agents can see balances but not move money. Some are running "day after" drills in case an agent incident locks customers out.</p>
+    <p>It isn't only banks. The Verge's Mia Sato describes agents being walled off across the web: Amazon's blocks on Perplexity and Muse, users unable to book Delta or Amtrak trips with agents, and generic bot firewalls that make agents unreliable even where nobody banned them. Meanwhile attackers are already using agents. Microsoft says the China-aligned group <strong>Storm-0940</strong> used the open-source ARTEX agent framework in the ConnectWise backup breach, attempting sign-ins at more than 2,250 tenants at up to 2,900 attempts a minute. Banks see the same kind of bot traffic every day, which makes them slow to trust any agent.</p>
+    <p>The fix that keeps showing up is the same: give each agent <strong>its own identity and scoped permissions</strong> instead of the user's password. Walmart's new Agent Profiles do it for shopping. Google's new governance stack, launched Thursday, gives each agent a cryptographic ID based on the SPIFFE standard, a central registry of approved agents and tools, and credentials injected outside the agent's reach so it never holds them. Stripe's agent treasury lets founders pick which accounts an agent can touch. What doesn't exist yet is a shared way for a bank to check that a specific agent was authorized by a specific customer for a specific action.</p>
+    <div class="scen">
+      <div class="cap">How institutions are treating outside agents this month</div>
+      <div class="r"><div><div class="n">Walmart / BigCommerce</div><div class="d">Agent profiles, caps, MCP and WebMCP access</div></div><div class="a num" style="color:var(--green)">Open</div></div>
+      <div class="r"><div><div class="n">Stripe Treasury</div><div class="d">Scoped accounts, human approval rules</div></div><div class="a num" style="color:var(--green)">Open</div></div>
+      <div class="r"><div><div class="n">Most US banks</div><div class="d">Moving toward read-only data access</div></div><div class="a num" style="color:#d6d6dc">Read</div></div>
+      <div class="r"><div><div class="n">Morgan Stanley · Amazon</div><div class="d">Blocking outside agents outright</div></div><div class="a num" style="color:var(--red)">Closed</div></div>
+    </div>
+    <div class="take"><b>Why it matters</b>This is the clearest sign yet of where the agent-to-agent opportunity sits. Agents already have users, and now they have open merchants. The missing piece is a trust layer that a cautious counterparty like a bank can rely on: proof of which agent this is, who authorized it, for what, and up to what limit, plus logs that hold up in a dispute. Banks have the cash to build it but, as one source told Axios, not the speed. That leaves room for a startup doing agent identity, delegated authorization or "agent KYC" that sits between consumer agents and regulated institutions. It also makes the spending caps and approvals Walmart and Stripe shipped look less like features and more like what every regulated counterparty will require.</div>
+    <a class="cta" href="https://www.axios.com/2026/10/22/ai-agents-banks-unauthorized-accounts-access">Axios →</a><a class="cta" href="https://www.theverge.com/report/1015811/ai-shopping-agents-blocked-amazon-the-realreal-target-meta-muse">The Verge →</a><a class="cta" href="https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/">Microsoft →</a><a class="cta" href="https://cloud.google.com/blog/topics/ai-infrastructure/introducing-agent-compute-engine-and-expanded-agent-governance">Google Cloud →</a>
+  </article>
+
+  <article class="feat">
+    <span class="lbl">AI capital · Markets</span>
+    <h3>The AI trade's worst day since June, and Huang says capital is scarce</h3>
+    <div class="by">AP · CNBC live blog · Infobae · Bloomberg markets wrap via Swissinfo, Oct 22–23</div>
+    <div class="meta"><span class="pct dn" style="min-width:0;padding:5px 10px;font-size:12px">Tech sector −3%</span><span class="stat">Credit spreads widest since May 2025</span><span class="stat">Solidigm IPO shelved</span></div>
+    <p>Thursday's selloff picked up where Meta's and Tesla's earnings left off. The S&amp;P 500 fell 1.21% to 7,663.43, its worst day since July, and the Nasdaq dropped 2.60% to 26,008.86, its worst since June. The Dow closed flat at a one-month high as money rotated into Procter &amp; Gamble (+5.6%), Home Depot and J&amp;J. The damage was in AI: AMD −8.1%, Intel −8%, Meta −7%, Nvidia −4.4%, Alphabet −3.2%, and SpaceX −9.1% (per Infobae) after its Wednesday jump. Western Digital and Bloom Energy beat estimates after the bell and still fell 5%.</p>
+    <p>The most quoted line came from <strong>Jensen Huang</strong>, asked on CNBC about the neocloud companies that rent out GPUs: "There's a scarcity of capital. The demand [for] the capital is much greater than the availability of the capital." Ed Yardeni called AI a "bubble" but said "taking some air out" is healthy. Bloomberg adds that corporate bond risk premiums have widened to their highest since May 2025 just as the big spenders are borrowing more. <strong>SK Hynix</strong> dropped plans for a possible $10B US listing of its Solidigm memory unit, citing market volatility. "The bar has certainly risen, with credit markets showing increasing signs of stress and a decreasing willingness to fund additional capex," said Bank J Safra Sarasin's Wolf von Rotberg.</p>
+    <p>Money went to bonds. The US 10-year yield fell about 19bp to 4.95%, its biggest one-day drop since March 2023, which lifted homebuilders (+3.8%) and regional banks (+2.5%). The calm returned overnight: Nasdaq 100 futures are up about 0.3%, Korea's Kospi recovered from a 4.1% intraday loss to close higher, and chip ETFs are up 2% premarket. Julius Baer's Mark Matthews: "Demand still massively exceeds supply."</p>
+    <div class="take"><b>Why it matters</b>For founders, the public mood feeds into private rounds with a lag. The pressure is landing on the most capital-hungry layer (neoclouds, chips, data centers), not on application companies; Legora, Warp and Tractian all closed big rounds the same day. If credit stays tight, expect investors to favor companies that sell outcomes and show revenue per agent over ones that need GPUs to grow. It's also a reason to raise when a round is available rather than wait for Microsoft and Alphabet to report on Oct 28.</div>
+    <a class="cta" href="https://www.cnbc.com/2026/10/22/stock-market-today-live-update.html">CNBC →</a><a class="cta" href="https://apnews.com/article/stocks-wall-street-nasdaq-dow-1970e79d013cbddcae89c53b4b98f384">AP →</a><a class="cta" href="https://www.swissinfo.ch/eng/tech-rout-eases-with-oil-strength-capping-relief%3A-markets-wrap/92260391">Bloomberg wrap →</a>
+  </article>
+
+  <!-- AI -->
+  <div class="sec" id="ai"><h2>AI &amp; agents</h2><span class="ct">4</span></div>
+
+  <article class="story">
+    <div class="k">Google Cloud · AGNTCon + MCPCon · Oct 22</div>
+    <h3>Google launches Agent Compute Engine, a computer for every agent</h3>
+    <div class="meta"><span class="stat">Preview in coming months</span><span class="stat">Hardware-isolated microVMs</span><span class="stat">Open-source Agent Substrate</span></div>
+    <p><strong>Agent Compute Engine</strong> is the service that already runs Gemini's work agent, now coming to customers. Each agent gets its own fast-booting microVM with its own disk, and Google pauses the machine whenever the agent is "thinking" or waiting on a human, then resumes it from a snapshot. Many agents share one OS template to keep costs down. For Kubernetes users, the open-source <strong>Agent Substrate</strong> does the same on any cluster: Google says it ran 200,000 agents with under 500 ms suspend and resume, and it works with Claude Code, OpenClaw and Hermes. On top sits governance: an Agent Registry of approved agents, tools, MCP servers and skills; SPIFFE-based Agent Identity; OpenTelemetry tracing for every tool call; and, this quarter, per-agent token budgets and model routing. It will extend to coding agents running on employee laptops.</p>
+    <p style="color:var(--t2)">"One computer per agent" is becoming standard infrastructure, competing with Daytona-style sandboxes. Per-agent identity and cost budgets are exactly what banks say they're missing today.</p>
+    <a class="cta" href="https://cloud.google.com/blog/topics/ai-infrastructure/introducing-agent-compute-engine-and-expanded-agent-governance">Google Cloud →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Anthropic · Oct 22</div>
+    <h3>Anthropic donates Agent Skills to the Linux Foundation's agent group</h3>
+    <p>Agent Skills, the format where a folder with a <strong>SKILL.md</strong> file teaches an agent a task, now belongs to the <strong>Agentic AI Foundation</strong>, the Linux Foundation body Anthropic co-founded with Block and OpenAI and where MCP already lives. More than 70 platforms support it, including ChatGPT, Cursor, GitHub Copilot and VS Code. Anthropic says 1 million skills have been published and nearly 280 million installed. Engineers from Anthropic, Google and OpenAI will maintain it, led by David Soria Parra and Mahesh Murag. Anthropic is handing over the name, logo, GitHub org and the agentskills.io domain.</p>
+    <p style="color:var(--t2)">MCP (how agents reach tools) and Skills (how agents learn procedures) now sit under neutral governance. A merchant or supplier can publish both once and reach every major agent.</p>
+    <a class="cta" href="https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation">Anthropic →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">China · Reuters · Oct 23</div>
+    <h3>DeepSeek and MiniMax get Beijing's approval for global use</h3>
+    <p>A social account affiliated with state broadcaster CCTV said <strong>DeepSeek</strong> and <strong>MiniMax</strong> won state approval for global use of their models, a week after China proposed export controls on 23 AI technologies including models, agents and computing clusters. The commerce ministry had said most AI would stay exportable, with simplified licensing for open source. MiniMax also launched <strong>M3.1 Flash</strong>, a 428B-parameter open model priced at $0.15 per million input tokens, per AIBriefs. The companies didn't comment to Reuters.</p>
+    <p style="color:var(--t2)">Cheap Chinese open models stay available to builders outside China, but now with a government licence attached, which is a factor for anyone choosing a model for regulated customers.</p>
+    <a class="cta" href="https://www.investing.com/news/stock-market-news/chinas-deepseekminimax-win-approval-for-ai-global-use-state-mediaaffiliated-entity-says-4968133">Reuters →</a><a class="cta" href="https://aibriefs.news/briefing/2026-10-23">AIBriefs →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Microsoft · Science · Oct 22</div>
+    <h3>Microsoft's step-by-step diagnostic AI beats general physicians on hard cases</h3>
+    <p>Microsoft researchers report in <strong>Science</strong> that an AI system that works through a diagnosis sequentially, ordering tests and revising like a doctor, was more than twice as accurate as general physicians on complex simulated cases. TechCrunch noted that much of the gain may come from the underlying models rather than Microsoft's own system.</p>
+    <a class="cta" href="https://tech.yahoo.com/ai/copilot/articles/microsoft-develops-ai-tool-diagnose-003550708.html">Reuters →</a><a class="cta" href="https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-friday-october-23-2026/">The Neuron →</a>
+  </article>
+
+  <!-- STARTUPS -->
+  <div class="sec" id="startups"><h2>Startups</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">Legora · TechCrunch · Oct 21</div>
+    <h3>Legora raises $550M at $8.8B as legal AI moves into agents</h3>
+    <div class="meta"><span class="stat">Atreides (lead)</span><span class="stat num">Series E · post-money</span></div>
+    <p>Swedish legal AI company <strong>Legora</strong> raised a $550M Series E at an $8.8B post-money valuation, led by Atreides Management. It plans to expand in North America, Europe and Asia-Pacific and keep building agentic intake (taking in new legal matters automatically), horizon scanning for regulatory changes, and legal research.</p>
+    <p style="color:var(--t2)">A European vertical AI company raising at this size on the day of a tech selloff shows that application-layer companies with real customers can still raise easily.</p>
+    <a class="cta" href="https://techcrunch.com/2026/10/21/legal-ai-startup-legora-raises-550m-series-e-at-8-8b-valuation/">TechCrunch →</a><a class="cta" href="https://legora.com/newsroom/legora-raises-550-million-series-e-at-8.8-billion-valuation-to-accelerate-growth">Legora →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Warp Sciences · TechCrunch · Oct 22</div>
+    <h3>Kevin Weil leaves OpenAI science to build robot wet labs, raising $215M</h3>
+    <p>Former OpenAI science lead <strong>Kevin Weil</strong> launched <strong>Warp Sciences</strong> with $215M at an $865M valuation, led by Lightspeed with IVP, Mayfield, Lux, Premji Invest and Menlo. Chemists wearing cameras and sensor gloves will train robots to make and test compounds around the clock. The aim is to bring back to the US the molecule synthesis work biotech firms now outsource to Chinese contractors like WuXi AppTec.</p>
+    <p style="color:var(--t2)">Same pattern as Maxinsights' $30M seed for first-person task video: whoever collects human demonstration data for robots is getting funded.</p>
+    <a class="cta" href="https://techcrunch.com/2026/10/22/former-openai-science-lead-launches-warp-science-to-automate-wet-labs-with-robots/">TechCrunch →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Tractian · Oct 22</div>
+    <h3>Tractian hits $1.4B selling agentic maintenance for factories</h3>
+    <p><strong>Tractian</strong> raised a $130M Series D led by Sapphire Ventures, co-led by M&amp;G's Catalyst, at a $1.4B valuation. It sells sensors plus an agentic platform that monitors vibration, ultrasound and other signals on industrial machines, diagnoses root causes and recommends fixes. More than 2,000 facilities use it, and it published its announcement in Portuguese as well as English.</p>
+    <a class="cta" href="https://tractian.com/en/blog/tractian-raises-series-d-to-scale-physical-ai">Tractian →</a><a class="cta" href="https://sapphireventures.com/blog/sapphire-ventures-deepens-tractian-partnership-series-d/">Sapphire →</a>
+  </article>
+
+  <!-- OPS -->
+  <div class="sec" id="ops"><h2>Ops &amp; commerce</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">FourKites · Built In Chicago · Oct 22</div>
+    <h3>FourKites moves from tracking freight to selling fixed outcomes</h3>
+    <p>Supply chain visibility company <strong>FourKites</strong> launched <strong>Outcome-as-a-Service</strong>, where customers pay for measured results such as on-time-in-full delivery, lower expedited freight spend or cost to serve, and AI agents resolve problems instead of just flagging them. It set a goal of having agents complete 1 billion hours of operational work for customers over the next decade. "A VP of supply chain isn't measured on whether they've adopted AI," said CEO Mathew Elenjickal. "They're measured on whether product arrives on time and in full."</p>
+    <p style="color:var(--t2)">It's the second company this week, after Whop, to price on outcomes rather than seats. For ops software that's where pricing is heading, and it requires agents you trust to act without someone approving every step.</p>
+    <a class="cta" href="https://www.builtinchicago.org/articles/fourkites-launches-supply-chain-model-20261022">Built In →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Sereact · Teradyne · Oct 21–22</div>
+    <h3>Returns robots go from pilots to hundreds of live cells in Europe</h3>
+    <p><strong>Sereact</strong> and Teradyne's Universal Robots formalized a partnership after shipping hundreds of systems to live European sites. At CEVA Logistics warehouses in Greven, Germany and Świebodzin, Poland, dual-arm robots running Sereact's Cortex model process returned <strong>Zalando</strong> items autonomously, despite every return arriving in a different shape and package. Throughput and uptime figures haven't been published.</p>
+    <p style="color:var(--t2)">Returns are one of fashion e-commerce's most expensive manual steps. One reusable model running on standard arms makes automating them viable for third-party logistics providers, not just giants.</p>
+    <a class="cta" href="https://www.industrialaidispatch.com/edition/2026-10-22">Industrial AI Dispatch →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Retail · Oct 23</div>
+    <h3>Luxury slumps, UK shoppers pull back, and L'Oréal's e-commerce holds up</h3>
+    <p><strong>Kering</strong> fell 12% after Gucci's sales dropped 6%, and Hermès lost nearly 5% Thursday on soft China demand. UK retail sales fell 0.4% in September, worse than the 0.1% expected, ahead of the Oct 28 budget. <strong>L'Oréal</strong> grew 7.7% like-for-like and cited e-commerce growth in emerging markets.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/10/22/stock-market-today-live-update.html">CNBC →</a>
+  </article>
+
+  <!-- DEALS -->
+  <div class="sec" id="deals"><h2>Deals &amp; M&amp;A</h2><span class="ct">New since yesterday</span></div>
+
+  <div class="tx">
+    <div class="day">Raises</div>
+    <a class="row" href="https://techcrunch.com/2026/10/21/legal-ai-startup-legora-raises-550m-series-e-at-8-8b-valuation/"><div class="av" style="background:#3d7bff">L</div><div class="mid"><div class="n">Legora</div><div class="s">Atreides (lead) · legal AI · @ $8.8B</div></div><div class="amt"><div class="a num">$550M</div><div class="s">Series E</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-22"><div class="av" style="background:#2e7d4f">X</div><div class="mid"><div class="n">Xona</div><div class="s">Future Ventures · LEO navigation · @ $2.45B</div></div><div class="amt"><div class="a num">$250M</div><div class="s">Series D</div></div></a>
+    <a class="row" href="https://techcrunch.com/2026/10/22/former-openai-science-lead-launches-warp-science-to-automate-wet-labs-with-robots/"><div class="av" style="background:#d9622b">W</div><div class="mid"><div class="n">Warp Sciences</div><div class="s">Lightspeed (lead) · robot wet labs · @ $865M</div></div><div class="amt"><div class="a num">$215M</div><div class="s">Launch</div></div></a>
+    <a class="row" href="https://techcrunch.com/2026/10/22/ben-lamm-raises-200m-for-warhound-to-engineer-war-dogs-and-arm-them-with-anduril-gear/"><div class="av" style="background:#b03a3a">W</div><div class="mid"><div class="n">Warhound</div><div class="s">Ben Lamm · engineered working dogs, Anduril gear</div></div><div class="amt"><div class="a num">$200M</div><div class="s">Launch</div></div></a>
+    <a class="row" href="https://tractian.com/en/blog/tractian-raises-series-d-to-scale-physical-ai"><div class="av" style="background:#0f8fa8">T</div><div class="mid"><div class="n">Tractian</div><div class="s">Sapphire + M&amp;G Catalyst · @ $1.4B</div></div><div class="amt"><div class="a num">$130M</div><div class="s">Series D</div></div></a>
+    <a class="row" href="https://techstartups.com/2026/10/22/startup-funding-news-today-october-22-2026-flapping-airplanes-legora-mach9-peak-energy-whop-more/"><div class="av" style="background:#6d7a2a">P</div><div class="mid"><div class="n">Peak Energy</div><div class="s">Per TechStartups roundup</div></div><div class="amt"><div class="a num">$108M</div><div class="s">Series B</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-22"><div class="av" style="background:#8a4fb0">A</div><div class="mid"><div class="n">AheadComputing</div><div class="s">Of an $80M round · per SEC Form D</div></div><div class="amt"><div class="a num">$63.5M</div><div class="s">Series A-1</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-22"><div class="av" style="background:#2a6f6f">M</div><div class="mid"><div class="n">Maxinsights</div><div class="s">Peak XV · first-person video for robot training</div></div><div class="amt"><div class="a num">$30M</div><div class="s">Seed</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-22"><div class="av" style="background:#d9622b">E</div><div class="mid"><div class="n">EZ Bombs</div><div class="s">CAVU Consumer Partners · CPG seasoning</div></div><div class="amt"><div class="a num">$25M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-22"><div class="av" style="background:#3d7bff">M</div><div class="mid"><div class="n">Mogul</div><div class="s">Draper Associates · real estate investing · @ $126M</div></div><div class="amt"><div class="a num">$15.5M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-22"><div class="av" style="background:#2e7d4f">B</div><div class="mid"><div class="n">BioStack</div><div class="s">Peak XV, YC · medical records incl. Argentina, Brazil</div></div><div class="amt"><div class="a num">$9.5M</div><div class="s">Seed</div></div></a>
+    <div class="day">Capital markets</div>
+    <a class="row" href="https://www.cnbc.com/2026/10/22/stock-market-today-live-update.html"><div class="av" style="background:#2a2a31">S</div><div class="mid"><div class="n">Solidigm (SK Hynix)</div><div class="s">US IPO review halted on volatility</div></div><div class="amt"><div class="a num">~$10B</div><div class="s">Shelved</div></div></a>
+  </div>
+
+  <!-- MARKETS -->
+  <div class="sec" id="markets"><h2>Markets</h2><span class="ct">Thu close · Fri snapshot</span></div>
+
+  <div class="tx stk">
+    <div class="day">Thursday close · Oct 22</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPX</div><div class="mid"><div class="n">S&amp;P 500</div><div class="px num">7,663.43 · worst day since July</div></div><span class="pct dn num">−1.21%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">DJI</div><div class="mid"><div class="n">Dow Jones</div><div class="px num">52,867.98 · one-month high</div></div><span class="pct up num">+0.02%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">IXIC</div><div class="mid"><div class="n">Nasdaq Composite</div><div class="px num">26,008.86 · worst day since June</div></div><span class="pct dn num">−2.60%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">NVDA</div><div class="mid"><div class="n">Nvidia</div><div class="px num">AMD −8.1% · Alphabet −3.2%</div></div><span class="pct dn num">−4.4%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">META</div><div class="mid"><div class="n">Meta</div><div class="px num">Capex doubts after Q3 (Infobae)</div></div><span class="pct dn num">−7%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">10Y</div><div class="mid"><div class="n">US 10-year</div><div class="px num">4.95% · biggest drop since Mar 2023</div></div><span class="pct up num">−19 bp</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BRN</div><div class="mid"><div class="n">Brent crude</div><div class="px num">~$113 · Houthi strikes, Iran threats</div></div><span class="pct up num">+3.8%</span></div>
+    <div class="day">Friday snapshot · ~05:40 ART</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">NQ</div><div class="mid"><div class="n">Nasdaq 100 futures</div><div class="px num">Chip ETF +2% premarket</div></div><span class="pct up num">+0.3%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">ES</div><div class="mid"><div class="n">S&amp;P 500 futures</div><div class="px num">Dow futures −0.3%</div></div><span class="pct nt num">Flat</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SXXP</div><div class="mid"><div class="n">Stoxx 600</div><div class="px num">Kering −12% · Volvo Cars −30%</div></div><span class="pct dn num">−0.3%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">KOSPI</div><div class="mid"><div class="n">Kospi close</div><div class="px num">5,550.3 · was −4.1% intraday</div></div><span class="pct up num">+0.3%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BRN</div><div class="mid"><div class="n">Brent crude</div><div class="px num">$113.65 · highest since early May</div></div><span class="pct up num">+0.4%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">10Y</div><div class="mid"><div class="n">US 10-year</div><div class="px num">4.98% · Bund 3.33% · Gilt 5.33%</div></div><span class="pct dn num">+3 bp</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BTC</div><div class="mid"><div class="n">Bitcoin</div><div class="px num">$81,711 · ether $2,405</div></div><span class="pct up num">+0.7%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">XAU</div><div class="mid"><div class="n">Gold</div><div class="px num">$4,014 · worst week since June</div></div><span class="pct dn num">−0.3%</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">Week so far · Oct 19–23</div>
+    <h3>A flat week that hides a rotation out of AI</h3>
+    <div class="meta"><span class="pct up" style="min-width:0;padding:5px 10px;font-size:12px">Dow +1.7% wk</span><span class="pct dn" style="min-width:0;padding:5px 10px;font-size:12px">Nasdaq −0.5% wk</span><span class="stat">UMich sentiment today</span></div>
+    <p>Going into Friday, CNBC has the S&amp;P up less than 0.1% for the week, the Nasdaq down 0.5% and the Dow up 1.7%, so investors are moving into defensive stocks rather than leaving. Japan's core inflation hit 2.1%, its highest this year, on the weak yen and energy. China's CSI 300 rose 1.7% Friday but is still set for an 11th straight weekly decline. Final University of Michigan consumer sentiment comes out today.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/10/22/stock-market-today-live-update.html">CNBC →</a>
+  </article>
+
+  <!-- ARGENTINA -->
+  <div class="sec" id="argentina"><h2>Argentina</h2><span class="ct">Thursday close</span></div>
+
+  <div class="tx stk">
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">MERV</div><div class="mid"><div class="n">MSCI Merval</div><div class="px num">97,993 · one-year low in dollars</div></div><span class="pct dn num">−1.5%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">RP</div><div class="mid"><div class="n">Riesgo país</div><div class="px num">704 bp · Globales −0.5%</div></div><span class="pct dn num">+28 bp</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">MAY</div><div class="mid"><div class="n">Dólar mayorista</div><div class="px num">$1,528 · nominal record · BNA $1,550</div></div><span class="pct nt num">+$2</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">BLUE</div><div class="mid"><div class="n">Dólar blue</div><div class="px num">$1,565</div></div><span class="pct nt num">Flat</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">CCL</div><div class="mid"><div class="n">Contado con liqui</div><div class="px num">$1,646.25 · gap 7.7% · MEP $1,551.52</div></div><span class="pct nt num">Record</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">Buenos Aires · Oct 22</div>
+    <h3>Country risk crosses 700 as the US tech rout spills over</h3>
+    <p>The global selloff hit Argentine assets. The Merval opened down 3% and closed down 1.5%. Ternium (−6.1%) and Satellogic (−5.1%) led ADR losses, YPF fell 2.5% to $49.12 and Mercado Libre 1.7%. Globant rose 5.6% and is up almost 32% in October. JP Morgan's country risk index rose 28 points to 704. The financial dollar rates hit records as investors bought dollars to hedge, widening the CCL gap to 7.7%. The central bank bought $61M, extending its buying streak to 18 sessions, while gross reserves fell $59M to $50.166B because gold dropped. The wholesale rate is 27.1% below the top of the band ($1,942.50).</p>
+    <p style="color:var(--t2)">Yesterday the 700 level was the line to watch, and it broke. Watch whether the rally in Treasuries pulls it back, or Brent above $113 keeps it up.</p>
+    <a class="cta" href="https://www.infobae.com/economia/2026/10/22/jornada-financiera-las-acciones-argentinas-cayeron-hasta-6-en-wall-street-y-el-riesgo-pais-supero-los-700-puntos/">Infobae →</a><a class="cta" href="https://www.rava.com/cotizaciones/historico/riesgo-pais/2026/10/22/">Rava →</a>
+  </article>
+
+  <!-- GLOBAL -->
+  <div class="sec" id="global"><h2>Global</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">Iran · Gulf · Oct 22–23</div>
+    <h3>Iran threatens Gulf data centers and AI sites if the US and Israel strike again</h3>
+    <p>Mohsen Rezaei, secretary of Iran's supreme national security council, said a new US–Israeli attack would bring strikes on oil facilities, <strong>undersea cables, data centers and AI facilities</strong> in up to seven Gulf countries. An adviser to Iran's chief negotiator called the strategy "zero red lines." The IRGC claimed it struck four ships doing ship-to-ship oil transfers in Hormuz and that three more hit mines; there's no independent confirmation. The Guardian reports a US buildup of three carriers is due by early November, and Trump has stepped back from new strikes seven times in four months. Foreign ministers from three European countries, Turkey, Saudi Arabia, Pakistan and Egypt meet in Istanbul today.</p>
+    <p style="color:var(--t2)">The Gulf has been a growing AI hub for US companies. A threat against its data centers, on top of the oil risk, matters for any AI company planning compute there.</p>
+    <a class="cta" href="https://www.theguardian.com/world/2026/oct/22/iran-threatens-seven-gulf-countries-us-israel-renew-attacks">The Guardian →</a><a class="cta" href="https://apnews.com/article/mideast-yemen-saudi-israel-october-22-2026-dde5b98a8bf961224514994b02babce9">AP →</a>
+  </article>
+
+  <article class="story">
+    <div class="k">Brazil · Oct 23–25</div>
+    <h3>Lula and Flávio Bolsonaro hold their last debate tonight before Sunday's runoff</h3>
+    <p>The final TV debate is on Globo tonight at 21:20 Brasília time (also 21:20 ART), after Jornal Nacional. Brazil votes in the presidential runoff on Sunday, Oct 25. The result will shape LatAm's biggest market, including policy for digital payments and e-commerce.</p>
+    <a class="cta" href="https://g1.globo.com/politica/eleicoes/2026/noticia/2026/10/23/debate-presidencial-da-globo-quando-e-onde-assistir.ghtml">G1 →</a>
+  </article>
+
+  <!-- AHEAD -->
+  <div class="sec" id="ahead"><h2>Ahead</h2><span class="ct">ART dates</span></div>
+  <div class="tx ahead">
+    <div class="row"><div class="when"><div class="m">Oct</div><div class="d">23</div></div><div class="mid"><div class="n">UMich sentiment · Istanbul ministers · Brazil debate</div><div class="s" style="white-space:normal">Debate on Globo at 21:20.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Oct</div><div class="d">25</div></div><div class="mid"><div class="n">Brazil presidential runoff</div><div class="s" style="white-space:normal">Lula vs. Flávio Bolsonaro.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Oct</div><div class="d">28</div></div><div class="mid"><div class="n">Microsoft and Alphabet results · FOMC · UK budget</div><div class="s" style="white-space:normal">The test of whether AI revenue justifies the capex. Amazon follows Oct 29.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">3</div></div><div class="mid"><div class="n">US midterms</div><div class="s" style="white-space:normal">Reported Iran strike plans are timed for after the vote. Walmart Agent Profiles due by about then.</div></div></div>
+  </div>
+
+  <footer>Prepared for Matias Ricci · Friday edition, Oct 23, 2026 · as of 07:00 ART (UTC−3)<br>Covers news since Thursday's brief. US index levels are Thursday closes; individual stock moves are from CNBC and Infobae, and Brent's Thursday move is Infobae's figure. The Friday snapshot is Bloomberg's 9:38 a.m. London (05:38 ART) wrap. Prices differ by source and minute. The bank agent findings are from Axios's unnamed sources, and Morgan Stanley says it hasn't seen rogue agents on its platforms. The IRGC ship claims are unverified. Skills install counts, Agent Substrate benchmarks and startup figures are company claims. MiniMax M3.1 details are from AIBriefs, not confirmed with the company.</footer>
+</main>
+</body>
+</html>
