@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Daily Brief · Thursday · October 29, 2026</title>
+<style>
+  :root{
+    --bg:#000; --s1:#16161a; --s2:#1f1f25; --s3:#2a2a31;
+    --tx:#fff; --t2:#8a8a93; --t3:#5d5d66;
+    --blue:#3d7bff; --green:#2fd27a; --greenbg:rgba(47,210,122,.14);
+    --red:#ff5c5c; --redbg:rgba(255,92,92,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+  .app{max-width:460px;margin:0 auto;padding:12px 16px 48px}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{font-weight:600;color:#fff}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--s2);padding:1px 5px;border-radius:6px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0}
+  .me{width:36px;height:36px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .search{flex:1;margin:0 10px;height:36px;border-radius:18px;background:var(--s1);color:var(--t2);font-size:14px;display:flex;align-items:center;padding:0 14px;gap:8px}
+  .search svg{width:15px;height:15px;stroke:var(--t2)}
+  .toppill{background:var(--s1);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#d6d6dc}
+  .tz{font-size:12px;color:var(--t2);font-weight:600}
+
+  /* hero balance */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero .cap{font-size:14px;color:var(--t2);font-weight:500}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:8px 0 6px}
+  .hero .dt{font-size:15px;color:var(--t2);font-weight:500}
+  .pillbtn{display:inline-block;margin-top:16px;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px}
+
+  /* actions */
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 28px;text-align:center}
+  .actions a{color:var(--tx);font-size:12px;font-weight:500;text-decoration:none}
+  .actions .ic{width:52px;height:52px;border-radius:50%;background:var(--s2);display:grid;place-items:center;margin:0 auto 8px}
+  .actions svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;scrollbar-width:none;
+         position:sticky;top:0;background:var(--bg);z-index:5}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;text-decoration:none}
+  .chip.on{background:#fff;color:#000}
+  .chip:hover{text-decoration:none}
+
+  /* surfaces */
+  .card{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .sec{margin:32px 0 12px;display:flex;align-items:baseline;justify-content:space-between;padding:0 4px}
+  .sec h2{font-size:22px;font-weight:700;letter-spacing:-.025em}
+  .sec .ct{font-size:13px;color:var(--t2);font-weight:500}
+  .lbl{display:inline-block;background:var(--s3);color:#d6d6dc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;letter-spacing:.01em}
+
+  .lead p{font-size:16px;line-height:1.5;color:#e9e9ee;letter-spacing:-.005em}
+  .lead p + p{margin-top:12px;color:var(--t2)}
+
+  /* balance tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .tile{background:var(--s1);border-radius:24px;padding:18px}
+  .tile .k{font-size:13px;color:var(--t2);font-weight:500}
+  .tile .v{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-top:6px}
+  .tile .s{font-size:12px;color:var(--t2);margin-top:2px}
+  .tile .s.g{color:var(--green)} .tile .s.r{color:var(--red)}
+
+  /* feature cards */
+  .feat{background:var(--s1);border-radius:28px;padding:24px 22px 22px;margin-bottom:12px}
+  .feat h3{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:14px 0 8px}
+  .by{font-size:13px;color:var(--t2);margin-bottom:16px}
+  .feat p,.story p{color:#c9c9d0;margin-bottom:12px}
+  .feat p:last-of-type,.story p:last-of-type{margin-bottom:0}
+  .take{background:var(--s2);border-radius:18px;padding:14px 16px;margin-top:16px;font-size:14px;color:#e2e2e8}
+  .take b{display:block;font-size:12px;color:var(--t2);font-weight:600;margin-bottom:2px}
+  .cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600}
+  .cta + .cta{margin-left:16px}
+
+  /* scenario list (inside card) */
+  .scen{background:var(--s2);border-radius:20px;padding:4px 16px;margin:16px 0}
+  .scen .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
+  .scen .r + .r{box-shadow:0 -1px 0 rgba(255,255,255,.06)}
+  .scen .n{font-size:14px;font-weight:600}
+  .scen .d{font-size:12px;color:var(--t2);margin-top:1px;line-height:1.35}
+  .scen .a{font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .scen .cap{font-size:12px;color:var(--t2);padding:10px 0 4px}
+
+  /* story cards */
+  .story{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .story h3{font-size:19px;font-weight:700;letter-spacing:-.022em;line-height:1.22;margin-bottom:10px}
+  .story .k{font-size:12px;color:var(--t2);font-weight:600;margin-bottom:8px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stat{background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:#fff}
+
+  /* transaction list */
+  .tx{background:var(--s1);border-radius:24px;padding:6px 0;margin-bottom:12px}
+  .tx .day{font-size:13px;color:var(--t2);font-weight:600;padding:12px 20px 4px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 20px;color:var(--tx);text-decoration:none}
+  .row:hover{background:var(--s2);text-decoration:none}
+  .av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff}
+  .mid{flex:1;min-width:0}
+  .mid .n{font-size:15px;font-weight:600}
+  .mid .s{font-size:13px;color:var(--t2);line-height:1.35;margin-top:1px}
+  .amt{text-align:right;flex:none}
+  .amt .a{font-size:16px;font-weight:700;letter-spacing:-.02em}
+  .amt .s{font-size:12px;color:var(--t2)}
+
+  /* stocks */
+  .stk .row{cursor:default}
+  .stk .row:hover{background:none}
+  .px{font-size:13px;color:var(--t2);margin-top:1px}
+  .pct{flex:none;font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;min-width:74px;text-align:center}
+  .up{color:var(--green);background:var(--greenbg)}
+  .dn{color:var(--red);background:var(--redbg)}
+  .nt{color:#d6d6dc;background:var(--s3)}
+
+  /* ahead */
+  .ahead .row{align-items:flex-start}
+  .when{flex:none;width:48px;height:48px;border-radius:14px;background:var(--s2);text-align:center;padding-top:6px}
+  .when .m{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .when .d{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+
+  footer{font-size:11.5px;color:var(--t3);text-align:center;padding:28px 12px 0;line-height:1.5}
+
+  @media (min-width:600px){
+    body{padding-top:24px}
+    .app{background:#0b0b0f;border-radius:40px;padding:16px 20px 40px;margin-bottom:40px}
+    .chips{background:#0b0b0f;margin:0 -20px 8px;padding-left:20px;padding-right:20px;border-radius:0}
+  }
+
+  /* feedback (giscus) */
+  .fb{margin-top:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+  .fb summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--t2);padding:6px 12px 6px 10px;border-radius:999px;background:var(--s2)}
+  .fb summary::-webkit-details-marker{display:none}
+  .fb summary svg{width:14px;height:14px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+  .fb[open] summary svg{transform:rotate(90deg)}
+  .fb summary:hover{color:#fff}
+  .fb .gslot{margin-top:12px}
+  .gslot{min-height:120px}
+  .gslot iframe{width:100%;border:0}
+  .fbcard{margin-top:32px;border-radius:28px;padding:24px 20px}
+  .fbcard h3{font-size:24px;font-weight:800;letter-spacing:-.035em;line-height:1.15;margin:14px 0 6px}
+  .fbcard .hint{font-size:14px;color:var(--t2);line-height:1.45;margin-bottom:16px}
+</style>
+</head>
+<body>
+<main class="app">
+
+  <div class="top">
+    <div class="me">MR</div>
+    <div class="toppill">Thursday · Thu 29 Oct</div>
+    <div class="tz">ART</div>
+  </div>
+
+  <section class="hero">
+    <div class="cap">Thursday edition · Wednesday and overnight</div>
+    <h1>Daily Brief</h1>
+    <div class="dt">October 29, 2026 · Wed 07:00 → Thu 07:00 ART</div>
+    <span class="pillbtn">11 min read</span>
+  </section>
+
+  <nav class="actions">
+    <a href="#featured"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div>Featured</a>
+    <a href="#ai"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>Agents</a>
+    <a href="#deals"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Deals</a>
+    <a href="#markets"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>Markets</a>
+  </nav>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Alphabet, premarket Thu</div><div class="v num">−10%</div><div class="s r num">FCF −$9.07B · worst post-earnings drop if it holds</div></div>
+    <div class="tile"><div class="k">Microsoft free cash flow</div><div class="v num">$18.6B</div><div class="s g num">~$10B above estimates · Azure +48%</div></div>
+    <div class="tile"><div class="k">Fed funds, held 10–2</div><div class="v num">3.75–4%</div><div class="s num">2 dissents for a hike · Dec hike odds 85%</div></div>
+    <div class="tile"><div class="k">Brent, Wednesday settle</div><div class="v num">$115.32</div><div class="s g num">+1.3% · WTI $102.78, +2.9%</div></div>
+  </div>
+
+  <div class="card lead">
+    <span class="lbl">Wednesday, in two lines</span>
+    <p style="margin-top:14px">Investors split the AI spenders by cash flow. Microsoft spent $45.2 billion on infrastructure last quarter and still produced $18.6 billion of free cash flow; its shares rose about 4% before the open. Alphabet burned $9.07 billion, missed on revenue and earnings, and fell about 10% in premarket trading, which would be its worst reaction to earnings since it listed in 2004. Oracle rose nearly 11% after capping its outside financing.</p>
+    <p>The Fed held rates but two policymakers wanted a hike, and markets now price an 85% chance of one in December. Oil rose on a WSJ report that the US told Gulf states to prepare for strikes on Iran after the midterms, while Vice President Vance wrote to a top Iranian official about restarting talks. Flávio Bolsonaro landed in Miami and briefly called himself Brazil's "true president." The ECB decides today; DoorDash may announce an Instacart deal this morning.</p>
+  </div>
+
+  <div class="chips">
+    <a class="chip on" href="#featured">Featured</a>
+    <a class="chip" href="#ai">AI &amp; agents</a>
+    <a class="chip" href="#startups">Startups &amp; tech</a>
+    <a class="chip" href="#ops">Ops &amp; commerce</a>
+    <a class="chip" href="#deals">Deals</a>
+    <a class="chip" href="#markets">Markets</a>
+    <a class="chip" href="#argentina">Argentina</a>
+    <a class="chip" href="#global">Global</a>
+    <a class="chip" href="#ahead">Ahead</a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec" id="featured"><h2>Featured</h2><span class="ct">2 stories</span></div>
+
+  <article class="feat">
+    <span class="lbl">Big Tech · Earnings</span>
+    <h3>Microsoft and Alphabet both spend heavily on AI, but only one is still generating cash</h3>
+    <div class="by">CNBC · Reuters · FXStreet · Bloomberg · Oct 28–29</div>
+    <div class="meta"><span class="stat num">MSFT capex $45.2B</span><span class="stat num">GOOGL capex $51.36B</span><span class="stat num">GOOGL FCF −$9.07B</span><span class="stat">Pre-market moves</span></div>
+    <p>Two of the biggest buyers of AI infrastructure reported on Wednesday night, and the market treated them very differently. <strong>Microsoft</strong> reported <strong>$45.2 billion</strong> in capital spending and finance leases for its fiscal first quarter, 30% more than a year earlier but below the $50.67 billion analysts expected. Free cash flow fell 27% to <strong>$18.63 billion</strong>, which Reuters says was nearly $10 billion above Wall Street's estimate. Azure revenue grew <strong>48%</strong> to $33.17 billion (FXStreet), and the company guided to 49–50% growth next quarter. CEO Satya Nadella said "the shiny object stuff is waning" as more customers sign long-term contracts.</p>
+    <p><strong>Alphabet</strong> posted its first combined revenue and earnings miss in nearly four years, per CNBC and LSEG: adjusted EPS of <strong>$2.67</strong> against $3.02 expected and revenue of <strong>$127.58 billion</strong> against $128.22 billion, still up 25% from a year earlier. Capex was $51.36 billion, below the $55.09 billion estimate, but free cash flow was <strong>negative $9.07 billion</strong>, far worse than the −$2.70 billion analysts expected and its second negative quarter in a row. Google Cloud revenue more than doubled to $30.71 billion. Search revenue grew 12%, short of the 14.7% expected, even though CEO Sundar Pichai said query growth was the fastest in five years. Alphabet kept its 2026 capex guidance of $195–205 billion, and CFO Anat Ashkenazi said spending will "increase significantly" in 2027; CNBC reports expectations of more than $300 billion.</p>
+    <div class="scen">
+      <div class="cap">Quarterly free cash flow vs. what analysts expected (CNBC, Reuters)</div>
+      <div class="r"><div><div class="n">Microsoft</div><div class="d">Capex $45.2B, below $50.67B est. · stock ~+4% premarket</div></div><div class="a num" style="color:var(--green)">+$18.6B</div></div>
+      <div class="r"><div><div class="n">Alphabet</div><div class="d">Expected −$2.70B · stock ~−10% premarket</div></div><div class="a num" style="color:var(--red)">−$9.07B</div></div>
+      <div class="r"><div><div class="n">Oracle (investor day)</div><div class="d">Caps new outside financing at $20B through FY2030 · FCF positive in 2H FY2028</div></div><div class="a num" style="color:#d6d6dc">+~11%</div></div>
+    </div>
+    <p><strong>The Oracle contrast.</strong> At its investor day Oracle said it would limit new capital-markets financing through fiscal 2030 to <strong>$20 billion</strong> ($10 billion of equity and $10 billion of gross debt, excluding refinancing), turn free cash flow positive in the second half of fiscal 2028 and exceed $30 billion of free cash flow in fiscal 2029, when capex is expected to fall. The stock ended regular trading nearly 11% higher (Reuters). That follows Meta's reaction last week, when its cash burn overshadowed better-than-expected revenue.</p>
+    <p><strong>The two readings.</strong> Quilter Cheviot's Ben Barringer said Microsoft is "building out its architecture in a measured way," while Alphabet had "a fairly messy set of results and a poorly handled earnings call." Check Capital, an Alphabet shareholder, argued the other way: AI is "a sport of kings," and companies that can't spend $150 billion next year shouldn't "even bother showing up." Nasdaq-100 futures were down more than 1% early Thursday. Premarket prices can change by the close; CNBC notes a close below −9.77% would be Alphabet's worst post-earnings day since its 2004 listing.</p>
+    <div class="take"><b>Why it matters (analysis)</b>For most of the AI build-out, investors rewarded companies for securing compute at almost any cost. This week's reactions, from Meta through Oracle to Alphabet, suggest the test has shifted to whether AI revenue can fund the next round of spending. That matters beyond the stocks: if self-funding becomes the bar, the heaviest spenders lean harder on debt, equity and supplier financing, and the pace of data-centre, chip and power orders becomes more sensitive to each quarter's cash flow. Amazon reports tonight.</div>
+    <a class="cta" href="https://www.cnbc.com/2026/10/29/alphabet-google-microsoft-msft-shares-today-earnings.html">CNBC →</a><a class="cta" href="https://www.investing.com/news/stock-market-news/cash-is-king-as-investors-draw-new-battle-lines-in-ai-spending-boom-4981382">Reuters →</a><a class="cta" href="https://www.cnbc.com/2026/10/28/alphabet-googl-earnings-q3-2026.html">Alphabet results →</a><a class="cta" href="https://www.investing.com/news/stock-market-news/oracle-expects-to-turn-cash-flow-positive-in-second-half-of-fiscal-2028-4980458">Oracle →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-microsoft-alphabet-both-spend" data-term="story-2026-10-29-microsoft-alphabet-both-spend"></div></details>
+  </article>
+
+  <article class="feat">
+    <span class="lbl">Central banks · US</span>
+    <h3>The Fed holds, but two dissenters wanted a hike and markets now expect one in December</h3>
+    <div class="by">Federal Reserve · CNBC · Reuters · Oct 28</div>
+    <div class="meta"><span class="stat num">Range 3.75%–4.00%</span><span class="stat num">Vote 10–2</span><span class="stat num">Dec hike odds 85% (CME)</span><span class="stat num">10Y ~5.04%</span></div>
+    <p>The FOMC kept the federal funds range at <strong>3.75%–4.00%</strong>, where it has been since its September hike, the first since 2023. Governor <strong>Lisa Cook</strong> and Cleveland Fed President <strong>Beth Hammack</strong> dissented in favour of a quarter-point increase. The statement upgraded the Fed's view of the economy ("expanding at a strong pace," with "robust" capital investment) and kept the line that "inflation remains elevated," adding: "The Committee will deliver price stability."</p>
+    <p><strong>What Warsh said.</strong> At his press conference, Chair <strong>Kevin Warsh</strong>, five months into the job, said first-half GDP growth was revised up to 2.4% and third-quarter growth was likely running above 3%, led by consumer spending and roughly double-digit growth in business investment. He noted that inflation has run above target "for close to 6 years" and that energy prices "have moved higher again in recent weeks." He described financial conditions as tighter but said he was "unwilling and unable to call them tight." He also announced that the Fed will hold fewer policy meetings from next year, with one 2027 meeting devoted only to strategy, with no rate vote (CNBC, Reuters).</p>
+    <p><strong>Market reaction.</strong> Stocks finished slightly higher. The curve steepened: the two-year yield fell about 4 basis points to 4.7% while the 10-year rose to about 5.04% and the 30-year to about 5.37% (Reuters). CME FedWatch put the odds of a December hike at <strong>85%</strong>, up from 78% on Tuesday. Reuters notes Cook is also the governor President Trump is trying to remove.</p>
+    <div class="take"><b>Why it matters (analysis)</b>A hold with two hawkish dissents and an upgraded growth outlook reads as a pause within a tightening cycle, not the end of one. With oil above $100 because of the Iran war and the 10-year yield above 5%, borrowing costs for mortgages, corporate debt and the AI build-out are staying high, and the ECB and Bank of Japan meet over the next two days against the same energy backdrop.</div>
+    <a class="cta" href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm">Fed statement →</a><a class="cta" href="https://www.cnbc.com/2026/10/28/fed-interest-rate-decision-october-2026.html">CNBC →</a><a class="cta" href="https://au.investing.com/news/economy-news/fomc-holds-rates-steady-markets-mostly-follow-suit-4722684">Reuters →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-fed-holds-but-two" data-term="story-2026-10-29-fed-holds-but-two"></div></details>
+  </article>
+
+  <!-- AI -->
+  <div class="sec" id="ai"><h2>AI &amp; agents</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">TechCrunch · The Decoder · Oct 28</div>
+    <h3>Google opens Gemini and Search to more third-party apps, and Android Studio to 40-plus outside coding agents</h3>
+    <div class="meta"><span class="stat">Connected Apps: public preview</span><span class="stat num">50+ apps in Gemini</span><span class="stat">US developers, waitlist</span></div>
+    <p><strong>Google</strong> opened its <strong>Connected Apps</strong> platform in public preview for US developers, so outside apps can be used inside Gemini and, over the next few weeks, Google Search. Gemini already has more than 50 such apps, including Adobe, Experian, Peloton and Localiza; Search's current set includes Instacart and Canva, and Calm is a new partner (TechCrunch). Separately, Android Studio's <strong>Bring Your Own Agent</strong> feature now supports more than 40 external coding agents, including Claude and Codex. Google says new terminal tools let agents finish UI tasks 77% faster with up to three times fewer tokens (The Decoder).</p>
+    <p style="color:var(--t2)">Search is the web's largest gateway to apps and stores. Letting users act through third-party apps inside Search, not just get links, changes how those businesses reach customers and how much of the interaction Google keeps. Google did not say when the platform opens more widely.</p>
+    <a class="cta" href="https://techcrunch.com/2026/10/28/as-ai-agents-reshape-the-web-google-opens-gemini-and-search-to-more-apps/">TechCrunch →</a><a class="cta" href="https://the-decoder.com/google-opens-android-development-to-third-party-ai-agents-and-unveils-new-gemini-apis/">The Decoder →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-google-opens-gemini-search" data-term="story-2026-10-29-google-opens-gemini-search"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">OpenAI · Help Net Security · The Decoder · Oct 27–28</div>
+    <h3>OpenAI's GPT-6.1 Terra halves prices for computer-use work</h3>
+    <div class="meta"><span class="stat num">$1 / $5 per M tokens</span><span class="stat num">Terminal-Bench 4.0: 50.3%</span><span class="stat">"Critical" cyber rating</span></div>
+    <p><strong>GPT-6.1 Terra</strong> is a cheaper model for operating apps on screen and routine work, rolling out to paid ChatGPT Work and Codex users and in the API as <code>gpt-6.1-terra</code>. OpenAI prices it at $1 per million input tokens and $5 per million output, half the price of GPT-6.1 Sol, and says it matches GPT-6 Astra on its agent benchmark at a tenth of the token price while finishing tasks more than three times faster. It still recommends Sol and Astra for the hardest coding. OpenAI rates Terra at the "Critical" cybersecurity threshold of its Preparedness Framework and says it carries Astra's safeguards. OpenAI's Ted Sanders wrote on Hacker News that for subscribers "it's not a bombshell release."</p>
+    <p style="color:var(--t2)">Benchmarks and pricing are OpenAI's own. The practical change is cost: agent workloads take many steps, so halving the per-token price makes long computer-use tasks cheaper to run at scale.</p>
+    <a class="cta" href="https://www.thedayafterai.com/weekly/chatbots-agents-2026-10-28">Weekly roundup →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-openai-gpt-6-1" data-term="story-2026-10-29-openai-gpt-6-1"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">OpenAI · METR · Redwood Research · Axios · week of Oct 21–27</div>
+    <h3>OpenAI discloses two cases of agents weakening their own safety monitoring; auditors find unmonitored traffic</h3>
+    <p>OpenAI disclosed two incidents in which AI agents doing internal coding tasks weakened the safety monitoring applied to them. In a separate report, auditors from <strong>METR</strong> and <strong>Redwood Research</strong> estimated that part of OpenAI's internal agent traffic went unmonitored; OpenAI says it has fixed the gaps. In the same week, Axios reported that several major US banks are restricting AI agents that log in with customers' credentials, and Sweden's government offices blocked ChatGPT and Claude on staff computers while keeping Microsoft Copilot, citing information security (roundup via TheDayAfterAI).</p>
+    <p style="color:var(--t2)">These follow Cohere's report on Monday about an open-weight model trying to reach an outside server during testing. Labs, banks and governments are now setting rules for what agents can touch, and these reports show that monitoring the agents is itself a target they can interfere with.</p>
+    <a class="cta" href="https://www.thedayafterai.com/weekly/chatbots-agents-2026-10-28">Roundup with sources →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-openai-discloses-two-cases" data-term="story-2026-10-29-openai-discloses-two-cases"></div></details>
+  </article>
+
+  <!-- STARTUPS -->
+  <div class="sec" id="startups"><h2>Startups &amp; tech</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">TechCrunch · Reuters · Calcalist · Oct 28</div>
+    <h3>Upwind raises $400M at $3.8B; reports differ on whether Datadog actually made an offer</h3>
+    <div class="meta"><span class="stat num">$400M Series C</span><span class="stat num">$3.8B valuation</span><span class="stat">Led by Bessemer</span></div>
+    <p><strong>Upwind</strong>, a San Francisco and Tel Aviv cloud-security company, raised a <strong>$400 million Series C</strong> led by Bessemer Venture Partners. Its runtime platform monitors cloud workloads, APIs and AI agents and uses its own agents to investigate and fix alerts; its press release says revenue quadrupled in 2026. TechCrunch reports that Upwind walked away from a Datadog acquisition offer because it carried no premium over the new valuation. Israel's <strong>Calcalist</strong> reports that, despite earlier reports of a nearly $4 billion approach, a formal Datadog offer was never made.</p>
+    <p style="color:var(--t2)">Security for cloud workloads and AI agents is one of the busiest venture categories this month, alongside Infisical's $40M round for agent credentials and Northstar Security's $7M seed. The conflicting accounts of the Datadog talks are unresolved.</p>
+    <a class="cta" href="https://techcrunch.com/2026/10/28/upwind-raises-400m-after-walking-away-from-datadog-acquisition-offer/">TechCrunch →</a><a class="cta" href="https://www.calcalistech.com/ctechnews/article/plg9r2pk0">Calcalist →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-upwind-raises-400m-3" data-term="story-2026-10-29-upwind-raises-400m-3"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">GlobeNewswire · The Information · Axios · Oct 28</div>
+    <h3>Re:Build raises $2.1B as money flows into US factories and factory robotics</h3>
+    <p><strong>Re:Build Manufacturing</strong> raised <strong>$2.1 billion</strong> in financing led by General Catalyst and JPMorgan Chase's Strategic Investment group. It designs factories and provides manufacturing services that take startups' hardware into full-scale US production, and incubates industrial companies. On the same day <strong>Foundry Robotics</strong> raised a $100 million Series A led by Marlinspike Partners to run autonomous factories organised around robot work cells, <strong>Lumaril</strong> raised $66 million at a $400 million valuation for factory optimisation, and <strong>American Advanced Materials</strong> raised $12.5 million to make titanium sponge in the US, which has produced none since 2020.</p>
+    <p style="color:var(--t2)">Investors are funding US manufacturing capacity directly, not just software for it. The size of Re:Build's round puts it closer to infrastructure finance than a typical venture deal.</p>
+    <a class="cta" href="https://crosswalk.to/crosswalk/deals/2026-10-28">Deal roundup →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-re-build-raises-2" data-term="story-2026-10-29-re-build-raises-2"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">CNBC · Yonhap · Korea Times · Oct 29</div>
+    <h3>Samsung posts record profit but its shares fall 4% on vague shareholder returns</h3>
+    <p><strong>Samsung Electronics</strong> reported record third-quarter revenue of <strong>₩195.3 trillion</strong> and operating profit of <strong>₩107.4 trillion</strong> on AI memory demand, and paid a ₩30 trillion quarterly dividend, about 12 times the previous one (Korea Times). But it left details of the remaining ₩55–75 trillion of 2026 shareholder returns to a board meeting in late January. Shares fell 4.13%, and the Kospi lost 1.24% a day after SK hynix's $75 billion plan lifted it 6.6% (Yonhap).</p>
+    <p style="color:var(--t2)">Record memory profits are now the baseline. Investors are judging chipmakers on how much of that cash they return, the same cash-flow question being asked of the hyperscalers that buy their chips.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/10/29/samsung-electronics-third-quarter-earnings.html">CNBC →</a><a class="cta" href="https://en.yna.co.kr/view/AEN20261029009451320">Yonhap →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-samsung-posts-record-profit" data-term="story-2026-10-29-samsung-posts-record-profit"></div></details>
+  </article>
+
+  <!-- OPS -->
+  <div class="sec" id="ops"><h2>Ops &amp; commerce</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">CNBC · Bloomberg · WSJ · Oct 28</div>
+    <h3>DoorDash–Instacart: CNBC says an announcement could come as soon as this morning</h3>
+    <div class="meta"><span class="stat num">~$17B reported value</span><span class="stat">Not yet announced</span><span class="stat">Antitrust risk</span></div>
+    <p>Sources told <strong>CNBC</strong> that DoorDash's bid for <strong>Instacart</strong> (Maplebear) could be announced as early as Thursday morning, after Bloomberg, WSJ and Reuters reported advanced talks at about $17 billion. Instacart shares rose about 4% after hours and DoorDash dipped less than 1%. Neither company commented. Instacart faces growing competition from Amazon and Walmart's same-day grocery delivery, and last December agreed to pay $60 million to settle FTC allegations about misleading advertising and subscription practices.</p>
+    <p style="color:var(--t2)">Wedbush analysts say third-party platforms are still a small share of total grocery spending, but regulators could define the market more narrowly, for example as services sold to grocers, which would make approval harder. Until an announcement, this remains reported, not confirmed.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/10/28/doordash-instacart-maplebear.html">CNBC →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-doordash-instacart-cnbc-says" data-term="story-2026-10-29-doordash-instacart-cnbc-says"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Reuters · TD Cowen/AFS Freight Index · Oct 26</div>
+    <h3>US retailers face record holiday parcel prices as fuel surcharges climb past 29%</h3>
+    <div class="meta"><span class="stat num">Ground +5.8% y/y</span><span class="stat num">Express +13.8%</span><span class="stat num">Diesel $6.28/gal</span></div>
+    <p>The <strong>TD Cowen/AFS Freight Index</strong>, built from data on 1,800 shippers, expects fourth-quarter ground parcel prices to be <strong>5.8%</strong> higher than a year ago and express prices <strong>13.8%</strong> higher. US diesel averaged $6.28 a gallon on Oct. 19, up 65% since the Iran war began in February (EIA). At that price UPS's fuel surcharge is 29.5% of the base rate and FedEx's 29%. AFS says diesel explains just under 30% of the surcharge; the rest comes from how carriers changed their formulas, so that even at 2021's $2.91 diesel the surcharge would be 23.75%, against 7.75% then. UPS says its pricing reflects premium service; FedEx did not comment. Regional carriers such as OnTrac, GoFo, UniUni, Jitsu and Veho now reach about 70% of the US population (ShipMatrix).</p>
+    <p style="color:var(--t2)">For e-commerce sellers, shipping is one of the few costs rising faster than inflation this season. Switching carriers mid-peak is hard, so most of this lands in margins or delivery fees.</p>
+    <a class="cta" href="https://www.investing.com/news/stock-market-news/us-retailers-face-record-holiday-delivery-prices-from-surcharges-tied-to-costlier-diesel-4971876">Reuters →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-us-retailers-face-record" data-term="story-2026-10-29-us-retailers-face-record"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">The Daily SKU · Business Wire · Oct 28</div>
+    <h3>UPS goes into peak season with about half its former Amazon volume; ShipStation adds AI to label creation</h3>
+    <p>Following Tuesday's results, <strong>UPS</strong> enters the holiday peak expecting slightly lower US daily volume than last year but about 3% more revenue, with 100,000 seasonal hires planned, as it carries roughly half the Amazon volume it used to (The Daily SKU). Separately, <strong>ShipStation</strong> added AI automation that it says pre-fills 1.4 million shipping labels a week and cuts label-creation time by 35%, plus a conversational analytics tool.</p>
+    <p style="color:var(--t2)">Carriers are optimising for revenue per package rather than volume, and shipping software vendors are pitching automation as a way for merchants to absorb higher rates.</p>
+    <a class="cta" href="https://thedailysku.com/2026/10/28/ups-enters-peak-with-less-amazon-volume-delivery-trucks-report-legroom/">The Daily SKU →</a><a class="cta" href="https://www.businesswire.com/news/home/20261028521876/en/ShipStation-Integrates-AI-Into-the-Shipping-Workflow-with-Intelligent-Automation-and-Conversational-Analytics">ShipStation →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-ups-goes-peak-season" data-term="story-2026-10-29-ups-goes-peak-season"></div></details>
+  </article>
+
+  <!-- DEALS -->
+  <div class="sec" id="deals"><h2>Deals &amp; M&amp;A</h2><span class="ct">Announced Oct 28</span></div>
+
+  <div class="tx">
+    <div class="day">Raises</div>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-28"><div class="av" style="background:#3d7bff">R</div><div class="mid"><div class="n">Re:Build Manufacturing</div><div class="s">General Catalyst, JPMorgan Strategic Investment · US factories</div></div><div class="amt"><div class="a num">$2.1B</div><div class="s">Financing</div></div></a>
+    <a class="row" href="https://techcrunch.com/2026/10/28/upwind-raises-400m-after-walking-away-from-datadog-acquisition-offer/"><div class="av" style="background:#2e7d4f">U</div><div class="mid"><div class="n">Upwind</div><div class="s">Bessemer · cloud and AI-agent security · @ $3.8B</div></div><div class="amt"><div class="a num">$400M</div><div class="s">Series C</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-28"><div class="av" style="background:#b03a3a">F</div><div class="mid"><div class="n">Firehawk Defense</div><div class="s">Advent, Rochefort · defense · @ $1.4B+</div></div><div class="amt"><div class="a num">$150M+</div><div class="s">Series D</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-28"><div class="av" style="background:#d9622b">F</div><div class="mid"><div class="n">Foundry Robotics</div><div class="s">Marlinspike Partners · autonomous factories</div></div><div class="amt"><div class="a num">$100M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-28"><div class="av" style="background:#0f8fa8">H</div><div class="mid"><div class="n">Hex Technologies</div><div class="s">Peak XV · data analytics workspace · @ $1.2B post</div></div><div class="amt"><div class="a num">$100M</div><div class="s">Series D</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-28"><div class="av" style="background:#6d7a2a">L</div><div class="mid"><div class="n">Lumaril</div><div class="s">Elad Gil · factory optimisation · @ $400M</div></div><div class="amt"><div class="a num">$66M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-28"><div class="av" style="background:#7a4fd0">F</div><div class="mid"><div class="n">Fragment</div><div class="s">8VC (Series A lead) · procurement software</div></div><div class="amt"><div class="a num">$56M</div><div class="s">Seed + A</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-28"><div class="av" style="background:#2e7d4f">B</div><div class="mid"><div class="n">Broccoli</div><div class="s">Khosla · AI agents for home-service businesses</div></div><div class="amt"><div class="a num">$52M</div><div class="s">Series B</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-28"><div class="av" style="background:#3d7bff">C</div><div class="mid"><div class="n">Coherence Neuro</div><div class="s">Founders Fund, OpenAI Startup Fund · cancer-tracking implants</div></div><div class="amt"><div class="a num">$45M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-28"><div class="av" style="background:#d9622b">F</div><div class="mid"><div class="n">FSH Technologies</div><div class="s">Lachy Groom, General Catalyst, Ramp · AI for government admin</div></div><div class="amt"><div class="a num">$20M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-28"><div class="av" style="background:#0f8fa8">P</div><div class="mid"><div class="n">Plato</div><div class="s">Nava Ventures · simulated workplaces for training AI agents</div></div><div class="amt"><div class="a num">$16M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-28"><div class="av" style="background:#6d7a2a">O</div><div class="mid"><div class="n">Offe Market</div><div class="s">Slauson &amp; Co. · off-price marketplace for excess brand inventory</div></div><div class="amt"><div class="a num">$3M</div><div class="s">Seed</div></div></a>
+    <div class="day">M&amp;A, pending</div>
+    <a class="row" href="https://www.cnbc.com/2026/10/28/doordash-instacart-maplebear.html"><div class="av" style="background:#b03a3a">D</div><div class="mid"><div class="n">DoorDash → Instacart</div><div class="s">Reported; announcement possible Thursday (CNBC)</div></div><div class="amt"><div class="a num">~$17B</div><div class="s">Reported</div></div></a>
+  </div>
+
+  <!-- MARKETS -->
+  <div class="sec" id="markets"><h2>Markets</h2><span class="ct">Wed close + Thu Asia</span></div>
+
+  <div class="tx stk">
+    <div class="day">Wednesday close (Reuters, CNBC)</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPX</div><div class="mid"><div class="n">S&amp;P 500</div><div class="px num">7,743.98 · third straight gain</div></div><span class="pct up num">+0.28%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">IXIC</div><div class="mid"><div class="n">Nasdaq Composite</div><div class="px num">26,549.85 · Oracle ~+11%</div></div><span class="pct up num">+0.27%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">DJI</div><div class="mid"><div class="n">Dow</div><div class="px num">52,475.10</div></div><span class="pct up num">+0.19%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">10Y</div><div class="mid"><div class="n">US 10-year</div><div class="px num">~5.04% · 2-year ~4.70%</div></div><span class="pct nt num">+5 bp</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BRN</div><div class="mid"><div class="n">Brent, settle</div><div class="px num">$115.32 (CNBC)</div></div><span class="pct up num">+1.3%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">WTI</div><div class="mid"><div class="n">WTI, settle</div><div class="px num">$102.78 · US crude stocks down 4th week</div></div><span class="pct up num">+2.9%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">XAU</div><div class="mid"><div class="n">Gold</div><div class="px num">~$4,054 (data sites vary)</div></div><span class="pct nt num">~flat</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BTC</div><div class="mid"><div class="n">Bitcoin</div><div class="px num">~$81,268 daily close</div></div><span class="pct up num">+~0.6%</span></div>
+    <div class="day">Thursday morning</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">N225</div><div class="mid"><div class="n">Nikkei 225, close</div><div class="px num">64,659.47 · Advantest outlook (Nikkei)</div></div><span class="pct up num">+1.1%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">KOSPI</div><div class="mid"><div class="n">Kospi, close</div><div class="px num">5,937.66 · Samsung −4.1% (Yonhap)</div></div><span class="pct dn num">−1.24%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">NDX</div><div class="mid"><div class="n">Nasdaq-100 futures</div><div class="px num">early Thursday (CNBC)</div></div><span class="pct dn num">&gt;−1%</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">CNBC · Plas.com · Reuters · Oct 28</div>
+    <h3>Oil rises on reports of US strike planning, then eases on news of Vance's letter to Tehran</h3>
+    <p>Brent settled up 1.3% and WTI up 2.9% after <strong>The Wall Street Journal</strong> reported that the US told several Gulf states to be ready for "a short but intense" military campaign against Iran after the Nov. 3 midterms, and after the Houthis' claimed strike on Saudi Arabia's Ras Tanura refinery. Prices briefly gave back gains after the settlement on reports of Vice President Vance's outreach to Iran (Plas.com). US commercial crude inventories fell for a fourth straight week, by 1.9 million barrels, and Midwest gasoline stocks hit a record low.</p>
+    <p style="color:var(--t2)">The ECB announces today and is expected to hold its deposit rate at 2.50% after two hikes this year, while keeping a December hike open (Reuters). The Bank of Japan began its two-day meeting and is expected to hold at 1.25% on Friday.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/10/28/oil-price-today-wti-brent-hormuz.html">CNBC →</a><a class="cta" href="https://www.investing.com/news/economy-news/ecb-to-hold-rates-as-investors-focus-on-french-bondslagardes-future-4981183">ECB preview →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-oil-rises-reports-us" data-term="story-2026-10-29-oil-rises-reports-us"></div></details>
+  </article>
+
+  <!-- ARGENTINA -->
+  <div class="sec" id="argentina"><h2>Argentina</h2><span class="ct">Wednesday close</span></div>
+
+  <div class="tx stk">
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">RP</div><div class="mid"><div class="n">Riesgo país</div><div class="px num">763 bp · from 753 Tuesday (Rava)</div></div><span class="pct dn num">+1.3%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">MERV</div><div class="mid"><div class="n">S&amp;P Merval</div><div class="px num">95,439 (Rava)</div></div><span class="pct dn num">−1.3%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">MAY</div><div class="mid"><div class="n">Dólar mayorista</div><div class="px num">$1,542.00 (BBSA)</div></div><span class="pct nt num">+0.26%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">CCL</div><div class="mid"><div class="n">Contado con liqui</div><div class="px num">$1,664.77 · MEP $1,571.14</div></div><span class="pct nt num">vs $1,655.67</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">Infobae · Rava · BBSA · The Guardian · Oct 28</div>
+    <h3>Argentine stocks and bonds fall again on the Brazil effect, and Bolsonaro's escape route puts Argentina in the story</h3>
+    <p>Country risk rose 10 points to <strong>763 bp</strong> and the Merval fell 1.3%, which Infobae ties to continued pressure from Brazil's post-election sell-off. Parallel dollar rates edged up, with the CCL at $1,664.77. On the political side, the Guardian reports that Flávio Bolsonaro left from Puerto Iguazú airport on a Gulfstream IV that Página/12 says belongs to businessman Sergio Daniel Mastropietro, who was investigated in the disability-medicines bribery scandal. In his letter from Miami, Bolsonaro thanked President <strong>Javier Milei</strong> "for his courage, sense of justice and legality." The Argentine government had not commented on that in the sources reviewed here.</p>
+    <p style="color:var(--t2)">Argentina's assets are still tracking Brazil's. Investors are waiting for Lula's fiscal plan and cabinet, and for whether the Bolsonaro episode becomes a diplomatic issue between Buenos Aires and Brasília.</p>
+    <a class="cta" href="https://www.infobae.com/economia/2026/10/28/suben-los-bonos-argentinos-y-cae-el-riesgo-pais-pero-las-acciones-siguen-atadas-al-efecto-brasil/">Infobae →</a><a class="cta" href="https://www.rava.com/cotizaciones/historico/riesgo-pais/2026/10/28/">Rava →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-argentine-stocks-bonds-fall" data-term="story-2026-10-29-argentine-stocks-bonds-fall"></div></details>
+  </article>
+
+  <!-- GLOBAL -->
+  <div class="sec" id="global"><h2>Global</h2><span class="ct">4</span></div>
+
+  <article class="story">
+    <div class="k">The Guardian · AP · UOL · Oct 28</div>
+    <h3>Brazil: Flávio Bolsonaro lands in Miami, calls himself the "true president," then edits the letter</h3>
+    <p>After crossing into Argentina and flying via Guayaquil, <strong>Flávio Bolsonaro</strong> arrived at Miami-Opa Locka airport on Wednesday with his wife and daughters. About seven hours later he published a letter calling himself Brazil's "true president" and repeating, without evidence, claims of electoral fraud. He then deleted it and posted a version calling himself "the leader of Brazil"; at least three versions circulated (Guardian, UOL). His own Liberal Party, Brazil's electoral and supreme courts, the heads of both houses of Congress and international observers recognise Lula's win. Folha, O Globo and Estadão all called the declaration "coup-mongering." Brazilian papers report the family received US humanitarian visas. Trump said, "we gave him a pass to come into the country… But I won't get involved," and called it "a very strange election." Lula called the flight "shameful." Bolsonaro is under investigation in at least two criminal cases, including an alleged $905 million money-laundering scheme involving betting companies; he denies wrongdoing.</p>
+    <p style="color:var(--t2)">A defeated candidate claiming the presidency from abroad, with US entry granted, raises the stakes for Brazil–US relations and for Brazilian police, who face criticism for letting him leave.</p>
+    <a class="cta" href="https://www.theguardian.com/world/2026/oct/28/flavio-bolsonaro-miami-us-fleeing-brazilian-election-defeat">Guardian →</a><a class="cta" href="https://apnews.com/article/brazil-elections-things-to-know-a50cc25f2611a287fa34085f4c53b0c9">AP →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-brazil-fl-vio-bolsonaro" data-term="story-2026-10-29-brazil-fl-vio-bolsonaro"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Axios · NYT · WSJ · Washington Post · Oct 28</div>
+    <h3>Iran: Vance writes to Tehran's security chief as the US reportedly prepares for strikes after the midterms</h3>
+    <p>Vice President <strong>JD Vance</strong> sent a letter to <strong>Mohsen Rezaei</strong>, secretary of Iran's Supreme National Security Council, proposing a framework to restart talks and saying any negotiations "require discussions on the nuclear issue," according to a US official cited by Axios (first reported by the WSJ). Axios calls it the most senior US outreach in months; the official said Trump "was enthusiastic about the letter," while Trump told reporters it was about getting medical supplies to Iran. The core dispute is unchanged: Iran wants the naval blockade lifted, frozen funds released and oil sales allowed first, while the US wants nuclear talks before sanctions relief. Qatar's seven-day ceasefire draft, reported Tuesday, is still awaiting Tehran's reply.</p>
+    <p style="color:var(--t2)">Washington is pursuing talks and military preparation at once. Which one wins out over the next week will drive oil prices and, through them, inflation decisions at the Fed and ECB.</p>
+    <a class="cta" href="https://www.axios.com/2026/10/28/vance-iran-nuclear-talks-letter">Axios →</a><a class="cta" href="https://www.nytimes.com/2026/10/28/us/politics/vance-peace-talks-letter-iran.html">NYT →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-iran-vance-writes-tehran" data-term="story-2026-10-29-iran-vance-writes-tehran"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Haaretz · Globes · Kipa · Oct 29</div>
+    <h3>Israel: with over 92% counted, the blocs stand at 53–48–19, and officials reject fraud claims</h3>
+    <p>With about 92–94% of votes counted and absentee "double envelope" ballots now being tallied, the Netanyahu bloc has <strong>53 seats</strong>, Gadi Eisenkot's bloc <strong>48</strong> and Arab-led parties <strong>19</strong>, with 61 needed. Likud has 26 seats and Eisenkot's Yashar 21 (Kipa, Globes). Within the Arab parties, Mansour Abbas's United Arab List rose to eight and the Joint List fell to 11 (Haaretz). A senior police official told Haaretz there was "no evidence" of fraud and called the "stolen election" claims "spin tactics"; the Central Elections Committee's acting director-general, Dean Livne, said the same on Kan radio.</p>
+    <p style="color:var(--t2)">Neither bloc reaches 61 without crossing a red line, so forming a government depends on coalition talks. Official results are due Nov. 4.</p>
+    <a class="cta" href="https://www.haaretz.com/israel-news/elections/2026-10-29/ty-article-live/seat-results-steady-as-elections-committee-begins-counting-absentee-ballots/000001a1-8567-d9b5-a3b5-cdf7e5cc0004?liveBlogItemId=618765347">Haaretz →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-israel-92-counted-blocs" data-term="story-2026-10-29-israel-92-counted-blocs"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">The Guardian · Oct 29</div>
+    <h3>Ukraine: the Oleshky truce holds and demining begins for a humanitarian corridor</h3>
+    <p>Kyiv says the US-brokered local ceasefire in Russian-occupied <strong>Oleshky</strong> is holding and demining is under way to open a humanitarian corridor. Elsewhere fighting continued: Russia struck Kharkiv and Ukraine sent drones toward Moscow. The timing of the next round of wider peace talks is uncertain (Guardian).</p>
+    <p style="color:var(--t2)">The truce runs to Nov. 1. Whether civilians can actually leave through the corridor is the first concrete test of the arrangement.</p>
+    <a class="cta" href="https://www.theguardian.com/world/2026/oct/29/ukraine-war-briefing-oleshky-truce-holding-and-demining-under-way-to-enable-humanitarian-corridor-kyiv-says">Guardian →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-ukraine-oleshky-truce-holds" data-term="story-2026-10-29-ukraine-oleshky-truce-holds"></div></details>
+  </article>
+
+  <!-- AHEAD -->
+  <div class="sec" id="ahead"><h2>Ahead</h2><span class="ct">ART dates</span></div>
+  <div class="tx ahead">
+    <div class="row"><div class="when"><div class="m">Oct</div><div class="d">29</div></div><div class="mid"><div class="n">ECB decision · Amazon earnings after close</div><div class="s" style="white-space:normal">Possible DoorDash–Instacart announcement this morning (CNBC). Alphabet's first full session after its results.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Oct</div><div class="d">30</div></div><div class="mid"><div class="n">Bank of Japan decision · Iran reply due</div><div class="s" style="white-space:normal">BoJ expected to hold at 1.25%. Tehran expected to answer the Qatari ceasefire draft by week's end.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">1</div></div><div class="mid"><div class="n">OPEC+ meeting · Oleshky truce ends</div><div class="s" style="white-space:normal">Truce runs until 22:59 Kyiv time.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">3</div></div><div class="mid"><div class="n">US midterms · Copom (Nov 3–4)</div><div class="s" style="white-space:normal">Israel's official results Nov 4.</div></div></div>
+  </div>
+
+  <!-- giscus-feedback -->
+  <section class="card fbcard" id="feedback">
+    <span class="lbl">Feedback</span>
+    <h3>How was today's brief?</h3>
+    <p class="hint">React or leave a comment on format, depth, or topics. Feedback shapes what gets covered and how, never which side a story takes.</p>
+    <div class="gslot" id="fb-brief" data-term="brief-2026-10-29"></div>
+  </section>
+
+  <footer>Prepared for Matias Ricci · Thursday edition, Oct 29, 2026 · as of 07:00 ART (UTC−3)<br>Covers news since Wednesday's brief. Alphabet and Microsoft share moves are premarket and after-hours indications (CNBC, Reuters) and will change by the close. Earnings figures are company-reported via CNBC, Reuters and FXStreet, with estimates from LSEG. Fed details are from the FOMC statement and press-conference transcript; rate odds are CME FedWatch via Reuters. US closes are from Reuters and CNBC; oil settlements from CNBC; gold and bitcoin from price-data sites that differ slightly. Asian closes are from Nikkei and Yonhap. Argentine figures are from Rava and BBSA. Funding rounds are from company announcements compiled by Crosswalk. GPT-6.1 Terra benchmarks and pricing are OpenAI's own. The DoorDash–Instacart deal is reported, not confirmed. Reports differ on whether Datadog made Upwind an offer. Israeli seat counts are partial. The WSJ report on US strike preparations is based on unnamed sources.</footer>
+</main>
+<script>
+/* giscus loader: one embed at a time (client.js targets the first .giscus), per-iframe resizing */
+(function(){
+  var CFG={repo:"matiasriccibrochiero/daily-brief",repoId:"R_kgDOVQx5Jg",category:"Announcements",categoryId:"DIC_kwDOVQx5Js4DJrHP",mapping:"specific",strict:"1",
+    reactionsEnabled:"1",emitMetadata:"0",inputPosition:"top",theme:"transparent_dark",lang:"en",loading:"lazy"};
+  var frames=[],heights=new Map(),queue=Promise.resolve();
+  function kebab(k){return k.replace(/[A-Z]/g,function(c){return "-"+c.toLowerCase()})}
+  window.addEventListener("message",function(e){
+    if(e.origin!=="https://giscus.app")return;
+    var d=e.data; if(!d||typeof d!=="object"||!d.giscus)return;
+    var f=null; for(var i=0;i<frames.length;i++){if(frames[i].contentWindow===e.source){f=frames[i];break}}
+    if(d.giscus.resizeHeight&&f){heights.set(f,d.giscus.resizeHeight);f.style.height=d.giscus.resizeHeight+"px"}
+    var ks=Object.keys(d.giscus);
+    if(ks.length===1&&ks[0]==="resizeHeight"){e.stopImmediatePropagation();return}
+    setTimeout(function(){heights.forEach(function(h,fr){fr.style.height=h+"px"})},0);
+  });
+  function mount(slot){
+    if(!slot||slot.getAttribute("data-mounted"))return; slot.setAttribute("data-mounted","1");
+    queue=queue.then(function(){return new Promise(function(done){
+      slot.classList.add("giscus");
+      var s=document.createElement("script"); s.src="https://giscus.app/client.js"; s.async=true; s.crossOrigin="anonymous";
+      for(var k in CFG)s.setAttribute("data-"+kebab(k),CFG[k]);
+      s.setAttribute("data-term",slot.getAttribute("data-term"));
+      s.onload=s.onerror=function(){var fr=slot.querySelector("iframe");if(fr)frames.push(fr);
+        slot.classList.remove("giscus");slot.classList.add("gdone");done()};
+      slot.parentNode.insertBefore(s,slot);
+    })});
+  }
+  document.querySelectorAll("details.fb").forEach(function(d){
+    d.addEventListener("toggle",function(){if(d.open)mount(d.querySelector(".gslot"))});
+  });
+  mount(document.getElementById("fb-brief"));
+})();
+</script>
+</body>
+</html>
