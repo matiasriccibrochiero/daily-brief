@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Daily Brief · Friday · October 30, 2026</title>
+<style>
+  :root{
+    --bg:#000; --s1:#16161a; --s2:#1f1f25; --s3:#2a2a31;
+    --tx:#fff; --t2:#8a8a93; --t3:#5d5d66;
+    --blue:#3d7bff; --green:#2fd27a; --greenbg:rgba(47,210,122,.14);
+    --red:#ff5c5c; --redbg:rgba(255,92,92,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+  .app{max-width:460px;margin:0 auto;padding:12px 16px 48px}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{font-weight:600;color:#fff}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--s2);padding:1px 5px;border-radius:6px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0}
+  .me{width:36px;height:36px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .search{flex:1;margin:0 10px;height:36px;border-radius:18px;background:var(--s1);color:var(--t2);font-size:14px;display:flex;align-items:center;padding:0 14px;gap:8px}
+  .search svg{width:15px;height:15px;stroke:var(--t2)}
+  .toppill{background:var(--s1);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#d6d6dc}
+  .tz{font-size:12px;color:var(--t2);font-weight:600}
+
+  /* hero balance */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero .cap{font-size:14px;color:var(--t2);font-weight:500}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:8px 0 6px}
+  .hero .dt{font-size:15px;color:var(--t2);font-weight:500}
+  .pillbtn{display:inline-block;margin-top:16px;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px}
+
+  /* actions */
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 28px;text-align:center}
+  .actions a{color:var(--tx);font-size:12px;font-weight:500;text-decoration:none}
+  .actions .ic{width:52px;height:52px;border-radius:50%;background:var(--s2);display:grid;place-items:center;margin:0 auto 8px}
+  .actions svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;scrollbar-width:none;
+         position:sticky;top:0;background:var(--bg);z-index:5}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;text-decoration:none}
+  .chip.on{background:#fff;color:#000}
+  .chip:hover{text-decoration:none}
+
+  /* surfaces */
+  .card{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .sec{margin:32px 0 12px;display:flex;align-items:baseline;justify-content:space-between;padding:0 4px}
+  .sec h2{font-size:22px;font-weight:700;letter-spacing:-.025em}
+  .sec .ct{font-size:13px;color:var(--t2);font-weight:500}
+  .lbl{display:inline-block;background:var(--s3);color:#d6d6dc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;letter-spacing:.01em}
+
+  .lead p{font-size:16px;line-height:1.5;color:#e9e9ee;letter-spacing:-.005em}
+  .lead p + p{margin-top:12px;color:var(--t2)}
+
+  /* balance tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .tile{background:var(--s1);border-radius:24px;padding:18px}
+  .tile .k{font-size:13px;color:var(--t2);font-weight:500}
+  .tile .v{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-top:6px}
+  .tile .s{font-size:12px;color:var(--t2);margin-top:2px}
+  .tile .s.g{color:var(--green)} .tile .s.r{color:var(--red)}
+
+  /* feature cards */
+  .feat{background:var(--s1);border-radius:28px;padding:24px 22px 22px;margin-bottom:12px}
+  .feat h3{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:14px 0 8px}
+  .by{font-size:13px;color:var(--t2);margin-bottom:16px}
+  .feat p,.story p{color:#c9c9d0;margin-bottom:12px}
+  .feat p:last-of-type,.story p:last-of-type{margin-bottom:0}
+  .take{background:var(--s2);border-radius:18px;padding:14px 16px;margin-top:16px;font-size:14px;color:#e2e2e8}
+  .take b{display:block;font-size:12px;color:var(--t2);font-weight:600;margin-bottom:2px}
+  .cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600}
+  .cta + .cta{margin-left:16px}
+
+  /* scenario list (inside card) */
+  .scen{background:var(--s2);border-radius:20px;padding:4px 16px;margin:16px 0}
+  .scen .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
+  .scen .r + .r{box-shadow:0 -1px 0 rgba(255,255,255,.06)}
+  .scen .n{font-size:14px;font-weight:600}
+  .scen .d{font-size:12px;color:var(--t2);margin-top:1px;line-height:1.35}
+  .scen .a{font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .scen .cap{font-size:12px;color:var(--t2);padding:10px 0 4px}
+
+  /* story cards */
+  .story{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .story h3{font-size:19px;font-weight:700;letter-spacing:-.022em;line-height:1.22;margin-bottom:10px}
+  .story .k{font-size:12px;color:var(--t2);font-weight:600;margin-bottom:8px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stat{background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:#fff}
+
+  /* transaction list */
+  .tx{background:var(--s1);border-radius:24px;padding:6px 0;margin-bottom:12px}
+  .tx .day{font-size:13px;color:var(--t2);font-weight:600;padding:12px 20px 4px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 20px;color:var(--tx);text-decoration:none}
+  .row:hover{background:var(--s2);text-decoration:none}
+  .av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff}
+  .mid{flex:1;min-width:0}
+  .mid .n{font-size:15px;font-weight:600}
+  .mid .s{font-size:13px;color:var(--t2);line-height:1.35;margin-top:1px}
+  .amt{text-align:right;flex:none}
+  .amt .a{font-size:16px;font-weight:700;letter-spacing:-.02em}
+  .amt .s{font-size:12px;color:var(--t2)}
+
+  /* stocks */
+  .stk .row{cursor:default}
+  .stk .row:hover{background:none}
+  .px{font-size:13px;color:var(--t2);margin-top:1px}
+  .pct{flex:none;font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;min-width:74px;text-align:center}
+  .up{color:var(--green);background:var(--greenbg)}
+  .dn{color:var(--red);background:var(--redbg)}
+  .nt{color:#d6d6dc;background:var(--s3)}
+
+  /* ahead */
+  .ahead .row{align-items:flex-start}
+  .when{flex:none;width:48px;height:48px;border-radius:14px;background:var(--s2);text-align:center;padding-top:6px}
+  .when .m{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .when .d{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+
+  footer{font-size:11.5px;color:var(--t3);text-align:center;padding:28px 12px 0;line-height:1.5}
+
+  @media (min-width:600px){
+    body{padding-top:24px}
+    .app{background:#0b0b0f;border-radius:40px;padding:16px 20px 40px;margin-bottom:40px}
+    .chips{background:#0b0b0f;margin:0 -20px 8px;padding-left:20px;padding-right:20px;border-radius:0}
+  }
+
+  /* feedback (giscus) */
+  .fb{margin-top:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+  .fb summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--t2);padding:6px 12px 6px 10px;border-radius:999px;background:var(--s2)}
+  .fb summary::-webkit-details-marker{display:none}
+  .fb summary svg{width:14px;height:14px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+  .fb[open] summary svg{transform:rotate(90deg)}
+  .fb summary:hover{color:#fff}
+  .fb .gslot{margin-top:12px}
+  .gslot{min-height:120px}
+  .gslot iframe{width:100%;border:0}
+  .fbcard{margin-top:32px;border-radius:28px;padding:24px 20px}
+  .fbcard h3{font-size:24px;font-weight:800;letter-spacing:-.035em;line-height:1.15;margin:14px 0 6px}
+  .fbcard .hint{font-size:14px;color:var(--t2);line-height:1.45;margin-bottom:16px}
+</style>
+</head>
+<body>
+<main class="app">
+
+  <div class="top">
+    <div class="me">MR</div>
+    <div class="toppill">Friday · Fri 30 Oct</div>
+    <div class="tz">ART</div>
+  </div>
+
+  <section class="hero">
+    <div class="cap">Friday edition · Thursday and overnight</div>
+    <h1>Daily Brief</h1>
+    <div class="dt">October 30, 2026 · Thu 07:00 → Fri 07:00 ART</div>
+    <span class="pillbtn">11 min read</span>
+  </section>
+
+  <nav class="actions">
+    <a href="#featured"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div>Featured</a>
+    <a href="#ai"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>Agents</a>
+    <a href="#deals"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Deals</a>
+    <a href="#markets"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>Markets</a>
+  </nav>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Alphabet, Thursday close</div><div class="v num">−12.6%</div><div class="s r num">Worst day on record · &gt;$500B of value</div></div>
+    <div class="tile"><div class="k">Binance hack</div><div class="v num">$6.3B</div><div class="s r num">Largest crypto theft ever · ~half frozen</div></div>
+    <div class="tile"><div class="k">DoorDash buys Instacart</div><div class="v num">$17B</div><div class="s g num">$65/share · ≥75% cash · close 2027–28</div></div>
+    <div class="tile"><div class="k">Nasdaq-100 futures, Fri</div><div class="v num">−2.2%</div><div class="s r num">Amazon −6% · Intel −25% premarket</div></div>
+  </div>
+
+  <div class="card lead">
+    <span class="lbl">Thursday, in two lines</span>
+    <p style="margin-top:14px">Investors kept selling the companies whose AI spending is outrunning their cash. Alphabet fell 12.6%, its worst day ever, and ServiceNow lost 27%. After the close Amazon reported $77.3 billion of quarterly capex and a $42.4 billion trailing cash outflow, and Intel warned of a weak PC market into 2027; Nasdaq futures are down 2.2% this morning. Separately, Binance said hackers stole $6.3 billion, the largest crypto theft on record.</p>
+    <p>DoorDash confirmed a $17 billion deal for Instacart. The ECB held at 2.5% and Christine Lagarde said she will step down in February; the Bank of Japan held and said its 2% inflation target has been met. A Russian drone strike on Dnipro's station killed 15, and the US is weighing new strikes on Iran after Tuesday's midterms.</p>
+  </div>
+
+  <div class="chips">
+    <a class="chip on" href="#featured">Featured</a>
+    <a class="chip" href="#ai">AI &amp; agents</a>
+    <a class="chip" href="#startups">Startups &amp; tech</a>
+    <a class="chip" href="#ops">Ops &amp; commerce</a>
+    <a class="chip" href="#deals">Deals</a>
+    <a class="chip" href="#markets">Markets</a>
+    <a class="chip" href="#argentina">Argentina</a>
+    <a class="chip" href="#global">Global</a>
+    <a class="chip" href="#ahead">Ahead</a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec" id="featured"><h2>Featured</h2><span class="ct">2 stories</span></div>
+
+  <article class="feat">
+    <span class="lbl">Markets · Big Tech</span>
+    <h3>Alphabet's worst day ever, then Amazon and Intel: the AI-spending sell-off widens</h3>
+    <div class="by">CNBC · Reuters · Amazon · Intel · Investing.com · Oct 29–30</div>
+    <div class="meta"><span class="stat num">GOOGL −12.64%</span><span class="stat num">NOW −26.95%</span><span class="stat num">AMZN capex $77.3B</span><span class="stat num">INTC ~−25% pre</span></div>
+    <p><strong>Alphabet</strong> closed down <strong>12.64% at $283.82</strong> on Thursday, the largest one-day drop since its 2004 listing, after Wednesday's earnings miss and a negative $9.07 billion free cash flow. Investing.com puts the loss at more than half a trillion dollars of market value. <strong>ServiceNow</strong> had its worst day ever, falling about 27%: revenue beat, but adjusted EPS of $1.00 missed by two cents and its subscription-backlog guidance disappointed, even as it reported production agentic-AI usage up 13-fold (CNBC, Investing.com). Caterpillar fell 9.25%, its worst day since March 2020, despite a record $78.1 billion backlog. The Nasdaq lost 1.38%; the S&amp;P 500 fell 0.3% and snapped a three-day run.</p>
+    <p><strong>Amazon</strong> reported after the close. AWS revenue grew <strong>39%</strong> to $46.0 billion, its fastest in nearly five years, and the company posted its highest-ever operating margin, 13.9%. But quarterly capex of <strong>$77.3 billion</strong> was roughly $19–20 billion above estimates (FactSet, LSEG), trailing-12-month free cash flow swung to a <strong>$42.4 billion outflow</strong>, and both revenue ($201.9 billion) and EPS ($1.89) missed. CEO Andy Jassy said 2027 capex will be "meaningfully more" than this year's $220 billion and that AWS growth should exceed 40% in 2027 and 2028. Shares fell about 7% after hours.</p>
+    <div class="scen">
+      <div class="cap">How the week's reports landed (Reuters, CNBC, Investing.com)</div>
+      <div class="r"><div><div class="n">Alphabet</div><div class="d">FCF −$9.07B · capex guide $195–205B kept</div></div><div class="a num" style="color:var(--red)">−12.6%</div></div>
+      <div class="r"><div><div class="n">ServiceNow</div><div class="d">Small EPS miss · guidance revived AI-disruption fears</div></div><div class="a num" style="color:var(--red)">−27%</div></div>
+      <div class="r"><div><div class="n">Amazon</div><div class="d">TTM FCF −$42.4B · AWS +39% · after hours</div></div><div class="a num" style="color:var(--red)">~−7%</div></div>
+      <div class="r"><div><div class="n">Intel</div><div class="d">Q4 guide $15–16B vs $17.07B est. · premarket</div></div><div class="a num" style="color:var(--red)">~−25%</div></div>
+      <div class="r"><div><div class="n">Microsoft</div><div class="d">Closed −0.16% · completed $25B bond sale</div></div><div class="a num" style="color:#d6d6dc">~flat</div></div>
+    </div>
+    <p><strong>Intel</strong> guided fourth-quarter revenue to $15–16 billion, below the $17.07 billion consensus, and said PC weakness, driven by an AI-led memory shortage that has pushed up PC costs, could last through the first half of 2027. It also said the deadly October explosion at its Kiryat Gat plant in Israel will cost about $600 million of revenue over two quarters, and that it will not generate positive cash flow this year. Third-quarter revenue of $16.51 billion was in line and EPS beat. Chip stocks including Nvidia, AMD and Micron fell 1–6% after hours (Reuters).</p>
+    <p><strong>The two readings.</strong> Seaport's Jay Goldberg told Reuters the market entered earnings season pessimistic: "No result is good enough, and bad results receive extra punishment." Jassy argued the opposite case for Amazon: "Our strategy is working," and AWS "could reach a trillion dollars" in revenue in as little as five years. Microsoft's $25 billion bond sale means all the US hyperscalers have now tapped debt markets for the build-out (Investing.com), and Treasuries rallied as money left tech.</p>
+    <div class="take"><b>Why it matters (analysis)</b>This is the first earnings season in which every large AI spender was judged primarily on cash flow, and three of the four that reported this week fell sharply on it. The pressure now runs in two directions: down the supply chain, where Intel's warning shows the memory crunch the AI build-out created is hurting PCs, and across software, where ServiceNow's fall reflects a fear that AI agents erode seat-based businesses. If the spenders respond by leaning more on debt, as Microsoft just did, the cost and pace of the build-out become more exposed to bond markets.</div>
+    <a class="cta" href="https://www.cnbc.com/2026/10/29/amazon-amzn-q3-earnings-report-2026.html">Amazon, CNBC →</a><a class="cta" href="https://www.investing.com/news/stock-market-news/intel-signals-slower-growth-as-pc-market-remains-under-pressure-4984967">Intel, Reuters →</a><a class="cta" href="https://www.cnbc.com/2026/10/29/servicenow-now-earnings-q3-2026.html">ServiceNow →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-alphabet-worst-day-ever" data-term="story-2026-10-30-alphabet-worst-day-ever"></div></details>
+  </article>
+
+  <article class="feat">
+    <span class="lbl">Crypto · Security</span>
+    <h3>Binance says hackers stole $6.3 billion, the largest crypto theft on record</h3>
+    <div class="by">Binance · BBC · CNBC · Al Jazeera · Investing.com · Oct 29–30</div>
+    <div class="meta"><span class="stat num">$6.3B affected</span><span class="stat num">~$3B frozen</span><span class="stat">Withdrawals paused</span><span class="stat num">BTC ~$78K</span></div>
+    <p><strong>Binance</strong>, the world's largest crypto exchange, suspended all withdrawals after what it says was the theft of about <strong>$6.3 billion</strong> in digital assets. Stablecoin issuers <strong>Tether</strong> and <strong>Circle</strong> froze tokens tied to the attack, and roughly half of the stolen value is now frozen on-chain (CNBC, Investing.com). The BBC reports Binance has found multiple "points of breach." The company says it will cover all losses from its SAFU insurance fund and company money, that "user funds are safe," and that withdrawals should resume within about 48 hours, by Sunday.</p>
+    <p>Analysts cited by Investing.com suggested the North Korea-linked group known as <strong>TraderTraitor</strong> may be responsible; that attribution is unconfirmed. Bitcoin fell about 2.6% to around $78,000 and briefly dropped below $77,000 for the first time in over a month.</p>
+    <div class="take"><b>Why it matters (analysis)</b>The theft is more than four times larger than the biggest previous exchange hacks, and it hit the venue that handles the most crypto trading volume. Two things will shape the fallout: whether Binance reopens withdrawals on schedule and covers losses in full, and whether stablecoin issuers' ability to freeze funds, which limited the damage here, becomes a bigger part of how regulators think about crypto security.</div>
+    <a class="cta" href="https://www.cnbc.com/2026/10/29/circle-tether-freeze-funds-impacted-by-potential-binance-security-issue.html">CNBC →</a><a class="cta" href="https://www.bbc.com/news/live/cqrmynd3042gt">BBC live →</a><a class="cta" href="https://www.binance.com/en/support/announcement/detail/c5a8729a97ac486d963784d96c5642d7">Binance →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-binance-says-hackers-stole" data-term="story-2026-10-30-binance-says-hackers-stole"></div></details>
+  </article>
+
+  <!-- AI -->
+  <div class="sec" id="ai"><h2>AI &amp; agents</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">Anthropic · The Verge · CNBC · Oct 29</div>
+    <h3>Anthropic launches Claude Duet, a proactive personal agent, against Meta's Muse and OpenAI's Dots</h3>
+    <div class="meta"><span class="stat">Research preview</span><span class="stat">US Pro and Max, waitlist</span><span class="stat">Claude Opus 5.5</span></div>
+    <p><strong>Claude Duet</strong> watches the services a user connects, sends morning briefings and works on tasks in the background, and asks for approval before sensitive actions such as sending messages, making payments, signing documents or deleting things. It runs on Claude Opus 5.5, comes as a standalone iOS and Android app plus claude.ai, and draws on the same usage limits as a user's plan (Anthropic). The Verge frames it as Anthropic's answer to Meta's Muse; CNBC previewed it last week alongside OpenAI's Dots.</p>
+    <p style="color:var(--t2)">All three big consumer AI labs now have an always-on personal agent. The approval gate on payments and messages is the main design difference to watch, since it decides how much these agents can do unattended.</p>
+    <a class="cta" href="https://claude.com/resources/articles/claude-duet">Anthropic →</a><a class="cta" href="https://www.theverge.com/ai-artificial-intelligence/1015843/anthropic-claude-duet-ai-agent">The Verge →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-anthropic-launches-claude-duet" data-term="story-2026-10-30-anthropic-launches-claude-duet"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Crosswalk · SiliconANGLE · Fortune · PR Newswire · Oct 29</div>
+    <h3>Agent startups keep raising: Serval at $3B, Casap, Broccoli, Rocker, and a Replika founder's Wabi at $1.25B</h3>
+    <p><strong>Serval</strong> raised a $150 million Series C led by Sequoia at a <strong>$3 billion</strong> valuation; staff describe a workflow in plain language and its agents write the automation, starting with IT requests. <strong>Casap</strong> ($56M, Base10) sells agents that run high-stakes bank operations under human oversight. <strong>Wabi</strong>, from Replika founder Eugenia Kuyda, raised $55M from IVP at $1.25B for a shared AI assistant for families and friends. Smaller rounds went to <strong>Rocker</strong> ($12.85M, Greycroft), a work agent from Stripe alumni, and <strong>Crux Labs</strong> ($6M+), which monitors agent traffic and builds evaluations.</p>
+    <p style="color:var(--t2)">Private money is still flowing into agent software on the same day ServiceNow, the incumbent in IT service management, had its worst trading day ever. Serval competes directly in that category.</p>
+    <a class="cta" href="https://crosswalk.to/crosswalk/deals/2026-10-29">Deal roundup →</a><a class="cta" href="https://www.businesswire.com/news/home/20261029114967/en/Serval-Raises-%24150M-Series-C-at-%243B-Valuation-Led-by-Sequoia">Serval →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-agent-startups-keep-raising" data-term="story-2026-10-30-agent-startups-keep-raising"></div></details>
+  </article>
+
+  <!-- STARTUPS -->
+  <div class="sec" id="startups"><h2>Startups &amp; tech</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">Business Wire · Bloomberg Law · The Elec · Oct 28–29</div>
+    <h3>Korea's FuriosaAI raises $620M for inference chips, quadrupling its valuation to $2.9B</h3>
+    <div class="meta"><span class="stat num">$620M Series D</span><span class="stat num">~$2.9B post-money</span><span class="stat num">$280M from state fund</span></div>
+    <p><strong>FuriosaAI</strong>, a Seoul chip designer, closed a $620 million (₩820 billion) Series D at about $2.9 billion post-money. Korea's National Growth Fund was the largest investor at $280 million. The money goes to producing more of its RNGD inference accelerators, building out its software and developing a third-generation chip with Broadcom (company release, Bloomberg Law).</p>
+    <p style="color:var(--t2)">Governments are increasingly writing the biggest checks in AI hardware rounds. Inference, running models rather than training them, is where most challengers to Nvidia are aiming.</p>
+    <a class="cta" href="https://furiosa.ai/blog/furiosaai-620-million-series-d">FuriosaAI →</a><a class="cta" href="https://news.bloomberglaw.com/private-equity/furiosaai-quadruples-valuation-to-2-9-billion-in-nvidia-chase">Bloomberg Law →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-korea-furiosaai-raises-620m" data-term="story-2026-10-30-korea-furiosaai-raises-620m"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">The Information · Crosswalk · Oct 29</div>
+    <h3>Sebastian Thrun and Adrian Aoun's Dulo raises a $130M seed for engineering AI</h3>
+    <p><strong>Dulo</strong>, founded this year in San Francisco by Sebastian Thrun (Google X, Udacity) and Adrian Aoun (Forward), raised a <strong>$130 million seed</strong> to build AI models for engineering, according to The Information; the lead investor was not disclosed.</p>
+    <p style="color:var(--t2)">A nine-figure seed for a months-old company shows how much capital well-known founders can raise before a product exists, even as public investors punish AI spending.</p>
+    <a class="cta" href="https://crosswalk.to/crosswalk/deals/2026-10-29">Crosswalk →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-sebastian-thrun-adrian-aoun" data-term="story-2026-10-30-sebastian-thrun-adrian-aoun"></div></details>
+  </article>
+
+  <!-- OPS -->
+  <div class="sec" id="ops"><h2>Ops &amp; commerce</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">DoorDash · Instacart · MLex · Invested Alpha · Oct 29</div>
+    <h3>DoorDash confirms it will buy Instacart for $17 billion, with a $1.25B break fee if antitrust blocks it</h3>
+    <div class="meta"><span class="stat num">$65 per share</span><span class="stat num">26% premium</span><span class="stat">Close end-2027 to 1H 2028</span></div>
+    <p><strong>DoorDash</strong> agreed to acquire <strong>Instacart</strong> (Maplebear) for <strong>$65 a share</strong>, about $17 billion in equity value and a 26% premium to Instacart's price before the first reports. At least 75% will be paid in cash, funded partly by a JPMorgan bridge loan. The companies pitch it as giving local grocers and retailers "the kinds of innovative technology that the biggest online retailers" build: Instacart users would gain access to more than 50,000 additional stores, and DashPass and Instacart+ would merge into one membership. Reviews are expected in the US, Canada and Israel; DoorDash owes <strong>$1.25 billion</strong> if antitrust stops the deal, and Instacart owes $650 million if it walks for a better offer (MLex). Holders of about 19% of Instacart have agreed to vote yes.</p>
+    <p style="color:var(--t2)">The long timeline signals the companies expect a deep antitrust review. DoorDash rose 5.6%; Instacart fell 2.2% to $57.11, about 12% below the offer, a gap that reflects the market's doubts about approval and the wait.</p>
+    <a class="cta" href="https://about.doordash.com/en-us/news/doordash-to-acquire-instacart">DoorDash release →</a><a class="cta" href="https://www.mlex.com/mlex/articles/2544031/doordash-instacart-expect-vetting-in-us-canada-israel-agree-to-termination-fees">MLex →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-doordash-confirms-will-buy" data-term="story-2026-10-30-doordash-confirms-will-buy"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">FreightWaves · Amazon · Investing.com · Oct 29–30</div>
+    <h3>Amazon's shipping bill rises 11% on fuel, while online store sales grow just 2%</h3>
+    <div class="meta"><span class="stat num">Shipping $28.3B</span><span class="stat num">1M+ robots</span><span class="stat num">Online stores +2%</span></div>
+    <p>Amazon's worldwide shipping costs rose 11.5% to $28.3 billion, against 12% unit growth; excluding fuel and linehaul inflation they rose 8%. Jassy said fuel and linehaul pressure will be "somewhat higher" in the fourth quarter and that the FBA fuel surcharge introduced this year does not fully offset it. The company still expects to cut cost-to-serve per unit for a fourth straight year, helped by more than 1 million robots and a doubled fleet of robotic arms (FreightWaves). Online store sales grew only about 2%, and ads 11%, partly because Prime Day moved into the second quarter this year (Investing.com).</p>
+    <p style="color:var(--t2)">Fuel-driven shipping inflation is hitting the largest, most automated e-commerce network too. Separately, Delta Cargo and SmartKargo launched DeliverDirect, a 1–3-day e-commerce parcel service using passenger-plane belly space.</p>
+    <a class="cta" href="https://www.freightwaves.com/news/amazon-battles-freight-inflation-as-shipping-costs-jump-11-in-q3">FreightWaves →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-amazon-shipping-bill-rises" data-term="story-2026-10-30-amazon-shipping-bill-rises"></div></details>
+  </article>
+
+  <!-- DEALS -->
+  <div class="sec" id="deals"><h2>Deals &amp; M&amp;A</h2><span class="ct">Announced Oct 28–29</span></div>
+
+  <div class="tx">
+    <div class="day">M&amp;A</div>
+    <a class="row" href="https://about.doordash.com/en-us/news/doordash-to-acquire-instacart"><div class="av" style="background:#b03a3a">D</div><div class="mid"><div class="n">DoorDash → Instacart</div><div class="s">$65/share · ≥75% cash · signed</div></div><div class="amt"><div class="a num">$17B</div><div class="s">Equity value</div></div></a>
+    <a class="row" href="https://investedalpha.com/news/caterpillar-sinks-9-percent-adt-soars-thrive-15-3-billion-deal-doordash-instacart-lilly-glaukos-movers"><div class="av" style="background:#0f8fa8">A</div><div class="mid"><div class="n">Thrive Holdings → ADT</div><div class="s">$10/share cash · 45.6% premium · ADT +33%</div></div><div class="amt"><div class="a num">$15.3B</div><div class="s">Incl. debt</div></div></a>
+    <div class="day">Raises</div>
+    <a class="row" href="https://furiosa.ai/blog/furiosaai-620-million-series-d"><div class="av" style="background:#3d7bff">F</div><div class="mid"><div class="n">FuriosaAI</div><div class="s">Korea National Growth Fund · inference chips · @ $2.9B</div></div><div class="amt"><div class="a num">$620M</div><div class="s">Series D</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-29"><div class="av" style="background:#2e7d4f">G</div><div class="mid"><div class="n">Group14 Technologies</div><div class="s">Undisclosed investor · battery materials plant in Spain</div></div><div class="amt"><div class="a num">€150M</div><div class="s">Series D ext.</div></div></a>
+    <a class="row" href="https://www.businesswire.com/news/home/20261029114967/en/Serval-Raises-%24150M-Series-C-at-%243B-Valuation-Led-by-Sequoia"><div class="av" style="background:#d9622b">S</div><div class="mid"><div class="n">Serval</div><div class="s">Sequoia · AI service management · @ $3B</div></div><div class="amt"><div class="a num">$150M</div><div class="s">Series C</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-29"><div class="av" style="background:#6d7a2a">D</div><div class="mid"><div class="n">Dulo</div><div class="s">Lead undisclosed · AI models for engineering</div></div><div class="amt"><div class="a num">$130M</div><div class="s">Seed</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-29"><div class="av" style="background:#7a4fd0">C</div><div class="mid"><div class="n">Collective</div><div class="s">General Catalyst, QED, Gradient · finance OS for solo businesses</div></div><div class="amt"><div class="a num">$100M</div><div class="s">B + facility</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-29"><div class="av" style="background:#0f8fa8">C</div><div class="mid"><div class="n">Casap</div><div class="s">Base10 · AI agents for bank operations</div></div><div class="amt"><div class="a num">$56M</div><div class="s">Series B</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-29"><div class="av" style="background:#3d7bff">W</div><div class="mid"><div class="n">Wabi</div><div class="s">IVP · shared personal AI assistant · @ $1.25B</div></div><div class="amt"><div class="a num">$55M</div><div class="s">Undisclosed</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-29"><div class="av" style="background:#b03a3a">O</div><div class="mid"><div class="n">Opentrons</div><div class="s">Avego · lab automation</div></div><div class="amt"><div class="a num">$40M</div><div class="s">Series E</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-29"><div class="av" style="background:#2e7d4f">S</div><div class="mid"><div class="n">StimCardio</div><div class="s">Metis MedTech · wearable for atrial fibrillation</div></div><div class="amt"><div class="a num">$30M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-29"><div class="av" style="background:#d9622b">O</div><div class="mid"><div class="n">Ozlo</div><div class="s">Modi Ventures · sleep earbuds</div></div><div class="amt"><div class="a num">$22M</div><div class="s">Series B</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-29"><div class="av" style="background:#6d7a2a">R</div><div class="mid"><div class="n">Rocker</div><div class="s">Greycroft · enterprise work agent</div></div><div class="amt"><div class="a num">$12.9M</div><div class="s">Undisclosed</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-10-29"><div class="av" style="background:#7a4fd0">P</div><div class="mid"><div class="n">Pathfinder</div><div class="s">Portage · cards for state education funds</div></div><div class="amt"><div class="a num">$12M</div><div class="s">Series A</div></div></a>
+  </div>
+
+  <!-- MARKETS -->
+  <div class="sec" id="markets"><h2>Markets</h2><span class="ct">Thu close + Fri Asia</span></div>
+
+  <div class="tx stk">
+    <div class="day">Thursday close (CNBC, AP)</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPX</div><div class="mid"><div class="n">S&amp;P 500</div><div class="px num">7,720.39 · snaps 3-day gain</div></div><span class="pct dn num">−0.30%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">IXIC</div><div class="mid"><div class="n">Nasdaq Composite</div><div class="px num">26,184.72</div></div><span class="pct dn num">−1.38%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">DJI</div><div class="mid"><div class="n">Dow</div><div class="px num">52,342.56 · Caterpillar −9.25%</div></div><span class="pct dn num">−0.25%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BRN</div><div class="mid"><div class="n">Brent, settle</div><div class="px num">$114.88 · WTI $102.00 (−0.76%)</div></div><span class="pct dn num">−0.38%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">XAU</div><div class="mid"><div class="n">Gold</div><div class="px num">Below $4,000 Friday (Bloomberg via swissinfo)</div></div><span class="pct dn num">lower</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BTC</div><div class="mid"><div class="n">Bitcoin</div><div class="px num">~$78,000 · after Binance hack</div></div><span class="pct dn num">−2.6%</span></div>
+    <div class="day">Friday morning</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">N225</div><div class="mid"><div class="n">Nikkei 225, close</div><div class="px num">63,290.11 · BoJ holds at 1.25%</div></div><span class="pct dn num">−2.12%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">KOSPI</div><div class="mid"><div class="n">Kospi, close</div><div class="px num">5,730.74 · chip stocks (Yonhap)</div></div><span class="pct dn num">−3.48%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">NDX</div><div class="mid"><div class="n">Nasdaq-100 futures</div><div class="px num">04:04 ET (Investing.com)</div></div><span class="pct dn num">−2.2%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">ES</div><div class="mid"><div class="n">S&amp;P 500 futures</div><div class="px num">Dow futures −0.1%</div></div><span class="pct dn num">−1.0%</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">ECB · CNBC · Bank of Japan · Nikkei Asia · Oct 29–30</div>
+    <h3>ECB holds and Lagarde announces her exit; the Bank of Japan declares its inflation target met</h3>
+    <div class="meta"><span class="stat num">ECB deposit 2.50%</span><span class="stat num">Euro inflation 3.8%</span><span class="stat num">BoJ 1.25%, 8–1</span></div>
+    <p>The <strong>ECB</strong> kept its deposit rate at 2.50% after September's hike. Lagarde said the Governing Council "debated whether a hike was appropriate" but unanimously chose to wait, as energy pushes euro-area inflation to 3.8% and long-term borrowing costs climb; money markets price about a 67% chance of a December hike (CNBC, LSEG). Earlier in the day the ECB announced that <strong>Lagarde will step down on Feb. 7, 2027</strong>, before her term ends; EU leaders will choose a successor. On Friday the <strong>Bank of Japan</strong> held at 1.25%, the highest since 1995, with board member Hajime Takata voting for 1.5%. For the first time since adopting the target in 2013, it said underlying inflation is "generally consistent" with 2%, and it raised its fiscal-2027 inflation forecast to 2.6% (CNBC, Nikkei Asia). It also sped up sales of its ETF holdings.</p>
+    <p style="color:var(--t2)">Capital Economics read the BoJ statement as declaring victory over deflation, which opens the door to further hikes. The ECB succession adds uncertainty at a moment when it is deciding whether to keep tightening.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/10/29/european-central-bank-interest-rates.html">ECB, CNBC →</a><a class="cta" href="https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.pr261029~abbb6dc64b.en.html">Lagarde →</a><a class="cta" href="https://www.cnbc.com/2026/10/30/boj-inflation-target-rates.html">BoJ →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-ecb-holds-lagarde-announces" data-term="story-2026-10-30-ecb-holds-lagarde-announces"></div></details>
+  </article>
+
+  <!-- ARGENTINA -->
+  <div class="sec" id="argentina"><h2>Argentina</h2><span class="ct">Thursday close</span></div>
+
+  <div class="tx stk">
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">RP</div><div class="mid"><div class="n">Riesgo país</div><div class="px num">741 bp · from 763 (Rava)</div></div><span class="pct up num">−2.9%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">MERV</div><div class="mid"><div class="n">S&amp;P Merval</div><div class="px num">94,530 · fourth straight fall (Rava)</div></div><span class="pct dn num">−1.0%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">MAY</div><div class="mid"><div class="n">Dólar mayorista</div><div class="px num">$1,538 · retail official $1,560 (Infobae)</div></div><span class="pct nt num">−0.26%</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">Infobae · BAE Negocios · Rava · Oct 29</div>
+    <h3>Argentine bonds recover and country risk hits its lowest since Lula's win, but stocks fall a fourth day</h3>
+    <p>Dollar bonds rose and <strong>country risk fell 22 points to 741 bp</strong>, the lowest since Brazil's election (BAE Negocios). Equities kept sliding: the Merval lost 1.0% to 94,530, its fourth consecutive decline, and the wholesale dollar eased to $1,538 (Infobae).</p>
+    <p style="color:var(--t2)">The split between bonds and stocks suggests credit investors are less worried about spillover from Brazil than equity investors are. Friday's global tech sell-off is the next test.</p>
+    <a class="cta" href="https://www.infobae.com/economia/2026/10/29/jornada-financiera-subieron-los-bonos-argentinos-y-cayo-el-riesgo-pais-pero-las-acciones-cedieron-por-cuarto-dia-seguido/">Infobae →</a><a class="cta" href="https://www.rava.com/cotizaciones/historico/riesgo-pais/2026/10/29/">Rava →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-argentine-bonds-recover-country" data-term="story-2026-10-30-argentine-bonds-recover-country"></div></details>
+  </article>
+
+  <!-- GLOBAL -->
+  <div class="sec" id="global"><h2>Global</h2><span class="ct">4</span></div>
+
+  <article class="story">
+    <div class="k">WSJ · Geo/Reuters · Al-Monitor · Foreign Exchanges · Oct 29</div>
+    <h3>Iran: CENTCOM chief briefs Trump on options as Tehran calls Qatar's ideas "unacceptable"</h3>
+    <p>US Central Command's Adm. Brad Cooper briefed President Trump in person on military options for Iran, the WSJ reports. Tehran called Qatar's seven-day de-escalation draft, which includes possibly reopening the Strait of Hormuz, sanctions relief and nuclear inspections, a set of "unacceptable" ideas rather than a formal offer, while staying in contact with mediators (Reuters via Geo). The IRGC claimed four vessels hit mines in the Strait of Hormuz on Thursday; that is unconfirmed, and CENTCOM says it has cleared the strait. The Pentagon has told Congress the war has cost $47.1 billion. Defense Secretary Hegseth also fired Lt. Gen. Brett Sylvia, head of the Joint Staff's strategy office (The Atlantic).</p>
+    <p style="color:var(--t2)">Oil eased Thursday on diplomacy hopes. Both tracks, talks and strike planning, point to the days after Tuesday's midterms.</p>
+    <a class="cta" href="https://www.geo.tv/latest/688776-qatar-presents-iran-with-new-draft-deal-to-end-war-tehran-calls-ideas-unacceptable">Reuters via Geo →</a><a class="cta" href="https://www.al-monitor.com/originals/2026/10/mediators-scramble-avert-us-iran-fighting-after-trumps-midterm-restraint-fades">Al-Monitor →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-iran-centcom-chief-briefs" data-term="story-2026-10-30-iran-centcom-chief-briefs"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Ukrainska Pravda · BBC · Kyiv Independent · NYT · Oct 29–30</div>
+    <h3>Ukraine: Russian drone kills 15 at Dnipro's main station while the Oleshky truce holds</h3>
+    <p>A Russian jet-powered drone hit Dnipro's main railway station on Thursday, killing at least <strong>15 people</strong> and wounding at least 14, including an 11-year-old (Ukrainska Pravda, BBC). Other strikes killed at least six people elsewhere. In the south, the local ceasefire around occupied <strong>Oleshky</strong> held, and the NYT reports the city of Kherson across the river has also gone quiet; evacuation corridors for the town's roughly 2,000 residents were still being organised. The WSJ reports Ukraine paused strikes on Russian refineries this month after US pressure, possibly until after the midterms.</p>
+    <p style="color:var(--t2)">The truce shows a narrow humanitarian deal can hold, while the Dnipro strike shows how little it changes the wider war.</p>
+    <a class="cta" href="https://www.bbc.com/news/articles/c9p8gdlz1p2ko">BBC →</a><a class="cta" href="https://www.pravda.com.ua/eng/news/2026/10/30/8060394/">Ukrainska Pravda →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-ukraine-russian-drone-kills" data-term="story-2026-10-30-ukraine-russian-drone-kills"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">AP · CBN · O Globo · Valor · Oct 28–30</div>
+    <h3>Brazil: no arrest warrant or extradition request yet for Flávio Bolsonaro in Miami</h3>
+    <p>Brazil's Federal Police say <strong>Flávio Bolsonaro</strong> is not considered a fugitive and there is no request for his arrest (CBN), although he left despite a Supreme Court order to surrender his passports. O Globo reports he is in the US on a temporary humanitarian admission rather than a visa. Legal experts quoted by Valor say Brazil can only seek extradition after a qualifying arrest order, and that the Trump administration's ties to the Bolsonaro family could complicate any request.</p>
+    <p style="color:var(--t2)">For now this is a political and diplomatic problem rather than a legal one. Lula's cabinet and fiscal plan, which markets are waiting for, are the other open questions in Brasília.</p>
+    <a class="cta" href="https://oglobo.globo.com/politica/noticia/2026/10/29/do-visto-humanitario-ao-risco-de-deportacao-entenda-a-situacao-juridica-de-flavio-bolsonaro-apos-a-fuga-para-os-eua.ghtml">O Globo →</a><a class="cta" href="https://valorinternational.globo.com/foreign-affairs/news/2026/10/28/brazil-may-seek-flavio-bolsonaro-s-extradition-but-trump-is-a-hurdle.ghtml">Valor →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-brazil-no-arrest-warrant" data-term="story-2026-10-30-brazil-no-arrest-warrant"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Central Elections Committee · Foreign Exchanges · Haaretz · Oct 29</div>
+    <h3>Israel: preliminary count confirms 53–48–19, and Netanyahu presses fraud claims about Arab parties' vote</h3>
+    <p>The Central Elections Committee's preliminary tabulation kept the blocs at <strong>53</strong> for Netanyahu's coalition, <strong>48</strong> for Gadi Eisenkot's opposition and <strong>19</strong> for the two Arab-led parties, with 61 needed. Netanyahu argues the Arab parties' vote was fraudulent; police and election officials have said there is no evidence of fraud. The Shin Bet is reportedly examining claims that a foreign country funded one Arab list, but says it is not seeking to invalidate their vote. Much of Eisenkot's bloc rejects relying on Arab parties, so analysts see a deadlock, with Netanyahu staying on as caretaker and a snap election possible.</p>
+    <p style="color:var(--t2)">Official results are due Nov. 4. Elsewhere: Serbia's winning protest movement is demanding audits and resignations, Venezuela's María Corina Machado says Washington backs elections next year (unconfirmed by the US), and Haiti set its election for July 18, 2027.</p>
+    <a class="cta" href="https://www.foreignexchanges.news/p/world-roundup-october-29-2026">World roundup →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-israel-preliminary-count-confirms" data-term="story-2026-10-30-israel-preliminary-count-confirms"></div></details>
+  </article>
+
+  <!-- AHEAD -->
+  <div class="sec" id="ahead"><h2>Ahead</h2><span class="ct">ART dates</span></div>
+  <div class="tx ahead">
+    <div class="row"><div class="when"><div class="m">Oct</div><div class="d">30</div></div><div class="mid"><div class="n">Amazon and Intel trade on results · Iran reply</div><div class="s" style="white-space:normal">Tehran expected to answer mediators by week's end.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">1</div></div><div class="mid"><div class="n">Binance withdrawals due to resume · OPEC+</div><div class="s" style="white-space:normal">Oleshky truce scheduled to end.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">2</div></div><div class="mid"><div class="n">Apple earnings</div><div class="s" style="white-space:normal">Fiscal Q4; consensus iPhone revenue about $56.4B (S&amp;P Global).</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">3</div></div><div class="mid"><div class="n">US midterms · Copom (Nov 3–4)</div><div class="s" style="white-space:normal">Israel's official results Nov 4.</div></div></div>
+  </div>
+
+  <!-- giscus-feedback -->
+  <section class="card fbcard" id="feedback">
+    <span class="lbl">Feedback</span>
+    <h3>How was today's brief?</h3>
+    <p class="hint">React or leave a comment on format, depth, or topics. Feedback shapes what gets covered and how, never which side a story takes.</p>
+    <div class="gslot" id="fb-brief" data-term="brief-2026-10-30"></div>
+  </section>
+
+  <footer>Prepared for Matias Ricci · Friday edition, Oct 30, 2026 · as of 07:00 ART (UTC−3)<br>Covers news since Thursday's brief. US closes are from CNBC and AP; Alphabet, ServiceNow and Caterpillar moves from CNBC, Yahoo Finance and Investing.com. Amazon and Intel figures are company-reported via Reuters, CNBC and FreightWaves; after-hours and premarket moves are indications and will change by the close. Futures, gold and bitcoin are from Investing.com and Bloomberg via swissinfo. Binance figures are the company's own; the TraderTraitor attribution is analysts' suspicion, not confirmed. ECB and BoJ details are from the central banks, CNBC and Nikkei Asia. Asian closes from Nikkei and Yonhap. Argentine figures from Rava and Infobae. Funding rounds are from company announcements compiled by Crosswalk. IRGC claims of mine strikes are unconfirmed. Israeli seat counts are preliminary.</footer>
+</main>
+<script>
+/* giscus loader: one embed at a time (client.js targets the first .giscus), per-iframe resizing */
+(function(){
+  var CFG={repo:"matiasriccibrochiero/daily-brief",repoId:"R_kgDOVQx5Jg",category:"Announcements",categoryId:"DIC_kwDOVQx5Js4DJrHP",mapping:"specific",strict:"1",
+    reactionsEnabled:"1",emitMetadata:"0",inputPosition:"top",theme:"transparent_dark",lang:"en",loading:"lazy"};
+  var frames=[],heights=new Map(),queue=Promise.resolve();
+  function kebab(k){return k.replace(/[A-Z]/g,function(c){return "-"+c.toLowerCase()})}
+  window.addEventListener("message",function(e){
+    if(e.origin!=="https://giscus.app")return;
+    var d=e.data; if(!d||typeof d!=="object"||!d.giscus)return;
+    var f=null; for(var i=0;i<frames.length;i++){if(frames[i].contentWindow===e.source){f=frames[i];break}}
+    if(d.giscus.resizeHeight&&f){heights.set(f,d.giscus.resizeHeight);f.style.height=d.giscus.resizeHeight+"px"}
+    var ks=Object.keys(d.giscus);
+    if(ks.length===1&&ks[0]==="resizeHeight"){e.stopImmediatePropagation();return}
+    setTimeout(function(){heights.forEach(function(h,fr){fr.style.height=h+"px"})},0);
+  });
+  function mount(slot){
+    if(!slot||slot.getAttribute("data-mounted"))return; slot.setAttribute("data-mounted","1");
+    queue=queue.then(function(){return new Promise(function(done){
+      slot.classList.add("giscus");
+      var s=document.createElement("script"); s.src="https://giscus.app/client.js"; s.async=true; s.crossOrigin="anonymous";
+      for(var k in CFG)s.setAttribute("data-"+kebab(k),CFG[k]);
+      s.setAttribute("data-term",slot.getAttribute("data-term"));
+      s.onload=s.onerror=function(){var fr=slot.querySelector("iframe");if(fr)frames.push(fr);
+        slot.classList.remove("giscus");slot.classList.add("gdone");done()};
+      slot.parentNode.insertBefore(s,slot);
+    })});
+  }
+  document.querySelectorAll("details.fb").forEach(function(d){
+    d.addEventListener("toggle",function(){if(d.open)mount(d.querySelector(".gslot"))});
+  });
+  mount(document.getElementById("fb-brief"));
+})();
+</script>
+</body>
+</html>
