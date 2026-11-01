@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Daily Brief · Sunday · November 1, 2026</title>
+<style>
+  :root{
+    --bg:#000; --s1:#16161a; --s2:#1f1f25; --s3:#2a2a31;
+    --tx:#fff; --t2:#8a8a93; --t3:#5d5d66;
+    --blue:#3d7bff; --green:#2fd27a; --greenbg:rgba(47,210,122,.14);
+    --red:#ff5c5c; --redbg:rgba(255,92,92,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+  .app{max-width:460px;margin:0 auto;padding:12px 16px 48px}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{font-weight:600;color:#fff}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--s2);padding:1px 5px;border-radius:6px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0}
+  .me{width:36px;height:36px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .search{flex:1;margin:0 10px;height:36px;border-radius:18px;background:var(--s1);color:var(--t2);font-size:14px;display:flex;align-items:center;padding:0 14px;gap:8px}
+  .search svg{width:15px;height:15px;stroke:var(--t2)}
+  .toppill{background:var(--s1);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#d6d6dc}
+  .tz{font-size:12px;color:var(--t2);font-weight:600}
+
+  /* hero balance */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero .cap{font-size:14px;color:var(--t2);font-weight:500}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:8px 0 6px}
+  .hero .dt{font-size:15px;color:var(--t2);font-weight:500}
+  .pillbtn{display:inline-block;margin-top:16px;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px}
+
+  /* actions */
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 28px;text-align:center}
+  .actions a{color:var(--tx);font-size:12px;font-weight:500;text-decoration:none}
+  .actions .ic{width:52px;height:52px;border-radius:50%;background:var(--s2);display:grid;place-items:center;margin:0 auto 8px}
+  .actions svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;scrollbar-width:none;
+         position:sticky;top:0;background:var(--bg);z-index:5}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;text-decoration:none}
+  .chip.on{background:#fff;color:#000}
+  .chip:hover{text-decoration:none}
+
+  /* surfaces */
+  .card{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .sec{margin:32px 0 12px;display:flex;align-items:baseline;justify-content:space-between;padding:0 4px}
+  .sec h2{font-size:22px;font-weight:700;letter-spacing:-.025em}
+  .sec .ct{font-size:13px;color:var(--t2);font-weight:500}
+  .lbl{display:inline-block;background:var(--s3);color:#d6d6dc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;letter-spacing:.01em}
+
+  .lead p{font-size:16px;line-height:1.5;color:#e9e9ee;letter-spacing:-.005em}
+  .lead p + p{margin-top:12px;color:var(--t2)}
+
+  /* balance tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .tile{background:var(--s1);border-radius:24px;padding:18px}
+  .tile .k{font-size:13px;color:var(--t2);font-weight:500}
+  .tile .v{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-top:6px}
+  .tile .s{font-size:12px;color:var(--t2);margin-top:2px}
+  .tile .s.g{color:var(--green)} .tile .s.r{color:var(--red)}
+
+  /* feature cards */
+  .feat{background:var(--s1);border-radius:28px;padding:24px 22px 22px;margin-bottom:12px}
+  .feat h3{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:14px 0 8px}
+  .by{font-size:13px;color:var(--t2);margin-bottom:16px}
+  .feat p,.story p{color:#c9c9d0;margin-bottom:12px}
+  .feat p:last-of-type,.story p:last-of-type{margin-bottom:0}
+  .take{background:var(--s2);border-radius:18px;padding:14px 16px;margin-top:16px;font-size:14px;color:#e2e2e8}
+  .take b{display:block;font-size:12px;color:var(--t2);font-weight:600;margin-bottom:2px}
+  .cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600}
+  .cta + .cta{margin-left:16px}
+
+  /* scenario list (inside card) */
+  .scen{background:var(--s2);border-radius:20px;padding:4px 16px;margin:16px 0}
+  .scen .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
+  .scen .r + .r{box-shadow:0 -1px 0 rgba(255,255,255,.06)}
+  .scen .n{font-size:14px;font-weight:600}
+  .scen .d{font-size:12px;color:var(--t2);margin-top:1px;line-height:1.35}
+  .scen .a{font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .scen .cap{font-size:12px;color:var(--t2);padding:10px 0 4px}
+
+  /* story cards */
+  .story{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .story h3{font-size:19px;font-weight:700;letter-spacing:-.022em;line-height:1.22;margin-bottom:10px}
+  .story .k{font-size:12px;color:var(--t2);font-weight:600;margin-bottom:8px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stat{background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:#fff}
+
+  /* transaction list */
+  .tx{background:var(--s1);border-radius:24px;padding:6px 0;margin-bottom:12px}
+  .tx .day{font-size:13px;color:var(--t2);font-weight:600;padding:12px 20px 4px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 20px;color:var(--tx);text-decoration:none}
+  .row:hover{background:var(--s2);text-decoration:none}
+  .av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff}
+  .mid{flex:1;min-width:0}
+  .mid .n{font-size:15px;font-weight:600}
+  .mid .s{font-size:13px;color:var(--t2);line-height:1.35;margin-top:1px}
+  .amt{text-align:right;flex:none}
+  .amt .a{font-size:16px;font-weight:700;letter-spacing:-.02em}
+  .amt .s{font-size:12px;color:var(--t2)}
+
+  /* stocks */
+  .stk .row{cursor:default}
+  .stk .row:hover{background:none}
+  .px{font-size:13px;color:var(--t2);margin-top:1px}
+  .pct{flex:none;font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;min-width:74px;text-align:center}
+  .up{color:var(--green);background:var(--greenbg)}
+  .dn{color:var(--red);background:var(--redbg)}
+  .nt{color:#d6d6dc;background:var(--s3)}
+
+  /* ahead */
+  .ahead .row{align-items:flex-start}
+  .when{flex:none;width:48px;height:48px;border-radius:14px;background:var(--s2);text-align:center;padding-top:6px}
+  .when .m{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .when .d{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+
+  footer{font-size:11.5px;color:var(--t3);text-align:center;padding:28px 12px 0;line-height:1.5}
+
+  @media (min-width:600px){
+    body{padding-top:24px}
+    .app{background:#0b0b0f;border-radius:40px;padding:16px 20px 40px;margin-bottom:40px}
+    .chips{background:#0b0b0f;margin:0 -20px 8px;padding-left:20px;padding-right:20px;border-radius:0}
+  }
+
+  /* feedback (giscus) */
+  .fb{margin-top:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+  .fb summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--t2);padding:6px 12px 6px 10px;border-radius:999px;background:var(--s2)}
+  .fb summary::-webkit-details-marker{display:none}
+  .fb summary svg{width:14px;height:14px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+  .fb[open] summary svg{transform:rotate(90deg)}
+  .fb summary:hover{color:#fff}
+  .fb .gslot{margin-top:12px}
+  .gslot{min-height:120px}
+  .gslot iframe{width:100%;border:0}
+  .fbcard{margin-top:32px;border-radius:28px;padding:24px 20px}
+  .fbcard h3{font-size:24px;font-weight:800;letter-spacing:-.035em;line-height:1.15;margin:14px 0 6px}
+  .fbcard .hint{font-size:14px;color:var(--t2);line-height:1.45;margin-bottom:16px}
+</style>
+</head>
+<body>
+<main class="app">
+
+  <div class="top">
+    <div class="me">MR</div>
+    <div class="toppill">Sunday · Sun 1 Nov</div>
+    <div class="tz">ART</div>
+  </div>
+
+  <section class="hero">
+    <div class="cap">Sunday edition · Saturday and overnight</div>
+    <h1>Daily Brief</h1>
+    <div class="dt">November 1, 2026 · Sat 07:00 → Sun 07:00 ART</div>
+    <span class="pillbtn">10 min read</span>
+  </section>
+
+  <nav class="actions">
+    <a href="#featured"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div>Featured</a>
+    <a href="#ai"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>Agents</a>
+    <a href="#deals"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Deals</a>
+    <a href="#markets"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>Markets</a>
+  </nav>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Binance theft covered</div><div class="v num">95%</div><div class="s g num">Of $6.3B · withdrawals reopening</div></div>
+    <div class="tile"><div class="k">Bitcoin, Sunday</div><div class="v num">~$77.5K</div><div class="s g num">vs ~$76.5K Friday afternoon</div></div>
+    <div class="tile"><div class="k">Hormuz reopening plan (Iran)</div><div class="v num">2 days</div><div class="s r num">If US accepts Iran's conditions</div></div>
+    <div class="tile"><div class="k">US early ballots (Reuters)</div><div class="v num">~50M</div><div class="s num">Record for a midterm · vote Tue</div></div>
+  </div>
+
+  <div class="card lead">
+    <span class="lbl">The weekend, in two lines</span>
+    <p style="margin-top:14px">Binance began reopening withdrawals on Sunday morning after saying it had covered 95% of the $6.3 billion stolen on Thursday, and the FBI formally attributed the theft to North Korea's TraderTraitor unit. In the Gulf, Iranian envoys met Qatari mediators in Doha and Iran said a plan to reopen the Strait of Hormuz within two days is ready if Washington accepts its terms, while its supreme leader warned of a response "without geographical limits" to any new attack.</p>
+    <p>In AI, CNBC confirmed OpenAI has cut its round to up to $20 billion, adding to signs that financing the build-out is getting harder (S&amp;P put Meta on negative outlook; the FT says Anthropic faces a junk rating). Apple confirmed Apple Intelligence reaches China in December with Alibaba's Qwen. Spain is still counting the cost of its deadliest rail crash in decades, and the US enters the final days before Tuesday's midterms.</p>
+  </div>
+
+  <div class="chips">
+    <a class="chip on" href="#featured">Featured</a>
+    <a class="chip" href="#ai">AI &amp; agents</a>
+    <a class="chip" href="#startups">Startups &amp; tech</a>
+    <a class="chip" href="#ops">Ops &amp; commerce</a>
+    <a class="chip" href="#deals">Deals</a>
+    <a class="chip" href="#markets">Markets</a>
+    <a class="chip" href="#argentina">Argentina</a>
+    <a class="chip" href="#global">Global</a>
+    <a class="chip" href="#ahead">Ahead</a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec" id="featured"><h2>Featured</h2><span class="ct">2 stories</span></div>
+
+  <article class="feat">
+    <span class="lbl">Crypto · Security</span>
+    <h3>Binance reopens withdrawals after replacing 95% of the $6.3B stolen; FBI names North Korea's TraderTraitor</h3>
+    <div class="by">Reuters · AFP · Cointelegraph · TokenPost · Exchange.news · Oct 31–Nov 1</div>
+    <div class="meta"><span class="stat num">$6.3B stolen</span><span class="stat num">~$6B replaced</span><span class="stat num">~$3B frozen</span><span class="stat num">15 networks in phase one</span></div>
+    <p>The world's largest crypto exchange resumed <strong>bitcoin withdrawals shortly after 06:00 GMT on Sunday</strong> (03:00 ART), followed by ether, BNB, XRP and selected USDT and USDC routes on Ethereum, BNB Chain and Base (Reuters, TokenPost). Binance support says phase one covers 15 networks, opened in batches ranked by last week's user demand, and warns of congestion and delays. Deposits stayed open throughout.</p>
+    <p>Binance says it has <strong>covered about $6 billion, or 95%,</strong> of the stolen tokens by buying replacements with company money; the remaining 5% are less liquid assets that will take longer to source. Co-CEO Yi He said half of the roughly $1 billion SAFU user-protection fund was used, alongside part of the futures insurance fund and corporate treasury, and pledged to refill SAFU. About $3 billion of stolen assets has been located and frozen with partners such as Tether and Circle.</p>
+    <div class="scen">
+      <div class="cap">How the gap was filled (Binance via Reuters)</div>
+      <div class="r"><div><div class="n">Stolen, Oct 29–30</div><div class="d">Most of it in ~20 minutes, via a compromised engineer laptop</div></div><div class="a num" style="color:var(--red)">$6.3B</div></div>
+      <div class="r"><div><div class="n">Replacement tokens bought</div><div class="d">SAFU (50% used), futures insurance fund, treasury</div></div><div class="a num" style="color:var(--green)">~$6.0B</div></div>
+      <div class="r"><div><div class="n">Still to source</div><div class="d">Less liquid tokens</div></div><div class="a num">~5%</div></div>
+      <div class="r"><div><div class="n">Located and frozen</div><div class="d">With industry partners, as of Friday</div></div><div class="a num">~$3B</div></div>
+    </div>
+    <p><strong>Attribution firmed up, mostly.</strong> The FBI said on Saturday that North Korea's state-sponsored <strong>TraderTraitor</strong> unit carried out the attack and that it has watched the group convert stolen assets into ether, with "further laundering" expected. President Trump said the same day that the US was "not certain" North Korea was involved. Pyongyang denies running state hacking units and did not respond to Reuters. Founder Changpeng Zhao credited US agencies with tracking and freezing funds. Binance says a full zero-knowledge proof-of-reserves report is due early this week.</p>
+    <div class="take"><b>Why it matters (analysis)</b>Covering a theft this size from its own balance sheet within three days is unusual; customers of past exchange failures such as Mt. Gox and FTX waited years for partial recoveries. If the reopening holds, it suggests the largest exchanges can now absorb a multi-billion-dollar loss without a run. The open questions are how much the replacement buying and drained reserves weaken Binance's own buffers, what the proof-of-reserves shows, and whether regulators push for tighter controls on hot wallets and features such as Ethereum's EIP-7702 delegation, which Binance says the attackers abused. The record size also adds to TRM Labs and Chainalysis data showing state-linked groups account for a growing share of crypto theft.</div>
+    <a class="cta" href="https://www.investing.com/news/stock-market-news/binance-to-resume-withdrawals-after-recovering-bulk-of-6-billion-in-stolen-funds-4989388">Reuters →</a><a class="cta" href="https://www.afp.com/en/binance-says-resuming-withdrawals-after-major-hack">AFP →</a><a class="cta" href="https://exchange.news/news/binance-withdrawals-reopen-bitcoin-network-first/">Phase one detail →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-binance-reopens-withdrawals-replacing" data-term="story-2026-11-01-binance-reopens-withdrawals-replacing"></div></details>
+  </article>
+
+  <article class="feat">
+    <span class="lbl">Global · Energy</span>
+    <h3>Iran says Hormuz could reopen in two days on its terms, as Doha talks run against the clock of Tuesday's midterms</h3>
+    <div class="by">Reuters via Business Standard · CGTN · Al Jazeera · Middle East Eye · AP via Newser · Oct 31–Nov 1</div>
+    <div class="meta"><span class="stat">Indirect talks in Doha</span><span class="stat num">144 ships redirected (CENTCOM)</span><span class="stat">Claims unverified</span></div>
+    <p>Iranian negotiators held talks with <strong>Qatari mediators in Doha</strong> on Saturday, after more than 12 hours of talks in Tehran on Friday, coordinated with Washington, a source told Reuters. Foreign Minister <strong>Abbas Araghchi</strong> said a new proposal agreed with mediators would allow the Strait of Hormuz to be <strong>fully reopened within two days</strong> if the US accepts Iran's conditions: lifting sanctions, restoring oil-export waivers, releasing frozen assets, reducing US forces in the region, ending hostilities on all fronts including Lebanon, and recognising a new shipping route developed with Oman. He called the US overture "positive" but said there are no immediate plans for direct talks.</p>
+    <p>Security chief <strong>Mohsen Rezaei</strong> said the tone of Vice President Vance's letter "completely changed" Washington's approach, but also that Iran is <strong>debating whether to drop its ban on nuclear weapons</strong> if fighting resumes; no decision has been made. Supreme Leader <strong>Mojtaba Khamenei</strong> ordered the armed forces to be ready and said any attack must meet a "geographically unrestricted response." Secretary of State Marco Rubio said President Trump has not decided whether to resume strikes and prefers diplomacy, adding that "talks have actually never stopped." Trump said Iran wants to "make a deal" but questioned its reliability.</p>
+    <p>Pressure continues at sea. CENTCOM says it has redirected <strong>144 commercial vessels</strong> under its blockade of Iranian ports as of Oct. 31. Iranian state media said the US attacked two fishing boats off Qeshm Island, which the US had not confirmed. On Sunday Iran designated Britain's Royal Navy and Royal Air Force as "terrorist" organisations (Middle East Eye).</p>
+    <div class="take"><b>Why it matters (analysis)</b>Both sides are now publicly describing a path out, but their sequencing still conflicts: Iran wants US concessions first and nuclear talks later, while the Vance letter reportedly puts the nuclear programme on the table from the start. A two-day reopening offer lowers the bar for a deal, while the Oman-route condition would hand Iran a lasting say over who uses the strait, which the US and Gulf states have resisted. With regional governments expecting a US decision after Tuesday's vote, the coming week is the most consequential since the ceasefire for oil, which ended October near six-month highs.</div>
+    <a class="cta" href="https://www.business-standard.com/world-news/iranian-envoys-meet-qatar-mediators-as-us-strike-threat-looms-post-midterms-126110100052_1.html">Reuters →</a><a class="cta" href="https://news.cgtn.com/news/2026-11-01/Iran-Qatar-hold-talks-as-Tehran-weighs-US-diplomatic-overture-1RI0McRVMHe/p.html">CGTN →</a><a class="cta" href="https://www.aljazeera.com/news/liveblog/2026/11/1/iran-war-live-araghchi-says-talks-under-way-on-2-day-plan-to-reopen-hormuz">Al Jazeera live →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-iran-says-hormuz-could" data-term="story-2026-11-01-iran-says-hormuz-could"></div></details>
+  </article>
+
+  <!-- AI -->
+  <div class="sec" id="ai"><h2>AI &amp; agents</h2><span class="ct">5</span></div>
+
+  <article class="story">
+    <div class="k">CNBC · Reuters · TechCrunch · FT · Oct 30–31</div>
+    <h3>Paying for AI gets harder: OpenAI's smaller round confirmed, S&amp;P warns on Meta, Anthropic faces a junk rating</h3>
+    <div class="meta"><span class="stat num">OpenAI up to $20B</span><span class="stat num">Meta AA− · outlook negative</span><span class="stat num">Anthropic ~BB (reported)</span></div>
+    <p>CNBC <strong>confirmed on Saturday</strong> that OpenAI is now seeking up to $20 billion, down from up to $30 billion, at a reported $1.25 trillion post-money valuation; the round is still open and terms could change. UAE investors and Coatue are leading, and the FT says some investors cut allocations before a Friday deadline. Separately, <strong>S&amp;P Global</strong> kept Meta's AA− rating but moved its outlook to negative, projecting a <strong>$71 billion free-cash-flow deficit in 2027</strong> from AI capital spending (Reuters). And the FT reported that <strong>Blackstone</strong> told investors it expects Anthropic to receive a high speculative-grade ("junk") credit rating after its IPO, reversing its earlier expectation of investment grade (TechCrunch).</p>
+    <p style="color:var(--t2)">Together these move the AI-spending debate from equity prices to the cost of debt: a weaker credit profile raises borrowing costs for data-centre build-outs and can limit access to pension and insurance money. Supporters note demand indicators, such as cloud growth, remain strong.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/10/31/openai-fundraising-20-billion-valuation.html">CNBC →</a><a class="cta" href="https://www.investing.com/news/stock-market-news/sp-global-revises-outlook-on-meta-to-negative-on-cashflow-concerns-4988756">S&amp;P on Meta →</a><a class="cta" href="https://techcrunch.com/2026/10/30/anthropic-expected-to-receive-high-junk-rating-from-credit-agencies-following-ipo-report-says/">TechCrunch →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-paying-ai-gets-harder" data-term="story-2026-11-01-paying-ai-gets-harder"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">The Verge · 9to5Mac · Xinhua · Oct 30–31</div>
+    <h3>Apple Intelligence reaches China in December, with Alibaba's Qwen inside Siri</h3>
+    <p>Apple confirmed that <strong>iOS 27.3</strong>, due in December after a developer beta from <strong>Nov. 4</strong>, brings Apple Intelligence to iPhones in mainland China, including Live Translation, Writing Tools, Visual Intelligence and notification summaries. <strong>Alibaba's Qwen</strong> will power parts of Siri, Writing Tools and Visual Intelligence; Alibaba says users choose whether to enable it and that it will not train on their requests. Newer Siri features from WWDC 2026 are not included.</p>
+    <p style="color:var(--t2)">China is Apple's largest market outside the US and the one where it has lacked AI features for more than a year, a gap local rivals have used. The arrangement is a template for how US platforms may ship AI where foreign models are restricted: local model, local partner, user opt-in.</p>
+    <a class="cta" href="https://www.theverge.com/tech/1023974/apple-intelligence-china-ios-27-3">The Verge →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-apple-intelligence-reaches-china" data-term="story-2026-11-01-apple-intelligence-reaches-china"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">CNBC · Oct 31</div>
+    <h3>Behind some personal AI agents, human contractors still make the calls</h3>
+    <p>Personal-agent startups <strong>Dazzle AI</strong> (led by Marissa Mayer), <strong>Duckbill</strong> and <strong>Wajo AI</strong> told CNBC they route tasks models fumble, such as phone calls, bookings and CAPTCHAs, to background-checked human contractors. Duckbill has launched an API so other agent builders can hand off such tasks, breaking them into "atomic bite-sized pieces" in a model its CEO likens to Uber. Mayer called it a "transitionary period" and said the human in the loop is "a benefit." CNBC notes Meta employees had raised privacy concerns about an internal test using contractors for its Muse agent; Meta says it does not currently use humans for Muse requests.</p>
+    <p style="color:var(--t2)">It is a reminder that agent reliability on real-world actions lags demos, and that hybrid human-AI services raise disclosure and privacy questions users may not expect.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/10/31/ai-agents-humans-dazzle-duckbill-meta.html">CNBC →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-behind-some-personal-ai" data-term="story-2026-11-01-behind-some-personal-ai"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Cisco Talos · WIRED · Oct 31</div>
+    <h3>New infostealer uses commercial LLMs to rank victims by what they are worth</h3>
+    <p>Cisco Talos found <strong>Volta-Autodoxer</strong>, Windows malware that steals passwords, session tokens, payment cards and wallet seeds, then mines a victim's Gmail and delivery receipts and sends the dossier through <strong>OpenRouter</strong> to an LLM prompted to act as an "intelligence analyst." It defaults to Anthropic's Claude Opus 4.6, with fallbacks to Moonshot's Kimi K2 and Google's Gemini 2.5 Flash in case of refusals. Talos has not confirmed use in the wild and says it may be built for sale to other criminals.</p>
+    <p style="color:var(--t2)">AI here is not inventing new attacks but speeding triage, helping low-skill attackers use stolen tokens before they expire. Built-in fallbacks across providers also show the limits of any single lab's guardrails.</p>
+    <a class="cta" href="https://www.wired.com/story/kernel-panic-volta-autodoxer-ai-infostealer-malware/">WIRED →</a><a class="cta" href="https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/">Talos →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-infostealer-uses-commercial-llms" data-term="story-2026-11-01-infostealer-uses-commercial-llms"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">GitHub · MarkTechPost · OpenAI Help Center · Oct 31–Nov 1</div>
+    <h3>Quick hits: DeepSeek open-sources an agent architecture; ChatGPT and Codex limits merge</h3>
+    <p><strong>DeepSeek</strong> published <code>dsh-superagent-prototype</code> under the MIT licence: a resident "Router" handles the user and policy, and dispatches approved tickets to isolated "Worker" sessions, with GitHub and Feishu events as triggers. DeepSeek labels it a research prototype, not a product. <strong>OpenAI</strong> says that from December, Plus, Pro and Business plans will share one usage allowance across ChatGPT and Codex; it has not published allowance sizes.</p>
+    <p style="color:var(--t2)">Both point to the same design shift: always-on agents that wake on events and draw on one compute budget, rather than separate chat and coding tools.</p>
+    <a class="cta" href="https://github.com/deepseek-ai/dsh-superagent-prototype">GitHub →</a><a class="cta" href="https://help.openai.com/en/articles/20001625-understanding-chatgpt-and-codex-usage-limits">OpenAI →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-quick-hits-deepseek-open" data-term="story-2026-11-01-quick-hits-deepseek-open"></div></details>
+  </article>
+
+  <!-- STARTUPS -->
+  <div class="sec" id="startups"><h2>Startups &amp; tech</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">The Cap Table · Companies House · Bloomberg via TFN · Oct 30–31</div>
+    <h3>UK chip startup Fractile raised £577M before shipping a chip, filings show</h3>
+    <div class="meta"><span class="stat num">£577.4M Series C</span><span class="stat num">5.2× share-price step-up</span><span class="stat num">~$250M Anthropic order (reported)</span></div>
+    <p>UK Companies House filings show <strong>Fractile</strong> issued £577.4 million (about $774 million) of Series C preferred shares between Sept. 9 and Oct. 23, at £1,452 a share, 5.2 times its Series B price five months ago (The Cap Table). The round has not been announced and the filings do not name investors. Bloomberg reported that Anthropic placed an initial order of about $250 million for Fractile's inference chips, with delivery not expected until 2027.</p>
+    <p style="color:var(--t2)">It would be one of Europe's largest chip financings, and it lands in the same week public chip stocks sold off: buyers of AI compute are still paying up to secure alternatives to Nvidia years ahead of delivery.</p>
+    <a class="cta" href="https://www.thecaptable.co.uk/article/fractile-s-series-c-filings-show-577m-raised-at-1-452-a-share-a-5-2x-step-up-on-its-series-b">The Cap Table →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-uk-chip-startup-fractile" data-term="story-2026-11-01-uk-chip-startup-fractile"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Business Wire · Dealroom · Oct 29</div>
+    <h3>&amp;Truth emerges with a $70M seed to prove code correct with AI-assisted formal verification</h3>
+    <p><strong>&amp;Truth</strong> says it is building a "universal verification machine" that mathematically proves software is safe and correct across languages, using the Lean proof assistant and open-source tools such as CSLib, with AI automating the proofs. The $70 million seed is among the largest of the year.</p>
+    <p style="color:var(--t2)">As AI writes more code, checking it becomes the bottleneck; formal proofs have historically been too costly outside aerospace and chips, and the bet is that AI can make them routine.</p>
+    <a class="cta" href="https://www.businesswire.com/news/home/20261029287395/en/Truth-Emerges-From-Stealth-Pioneering-the-Universal-Verification-Machine-for-Code">Business Wire →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-truth-emerges-70m-seed" data-term="story-2026-11-01-truth-emerges-70m-seed"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">TechCrunch · Today's Startup News · Oct 28–31</div>
+    <h3>Also this week: privacy AI assistant Ollie shuts down; Jio Platforms debuts 21% up</h3>
+    <p><strong>Ollie</strong>, a privacy-focused AI assistant that had raised a reported $7.5 million seed led by Khosla, will shut down on Nov. 6 (TechCrunch). In India, <strong>Jio Platforms</strong> listed at ₹1,358, 21.4% above its ₹1,119 IPO price, after the roughly ₹30,213 crore offering was subscribed more than 21 times, while Indian startup funding fell to $115–130 million for the week, depending on the tracker (Entrackr, Inc42).</p>
+    <a class="cta" href="https://www.todaysstartupnews.com/news/october-25-31-2026-startup-funding-news-recap">Weekly recap →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-also-week-privacy-ai" data-term="story-2026-11-01-also-week-privacy-ai"></div></details>
+  </article>
+
+  <!-- OPS -->
+  <div class="sec" id="ops"><h2>Ops &amp; commerce</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">Xinhua · State Post Bureau · Oct 31</div>
+    <h3>China's couriers push AI agents and robots into the Singles' Day peak</h3>
+    <div class="meta"><span class="stat num">151.3B parcels Jan–Sep · +4.3%</span><span class="stat num">AI adoption &gt;37%</span></div>
+    <p>Ahead of Nov. 11, <strong>STO Express</strong> is using an agent platform for customer queries, intercepting abnormal shipments and trunk-route planning; <strong>JD Logistics</strong> says its "Super Brain 3.0" model forecasts regional volumes and that couriers adopt more than 90% of its AI-recommended routes; <strong>YTO</strong> has embedded over 100 agents in dispatch and service, and <strong>SF Express</strong> pre-positions inventory from sales forecasts. China handled 151.3 billion parcels in the first nine months, up 4.3%. Figures are company and industry-body claims reported by state media.</p>
+    <p style="color:var(--t2)">China's parcel network, by far the world's largest, is becoming the main testbed for agents in physical operations, from routing to exception handling.</p>
+    <a class="cta" href="https://english.news.cn/20261031/0c16b318ace74fd393889db9f0eca385/c.html">Xinhua →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-china-couriers-push-ai" data-term="story-2026-11-01-china-couriers-push-ai"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Supply Chain Digital · Oct 31</div>
+    <h3>GXO expands Agility's Digit humanoids to two more US e-commerce sites</h3>
+    <p><strong>GXO Logistics</strong> will deploy Agility Robotics' <strong>Digit</strong> humanoids at fulfilment sites in Statesville, North Carolina, and Lebanon, Tennessee, from early 2027, starting with Digit 4 and moving to Digit 5. Digit units have moved more than 100,000 totes at GXO's Flowery Branch, Georgia, site since 2024.</p>
+    <p style="color:var(--t2)">Alongside Walmart's Symbotic commitment last week, it shows contract logistics firms moving humanoids from pilots to multi-site use, though at small scale relative to fixed automation.</p>
+    <a class="cta" href="https://supplychaindigital.com/news/this-weeks-top-five-stories-in-supply-chain-october-31">Supply Chain Digital →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-gxo-expands-agility-digit" data-term="story-2026-11-01-gxo-expands-agility-digit"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Moneycontrol · CNBC-TV18 · Oct 30–31</div>
+    <h3>Walmart probes Flipkart staff over alleged ₹150 crore vendor kickbacks</h3>
+    <p>Walmart is investigating whistleblower allegations that Flipkart employees in its smartphones and luggage-and-travel divisions took more than <strong>₹150 crore</strong> (about $16 million) from vendors in exchange for better visibility and preferential treatment, including through B2B operations (Moneycontrol). Flipkart issued a statement; the probe is ongoing and the amount is unverified.</p>
+    <p style="color:var(--t2)">Marketplace placement is a valuable lever for sellers, and the case tests a large platform's internal controls over who decides it.</p>
+    <a class="cta" href="https://www.moneycontrol.com/news/business/startup/walmart-probes-flipkart-employees-over-kickbacks-exceeding-rs-150-crore-14063863.html">Moneycontrol →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-walmart-probes-flipkart-staff" data-term="story-2026-11-01-walmart-probes-flipkart-staff"></div></details>
+  </article>
+
+  <!-- DEALS -->
+  <div class="sec" id="deals"><h2>Deals &amp; funding</h2><span class="ct">New since Saturday's brief</span></div>
+
+  <div class="tx">
+    <div class="day">Raises</div>
+    <a class="row" href="https://www.cnbc.com/2026/10/31/openai-fundraising-20-billion-valuation.html"><div class="av" style="background:#2e7d4f">O</div><div class="mid"><div class="n">OpenAI</div><div class="s">UAE investors, Coatue · @ $1.25T (FT) · still open</div></div><div class="amt"><div class="a num">≤$20B</div><div class="s">Confirmed by CNBC</div></div></a>
+    <a class="row" href="https://www.thecaptable.co.uk/article/fractile-s-series-c-filings-show-577m-raised-at-1-452-a-share-a-5-2x-step-up-on-its-series-b"><div class="av" style="background:#d9622b">F</div><div class="mid"><div class="n">Fractile</div><div class="s">Investors undisclosed · AI inference chips · per filings</div></div><div class="amt"><div class="a num">£577M</div><div class="s">Series C</div></div></a>
+    <a class="row" href="https://www.businesswire.com/news/home/20261029287395/en/Truth-Emerges-From-Stealth-Pioneering-the-Universal-Verification-Machine-for-Code"><div class="av" style="background:#3d7bff">&amp;</div><div class="mid"><div class="n">&amp;Truth</div><div class="s">AI-assisted formal code verification</div></div><div class="amt"><div class="a num">$70M</div><div class="s">Seed</div></div></a>
+    <a class="row" href="https://www.todaysstartupnews.com/news/october-25-31-2026-startup-funding-news-recap"><div class="av" style="background:#6d7a2a">M</div><div class="mid"><div class="n">Machenta</div><div class="s">Creandum, Union Square Ventures · London</div></div><div class="amt"><div class="a num">$40M</div><div class="s">Seed</div></div></a>
+    <a class="row" href="https://www.todaysstartupnews.com/news/october-25-31-2026-startup-funding-news-recap"><div class="av" style="background:#b03a3a">C</div><div class="mid"><div class="n">Cent</div><div class="s">Blume, South Park Commons · preventive health, India</div></div><div class="amt"><div class="a num">$15M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://startupreader.com/news/archive/2026-10-31"><div class="av" style="background:#0f8fa8">S</div><div class="mid"><div class="n">Simplismart</div><div class="s">Dallas VC, Nvidia, Accel · AI model deployment</div></div><div class="amt"><div class="a num">$14M</div><div class="s">Series B</div></div></a>
+    <a class="row" href="https://www.todaysstartupnews.com/news/october-25-31-2026-startup-funding-news-recap"><div class="av" style="background:#7a4fd0">M</div><div class="mid"><div class="n">Matiks</div><div class="s">General Catalyst, Ronnie Screwvala · social gaming</div></div><div class="amt"><div class="a num">$10M</div><div class="s">Pre-Series A</div></div></a>
+    <a class="row" href="https://startupreader.com/news/archive/2026-10-31"><div class="av" style="background:#2e7d4f">S</div><div class="mid"><div class="n">ShareWillow</div><div class="s">AI tools for home-service workers</div></div><div class="amt"><div class="a num">$8.5M</div><div class="s">Funding</div></div></a>
+    <a class="row" href="https://startupreader.com/news/archive/2026-10-31"><div class="av" style="background:#d9622b">B</div><div class="mid"><div class="n">Bleu Robotics</div><div class="s">Paris · software for industrial humanoids</div></div><div class="amt"><div class="a num">€5M</div><div class="s">Pre-seed</div></div></a>
+    <div class="day">Funds &amp; exits</div>
+    <a class="row" href="https://www.todaysstartupnews.com/news/october-25-31-2026-startup-funding-news-recap"><div class="av" style="background:#5d5d66">J</div><div class="mid"><div class="n">Jio Platforms IPO</div><div class="s">Listed ₹1,358 vs ₹1,119 issue · NSE, BSE</div></div><div class="amt"><div class="a num">+21.4%</div><div class="s">Debut</div></div></a>
+    <a class="row" href="https://www.todaysstartupnews.com/news/october-25-31-2026-startup-funding-news-recap"><div class="av" style="background:#3d7bff">B</div><div class="mid"><div class="n">BY Venture Partners</div><div class="s">Fund III · opens Lisbon office</div></div><div class="amt"><div class="a num">$60M</div><div class="s">Fund close</div></div></a>
+  </div>
+
+  <!-- MARKETS -->
+  <div class="sec" id="markets"><h2>Markets</h2><span class="ct">Friday close · markets shut for the weekend</span></div>
+
+  <div class="tx stk">
+    <div class="day">Friday, Oct 30 close (AP, Yahoo Finance, exchanges)</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPX</div><div class="mid"><div class="n">S&amp;P 500</div><div class="px num">7,580.07 · October −1.2%</div></div><span class="pct dn num">−1.82%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">IXIC</div><div class="mid"><div class="n">Nasdaq Composite</div><div class="px num">25,437.00 · October about −5.2%</div></div><span class="pct dn num">−2.86%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">DJI</div><div class="mid"><div class="n">Dow</div><div class="px num">51,770.31 · October +1.5%</div></div><span class="pct dn num">−1.09%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">NVDA</div><div class="mid"><div class="n">Nvidia</div><div class="px num">$204.64 · Intel $65.76 (−28.58%)</div></div><span class="pct dn num">−4.22%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">AMD</div><div class="mid"><div class="n">AMD</div><div class="px num">$504.80 · Micron $884.74 (−5.30%)</div></div><span class="pct dn num">−10.88%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BRN</div><div class="mid"><div class="n">Brent, Dec. expiry</div><div class="px num">$117.64 · WTI $104.12 (+2.08%)</div></div><span class="pct up num">+2.40%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">XAU</div><div class="mid"><div class="n">Gold, COMEX Dec.</div><div class="px num">$3,898.90 · silver $49.28 (−5.93%)</div></div><span class="pct dn num">−3.29%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">DXY</div><div class="mid"><div class="n">Dollar index</div><div class="px num">101.90 · USD/JPY 157.38</div></div><span class="pct dn num">−0.14%</span></div>
+    <div class="day">Trades 24/7 · Sunday morning</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BTC</div><div class="mid"><div class="n">Bitcoin</div><div class="px num">~$77,500 Sunday (Yahoo Finance) · ~$76,500 Fri p.m.</div></div><span class="pct up num">~+1%</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">Analysis · sources as cited</div>
+    <h3>What to watch when markets reopen Monday</h3>
+    <p>Friday's tech sell-off left the Nasdaq about 5% lower for October. Over the weekend the main new inputs were mixed: Binance's reopening removed one source of crypto stress, and bitcoin edged up; the OpenAI and credit-rating news extended doubts about AI financing; and Iran's two-day Hormuz offer came alongside harder military rhetoric. US markets also face Tuesday's midterms, where polls cited by Reuters favour Democrats to win the House, and Fed officials' recent signals of a possible December hike.</p>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-watch-when-markets-reopen" data-term="story-2026-11-01-watch-when-markets-reopen"></div></details>
+  </article>
+
+  <!-- ARGENTINA -->
+  <div class="sec" id="argentina"><h2>Argentina</h2><span class="ct">Friday close</span></div>
+
+  <div class="tx stk">
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">BCRA</div><div class="mid"><div class="n">BCRA purchases, October</div><div class="px num">US$1,395M · best month since July</div></div><span class="pct up num">2026: $15.96B</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">RES</div><div class="mid"><div class="n">Gross reserves, Oct 30</div><div class="px num">US$48,562M · −$1,592M on the day</div></div><span class="pct up num">Oct +$2.47B</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">MAY</div><div class="mid"><div class="n">Dólar mayorista (BCRA)</div><div class="px num">$1,537.34 · October +1.30%</div></div><span class="pct num" style="background:var(--s2);color:#d6d6dc">Fri close</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">RP</div><div class="mid"><div class="n">Riesgo país</div><div class="px num">787 bp · highest in a year</div></div><span class="pct dn num">+46 bp</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">Infobae · Clarín · Oct 31</div>
+    <h3>Central bank ends October with its strongest dollar buying since July, before an $880M IMF payment</h3>
+    <p>The BCRA bought <strong>US$1.395 billion</strong> in October, including $96 million on Friday, taking 2026 purchases to <strong>$15.96 billion</strong>, more than 50% above the implicit $10 billion target in the IMF programme (Infobae). It paused buying for three sessions last week amid volatility after the Brazilian real fell following Brazil's election. Gross reserves still fell $1.59 billion on Friday to $48.56 billion, which Infobae attributes to month-end bank reserve movements and a more than 3% fall in gold. The Treasury owes the IMF <strong>$880 million</strong> in interest on Monday and is expected to buy the dollars from the central bank. Separately, the government warned that beef, utility tariffs and fuel will add inflation pressure through year-end (Clarín).</p>
+    <p style="color:var(--t2)">Reserve accumulation is the main test of the IMF programme; Monday's payment and country risk at a one-year high will show how much of that buffer is usable ahead of the 2027 elections.</p>
+    <a class="cta" href="https://www.infobae.com/economia/2026/10/31/el-banco-central-compro-usd-1395-millones-en-octubre-y-reforzo-las-reservas/">Infobae →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-central-bank-ends-october" data-term="story-2026-11-01-central-bank-ends-october"></div></details>
+  </article>
+
+  <!-- GLOBAL -->
+  <div class="sec" id="global"><h2>Global</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">ABC News · EFE · elDiario.es · Euronews · CNN · Oct 28–31</div>
+    <h3>Spain's Urda rail crash: 69 dead, and a control-centre order under investigation</h3>
+    <div class="meta"><span class="stat num">69 dead</span><span class="stat num">39 still hospitalised (Oct 30)</span><span class="stat">2nd fatal crash on the line this year</span></div>
+    <p>A Renfe high-speed train ran into a stationary Iryo train near <strong>Urda (Toledo)</strong> on the Madrid–Seville line on Wednesday morning, killing <strong>69 people</strong> (Castilla-La Mancha government; an earlier figure of 74 was retracted). Transport Minister Óscar Puente said a computer failure had halted six trains and that the control centre then gave an "inexplicable" order to resume at normal speed; radio recordings published by elDiario.es show the Iryo driver reporting she was still stopped. In January, a crash on the same line near Adamuz killed 46. Spain held a third day of mourning on Saturday.</p>
+    <p>Unions including Semaf, CSIF and UGT blame understaffing, fatigue and pressure on controllers to restore timetables, and warn against blaming one individual; La Razón reports that infrastructure manager Adif pressed controllers to recover traffic quickly to avoid delay compensation, which has not been independently confirmed. Prime Minister Pedro Sánchez has backed Puente and not sought his resignation, while the opposition is demanding accountability (CNN, Russpain).</p>
+    <a class="cta" href="https://abcnews.com/International/10-killed-train-collision-high-speed-line-spain/story?id=137633323">ABC News →</a><a class="cta" href="https://www.euronews.com/2026/10/31/spain-observes-third-day-of-mourning-as-unions-demand-urgent-action-following-deadly-train">Euronews →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-spain-urda-rail-crash" data-term="story-2026-11-01-spain-urda-rail-crash"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Reuters · Oct 30–31</div>
+    <h3>US midterms: record early vote, a DOJ probe in Alaska and a court rebuke, days before Tuesday</h3>
+    <p>Nearly <strong>50 million</strong> Americans have voted early, a midterm record. The Justice Department stepped up a criminal investigation into reports that aides to a Democratic Senate candidate in Alaska recruited a spoiler candidate sharing the Republican incumbent's name; Democrats have not been charged. Separately, a federal judge ordered the DOJ to stop threatening to prosecute election officials who do not comply with its demands on alleged non-citizen voting. Polls cited by Reuters favour Democrats to win the House and give them a plausible chance in the Senate, where Republicans hold narrow majorities.</p>
+    <a class="cta" href="https://www.devdiscourse.com/article/international/4000074-reuters-world-news-summary">Reuters summary →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-us-midterms-record-early" data-term="story-2026-11-01-us-midterms-record-early"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Reuters · Anadolu · Euronews · Oct 30–Nov 1</div>
+    <h3>In brief: Patriots for Ukraine, a G20 without a joint statement, protests across Europe</h3>
+    <p>The US approved a <strong>$2.1 billion</strong> sale of 500 Patriot PAC-3 MSE missiles to Ukraine, paid by allies and EU-financed funds, and Zelenskyy said he agreed with Turkey's Erdoğan to work on a new <strong>Black Sea grain corridor</strong>. G20 foreign ministers ended in Atlanta with a chair's statement focused on energy security and shipping lanes rather than a joint declaration, amid rifts over Russian FM Lavrov's attendance; the US proposed Poland as a permanent member. Cost-of-living protests drew a general strike in Italy, clashes and tear gas in Lyon, Grenoble and Marseille, and youth-led rallies in Germany. In Poland, PM Tusk vowed "no compromise" in the Constitutional Tribunal standoff. Russia vetoed a US resolution on Western Sahara, leaving the UN mission's mandate to lapse.</p>
+    <a class="cta" href="https://www.aa.com.tr/en/world/morning-briefing-nov-1-2026/4107709">Anadolu →</a><a class="cta" href="https://www.euronews.com/2026/10/31">Euronews →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-brief-patriots-ukraine-g20" data-term="story-2026-11-01-brief-patriots-ukraine-g20"></div></details>
+  </article>
+
+  <!-- AHEAD -->
+  <div class="sec" id="ahead"><h2>Ahead</h2><span class="ct">ART dates</span></div>
+  <div class="tx ahead">
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">2</div></div><div class="mid"><div class="n">Argentina's $880M IMF payment · markets reopen</div><div class="s" style="white-space:normal">First session after the AI sell-off and Binance reopening.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">3</div></div><div class="mid"><div class="n">US midterms · Binance proof of reserves</div><div class="s" style="white-space:normal">Reserves report expected by Tuesday (UTC); Copom meets Nov 3–4.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">4</div></div><div class="mid"><div class="n">iOS 27.3 beta with Apple Intelligence in China</div><div class="s" style="white-space:normal">Israel's official election results also due.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">11</div></div><div class="mid"><div class="n">Singles' Day peak in China</div><div class="s" style="white-space:normal">First large test of couriers' AI deployments.</div></div></div>
+  </div>
+
+  <!-- giscus-feedback -->
+  <section class="card fbcard" id="feedback">
+    <span class="lbl">Feedback</span>
+    <h3>How was today's brief?</h3>
+    <p class="hint">React or leave a comment on format, depth, or topics. Feedback shapes what gets covered and how, never which side a story takes.</p>
+    <div class="gslot" id="fb-brief" data-term="brief-2026-11-01"></div>
+  </section>
+
+  <footer>Prepared for Matias Ricci · Sunday edition, Nov 1, 2026 · as of 07:00 ART (UTC−3)<br>Covers news since Saturday's brief. US markets are closed for the weekend; equity, commodity and currency figures are Friday, Oct 30 closes or settlements (AP, Yahoo Finance, exchange data via Reuters/Investing.com). Bitcoin is a Sunday-morning quote. Binance figures and its account of the attack are the company's own; North Korea attribution is from the FBI and blockchain analytics firms, and was questioned by President Trump. Iranian statements about Hormuz, fishing boats and nuclear policy are unverified. OpenAI round figures are as reported by the FT and CNBC, not confirmed by OpenAI; the Anthropic rating outlook is Blackstone's view as reported by the FT. Fractile figures come from public filings, not a company announcement. Argentine figures from BCRA via Infobae and Rava. Rounds covered in earlier briefs are not repeated.</footer>
+</main>
+<script>
+/* giscus loader: one embed at a time (client.js targets the first .giscus), per-iframe resizing */
+(function(){
+  var CFG={repo:"matiasriccibrochiero/daily-brief",repoId:"R_kgDOVQx5Jg",category:"Announcements",categoryId:"DIC_kwDOVQx5Js4DJrHP",mapping:"specific",strict:"1",
+    reactionsEnabled:"1",emitMetadata:"0",inputPosition:"top",theme:"transparent_dark",lang:"en",loading:"lazy"};
+  var frames=[],heights=new Map(),queue=Promise.resolve();
+  function kebab(k){return k.replace(/[A-Z]/g,function(c){return "-"+c.toLowerCase()})}
+  window.addEventListener("message",function(e){
+    if(e.origin!=="https://giscus.app")return;
+    var d=e.data; if(!d||typeof d!=="object"||!d.giscus)return;
+    var f=null; for(var i=0;i<frames.length;i++){if(frames[i].contentWindow===e.source){f=frames[i];break}}
+    if(d.giscus.resizeHeight&&f){heights.set(f,d.giscus.resizeHeight);f.style.height=d.giscus.resizeHeight+"px"}
+    var ks=Object.keys(d.giscus);
+    if(ks.length===1&&ks[0]==="resizeHeight"){e.stopImmediatePropagation();return}
+    setTimeout(function(){heights.forEach(function(h,fr){fr.style.height=h+"px"})},0);
+  });
+  function mount(slot){
+    if(!slot||slot.getAttribute("data-mounted"))return; slot.setAttribute("data-mounted","1");
+    queue=queue.then(function(){return new Promise(function(done){
+      slot.classList.add("giscus");
+      var s=document.createElement("script"); s.src="https://giscus.app/client.js"; s.async=true; s.crossOrigin="anonymous";
+      for(var k in CFG)s.setAttribute("data-"+kebab(k),CFG[k]);
+      s.setAttribute("data-term",slot.getAttribute("data-term"));
+      s.onload=s.onerror=function(){var fr=slot.querySelector("iframe");if(fr)frames.push(fr);
+        slot.classList.remove("giscus");slot.classList.add("gdone");done()};
+      slot.parentNode.insertBefore(s,slot);
+    })});
+  }
+  document.querySelectorAll("details.fb").forEach(function(d){
+    d.addEventListener("toggle",function(){if(d.open)mount(d.querySelector(".gslot"))});
+  });
+  mount(document.getElementById("fb-brief"));
+})();
+</script>
+</body>
+</html>
