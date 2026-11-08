@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Daily Brief · Sunday · November 8, 2026</title>
+<style>
+  :root{
+    --bg:#000; --s1:#16161a; --s2:#1f1f25; --s3:#2a2a31;
+    --tx:#fff; --t2:#8a8a93; --t3:#5d5d66;
+    --blue:#3d7bff; --green:#2fd27a; --greenbg:rgba(47,210,122,.14);
+    --red:#ff5c5c; --redbg:rgba(255,92,92,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+  .app{max-width:460px;margin:0 auto;padding:12px 16px 48px}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{font-weight:600;color:#fff}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--s2);padding:1px 5px;border-radius:6px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0}
+  .me{width:36px;height:36px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .search{flex:1;margin:0 10px;height:36px;border-radius:18px;background:var(--s1);color:var(--t2);font-size:14px;display:flex;align-items:center;padding:0 14px;gap:8px}
+  .search svg{width:15px;height:15px;stroke:var(--t2)}
+  .toppill{background:var(--s1);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#d6d6dc}
+  .tz{font-size:12px;color:var(--t2);font-weight:600}
+
+  /* hero balance */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero .cap{font-size:14px;color:var(--t2);font-weight:500}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:8px 0 6px}
+  .hero .dt{font-size:15px;color:var(--t2);font-weight:500}
+  .pillbtn{display:inline-block;margin-top:16px;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px}
+
+  /* actions */
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 28px;text-align:center}
+  .actions a{color:var(--tx);font-size:12px;font-weight:500;text-decoration:none}
+  .actions .ic{width:52px;height:52px;border-radius:50%;background:var(--s2);display:grid;place-items:center;margin:0 auto 8px}
+  .actions svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;scrollbar-width:none;
+         position:sticky;top:0;background:var(--bg);z-index:5}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;text-decoration:none}
+  .chip.on{background:#fff;color:#000}
+  .chip:hover{text-decoration:none}
+
+  /* surfaces */
+  .card{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .sec{margin:32px 0 12px;display:flex;align-items:baseline;justify-content:space-between;padding:0 4px}
+  .sec h2{font-size:22px;font-weight:700;letter-spacing:-.025em}
+  .sec .ct{font-size:13px;color:var(--t2);font-weight:500}
+  .lbl{display:inline-block;background:var(--s3);color:#d6d6dc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;letter-spacing:.01em}
+
+  .lead p{font-size:16px;line-height:1.5;color:#e9e9ee;letter-spacing:-.005em}
+  .lead p + p{margin-top:12px;color:var(--t2)}
+
+  /* balance tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .tile{background:var(--s1);border-radius:24px;padding:18px}
+  .tile .k{font-size:13px;color:var(--t2);font-weight:500}
+  .tile .v{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-top:6px}
+  .tile .s{font-size:12px;color:var(--t2);margin-top:2px}
+  .tile .s.g{color:var(--green)} .tile .s.r{color:var(--red)}
+
+  /* feature cards */
+  .feat{background:var(--s1);border-radius:28px;padding:24px 22px 22px;margin-bottom:12px}
+  .feat h3{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:14px 0 8px}
+  .by{font-size:13px;color:var(--t2);margin-bottom:16px}
+  .feat p,.story p{color:#c9c9d0;margin-bottom:12px}
+  .feat p:last-of-type,.story p:last-of-type{margin-bottom:0}
+  .take{background:var(--s2);border-radius:18px;padding:14px 16px;margin-top:16px;font-size:14px;color:#e2e2e8}
+  .take b{display:block;font-size:12px;color:var(--t2);font-weight:600;margin-bottom:2px}
+  .cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600}
+  .cta + .cta{margin-left:16px}
+
+  /* scenario list (inside card) */
+  .scen{background:var(--s2);border-radius:20px;padding:4px 16px;margin:16px 0}
+  .scen .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
+  .scen .r + .r{box-shadow:0 -1px 0 rgba(255,255,255,.06)}
+  .scen .n{font-size:14px;font-weight:600}
+  .scen .d{font-size:12px;color:var(--t2);margin-top:1px;line-height:1.35}
+  .scen .a{font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .scen .cap{font-size:12px;color:var(--t2);padding:10px 0 4px}
+
+  /* story cards */
+  .story{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .story h3{font-size:19px;font-weight:700;letter-spacing:-.022em;line-height:1.22;margin-bottom:10px}
+  .story .k{font-size:12px;color:var(--t2);font-weight:600;margin-bottom:8px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stat{background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:#fff}
+
+  /* transaction list */
+  .tx{background:var(--s1);border-radius:24px;padding:6px 0;margin-bottom:12px}
+  .tx .day{font-size:13px;color:var(--t2);font-weight:600;padding:12px 20px 4px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 20px;color:var(--tx);text-decoration:none}
+  .row:hover{background:var(--s2);text-decoration:none}
+  .av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff}
+  .mid{flex:1;min-width:0}
+  .mid .n{font-size:15px;font-weight:600}
+  .mid .s{font-size:13px;color:var(--t2);line-height:1.35;margin-top:1px}
+  .amt{text-align:right;flex:none}
+  .amt .a{font-size:16px;font-weight:700;letter-spacing:-.02em}
+  .amt .s{font-size:12px;color:var(--t2)}
+
+  /* stocks */
+  .stk .row{cursor:default}
+  .stk .row:hover{background:none}
+  .px{font-size:13px;color:var(--t2);margin-top:1px}
+  .pct{flex:none;font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;min-width:74px;text-align:center}
+  .up{color:var(--green);background:var(--greenbg)}
+  .dn{color:var(--red);background:var(--redbg)}
+  .nt{color:#d6d6dc;background:var(--s3)}
+
+  /* ahead */
+  .ahead .row{align-items:flex-start}
+  .when{flex:none;width:48px;height:48px;border-radius:14px;background:var(--s2);text-align:center;padding-top:6px}
+  .when .m{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .when .d{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+
+  footer{font-size:11.5px;color:var(--t3);text-align:center;padding:28px 12px 0;line-height:1.5}
+
+  @media (min-width:600px){
+    body{padding-top:24px}
+    .app{background:#0b0b0f;border-radius:40px;padding:16px 20px 40px;margin-bottom:40px}
+    .chips{background:#0b0b0f;margin:0 -20px 8px;padding-left:20px;padding-right:20px;border-radius:0}
+  }
+
+
+  /* feedback (giscus) */
+  .fb{margin-top:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+  .fb summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--t2);padding:6px 12px 6px 10px;border-radius:999px;background:var(--s2)}
+  .fb summary::-webkit-details-marker{display:none}
+  .fb summary svg{width:14px;height:14px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+  .fb[open] summary svg{transform:rotate(90deg)}
+  .fb summary:hover{color:#fff}
+  .fb .gslot{margin-top:12px}
+  .gslot{min-height:120px}
+  .gslot iframe{width:100%;border:0}
+  .fbcard{margin-top:32px;border-radius:28px;padding:24px 20px}
+  .fbcard h3{font-size:24px;font-weight:800;letter-spacing:-.035em;line-height:1.15;margin:14px 0 6px}
+  .fbcard .hint{font-size:14px;color:var(--t2);line-height:1.45;margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<main class="app">
+
+  <div class="top">
+    <div class="me">MR</div>
+    <div class="toppill">Sunday · Sun 8 Nov</div>
+    <div class="tz">ART</div>
+  </div>
+
+  <section class="hero">
+    <div class="cap">Sunday edition · Overnight and the weekend</div>
+    <h1>Daily Brief</h1>
+    <div class="dt">November 8, 2026 · Sat 07:00 → Sun 07:00 ART</div>
+    <span class="pillbtn">12 min read</span>
+  </section>
+
+  <nav class="actions">
+    <a href="#featured"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div>Featured</a>
+    <a href="#ai"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>Agents</a>
+    <a href="#deals"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Deals</a>
+    <a href="#markets"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>Markets</a>
+  </nav>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Ueno accounts frozen</div><div class="v num">~3M</div><div class="s num">About 60% of Paraguay's adults</div></div>
+    <div class="tile"><div class="k">State and pension money in Ueno</div><div class="v num">$800–860M</div><div class="s num">Guardian estimate</div></div>
+    <div class="tile"><div class="k">Brent, last week</div><div class="v num">−16%</div><div class="s r num">To $98.32 · peace-hopes fade</div></div>
+    <div class="tile"><div class="k">Kraków shooting</div><div class="v num">6</div><div class="s r num">Killed in the main square</div></div>
+  </div>
+
+  <div class="card lead">
+    <span class="lbl">Overnight, in two lines</span>
+    <p style="margin-top:14px">Paraguay's Senate impeached President Santiago Peña on Friday over the collapse of digital lender Ueno Bank, which froze nearly 3 million accounts. On Saturday prosecutors charged him and a judge ordered him into pretrial custody. Iran's Revolutionary Guard said it had lifted its self-imposed 2,000 km missile-range limit; the US disabled a cargo ship trying to run the Iran blockade and created a task force aimed at Iran's land and Caspian routes; and falling debris from a Houthi barrage damaged an Aramco building in Riyadh.</p>
+    <p>A gunman killed six people in Kraków's main square in an attack Polish officials described as far-right inspired. Israel's president asked Gadi Eisenkot, not Benjamin Netanyahu, to form a government. Pope Leo XIV arrives in Buenos Aires at 16:30 today for the first papal visit in 39 years. US markets were closed; Korea's Kospi fell 11.7% last week, and Berkshire Hathaway reported $9.6 billion of share buybacks in the third quarter.</p>
+  </div>
+
+  <div class="chips">
+    <a class="chip on" href="#featured">Featured</a>
+    <a class="chip" href="#ai">AI &amp; agents</a>
+    <a class="chip" href="#ops">Ops &amp; commerce</a>
+    <a class="chip" href="#startups">Startups &amp; tech</a>
+    <a class="chip" href="#deals">Deals</a>
+    <a class="chip" href="#markets">Markets</a>
+    <a class="chip" href="#argentina">Argentina</a>
+    <a class="chip" href="#global">Global</a>
+    <a class="chip" href="#ahead">Ahead</a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec" id="featured"><h2>Featured</h2><span class="ct">2 stories</span></div>
+
+  <article class="feat">
+    <span class="lbl">Paraguay · Banking crisis</span>
+    <h3>Paraguay's digital-bank collapse topples a president, and a judge jails him</h3>
+    <div class="by">Guardian · AFP · AP · Reuters · ABC Color · Ámbito · Nov 7–8</div>
+    <div class="meta"><span class="stat num">~3M accounts frozen</span><span class="stat num">$800–860M public money</span><span class="stat">Charged Sat · custody ordered</span><span class="stat">Alliana sworn in</span></div>
+    <p><strong>What happened.</strong> Paraguay's central bank put Ueno Bank, a fast-growing digital lender, into resolution on Monday night, November 2, citing insolvency. Nearly <strong>3 million</strong> customers — about 60% of the country's adults, the Guardian reports — found their accounts frozen. AFP describes the same scale as nearly half of Paraguay's 6.5 million people. Ueno also held an estimated <strong>$800 million to $860 million</strong> in state and pension funds. About <strong>32,000</strong> pensioners went unpaid, businesses reported sales falling by as much as 80%, and media outlets in the same group, including the newspaper <em>La Tribuna</em>, had operations suspended.</p>
+    <p>President Santiago Peña resigned on Thursday in an attempt to keep the lifetime Senate seat that former presidents receive, which would have given him special jurisdiction. Lawmakers impeached him on Friday anyway and stripped the seat, so he faces ordinary courts. Vice President Pedro Alliana was sworn in to finish the term, which ends in 2028.</p>
+    <p>On Saturday prosecutors charged Peña with breach of trust and administration for personal gain — AFP's wording is "mismanagement for personal gain" — and asked for preventive detention. Each charge carries up to 10 years, Reuters reported. After a hearing, Judge Hernán Otazú ordered Peña into pretrial custody at the Asunción facility where he had been held since Friday, and froze the assets of Peña and former central-bank chief Carlos Carvallo Spalding, AFP reported. Carvallo, who ran Ueno until 2023 and was later appointed to lead the central bank, faces the same two charges plus falsifying government documents.</p>
+    <div class="scen">
+      <div class="cap">How the week unfolded</div>
+      <div class="r"><div><div class="n">Mon 2 Nov</div><div class="d">Central bank puts Ueno into resolution</div></div><div class="a num">~3M</div></div>
+      <div class="r"><div><div class="n">Thu 5 Nov</div><div class="d">Peña resigns, trying to keep immunity</div></div><div class="a num">Out</div></div>
+      <div class="r"><div><div class="n">Fri 6 Nov</div><div class="d">Senate impeaches him; Alliana sworn in</div></div><div class="a num">Removed</div></div>
+      <div class="r"><div><div class="n">Sat 7 Nov</div><div class="d">Charges filed; judge orders custody</div></div><div class="a num">Jailed</div></div>
+    </div>
+    <p><strong>The alleged chain.</strong> Peña, who took office in 2023 at 44 as Paraguay's youngest democratic-era president, appointed Carvallo — then Ueno's chief executive — to run the central bank. Less than three months later, the Guardian reports, Carvallo authorized Ueno to become a full digital bank. Peña had about <strong>$1 million</strong> in shares bought in 2019 in a company that became Ueno Holding; the Guardian says he sold them in April 2025 (Reuters has reported March 2025). Prosecutors say he used his influence to steer government deposits to Ueno and downplayed warnings about questionable loans and solvency. Eight former Ueno executives and directors were charged earlier in the week.</p>
+    <p><strong>The defense, and depositors.</strong> Peña's lawyer, Ricardo Preda, denies the charges and says a minister, not the president, decides where state money is deposited (AFP). Peña has said the bank's problems were a regulatory matter. A deposit-guarantee fund covers up to <strong>$38,000</strong>, which the Guardian says would apply to more than 90% of individual account holders. On Friday the central bank began paying customers with up to <strong>$1,565</strong> who have no debts and hold an account elsewhere. The central bank told AFP that more than 50% of customers have recovered their funds; that is the bank's own claim, and it is unclear whether it means half of customers or of balances.</p>
+    <p>In Buenos Aires, Ámbito reports that ITTI, the group's technology arm, operates locally as Kaitel SRL in Belgrano with about <strong>943</strong> staff. Some were suspended without pay for 30 days from November 5, and the company has said it is struggling to pay October salaries. Peña had been a close ally of both Javier Milei and Donald Trump; AFP notes his removal as another setback for Trump's network of South American allies.</p>
+    <div class="take"><b>Why it matters (analysis)</b>A mobile-first lender grew large enough in about three years to hold most adults' money and a large share of public funds, then failed, and the failure removed a sitting president in five days. The case puts the supervisor-as-former-CEO relationship at the center of a national crisis. It is also a test of how quickly a deposit-guarantee scheme can restore confidence when the bank is the country's everyday payments rail, and it leaves Argentina with a direct labor-market spillover through the group's Buenos Aires tech operation.</div>
+    <a class="cta" href="https://www.theguardian.com/world/2026/nov/07/paraguay-ueno-bank-collapse-santiago-pena">Guardian →</a><a class="cta" href="https://www.afp.com/en/impeached-paraguay-leader-charged-over-shock-implosion-bank">AFP →</a><a class="cta" href="https://apnews.com/article/paraguay-president-pena-ueno-bank-0a3cddd03f9fb36c870fa3117aeeb4ac">AP →</a><a class="cta" href="https://www.ambito.com/negocios/ueno-bank-del-desembarco-fastuoso-buenos-aires-la-crisis-que-dejo-casi-1000-trabajadores-la-incertidumbre-n6342017">Ámbito →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-paraguay-digital-bank-collapse" data-term="story-2026-11-08-paraguay-digital-bank-collapse"></div></details>
+  </article>
+
+  <article class="feat">
+    <span class="lbl">Middle East · Shipping</span>
+    <h3>Iran drops its missile-range cap as the US widens the blockade and debris hits Aramco in Riyadh</h3>
+    <div class="by">Iran International · CENTCOM · The National · Anadolu · Reuters · Nov 7–8</div>
+    <div class="meta"><span class="stat">2,000 km cap lifted</span><span class="stat">M/V Huda disabled</span><span class="stat">Task Force Iron Gate</span><span class="stat">Aramco tower damaged</span></div>
+    <p><strong>What happened.</strong> IRGC spokesman Hossein Mohebbi said Saturday that Iran's self-imposed <strong>2,000 km</strong> limit on ballistic-missile range "has been lifted," citing Supreme Leader Mojtaba Khamenei's directive to respond with "no geographical limits." He did not say Iran has already fielded longer-range missiles, only that capabilities would be shown "in practice." On the same day an IRGC aerospace adviser said the missiles have a range of about 2,000 km. In March, US and British officials said two missiles were launched toward Diego Garcia, about 4,000 km away; Iran denied responsibility (Iran International).</p>
+    <p>In the Gulf of Oman, US Central Command said a US aircraft fired precision munitions at the stern of the St. Kitts-flagged cargo ship <strong>M/V Huda</strong> on November 7, after the crew ignored warnings and tried more than once to breach the naval blockade. The ship had visited an Iranian port. CENTCOM says that since July it has redirected <strong>147</strong> commercial vessels that complied and disabled <strong>five</strong> merchant ships that did not, and that it had previously destroyed 10 Iranian commercial oil tankers it described as part of an IRGC shadow network. Industry coverage notes this is a cargo ship rather than a tanker, which extends enforcement beyond oil cargoes.</p>
+    <p>The same day, CENTCOM said Admiral Brad Cooper directed the creation of <strong>Task Force Iron Gate</strong>: about 20 civilian and military staff based in Tampa, tasked with stopping advanced weapons, dual-use technology, sanctioned materials and what Washington calls illegal revenue streams moving across Iran's land borders and the Caspian Sea (Anadolu, citing CENTCOM).</p>
+    <div class="scen">
+      <div class="cap">Weekend escalation, in figures</div>
+      <div class="r"><div><div class="n">Declared missile-range cap</div><div class="d">IRGC says the limit is lifted</div></div><div class="a num">2,000 km</div></div>
+      <div class="r"><div><div class="n">Vessels redirected since July</div><div class="d">CENTCOM, ships that complied</div></div><div class="a num">147</div></div>
+      <div class="r"><div><div class="n">Merchant ships disabled</div><div class="d">Including Huda on Nov 7</div></div><div class="a num">5</div></div>
+      <div class="r"><div><div class="n">Brent last week</div><div class="d">CNBC; oil had priced in peace hopes</div></div><div class="a num" style="color:var(--red)">−16%</div></div>
+    </div>
+    <p><strong>Riyadh.</strong> Early Sunday the Saudi-led coalition said it intercepted two ballistic missiles and two cruise missiles fired by Yemen's Houthis toward Riyadh and the south. The Saudi energy ministry said falling shrapnel caused minor damage to an Aramco administrative building in the King Abdullah Financial District, with no casualties. A Reuters witness, cited by The National, saw blown-out windows across several floors of the Aramco tower. Houthi spokesman Yahya Saree said the group carried out six operations, naming King Khalid International Airport, Aramco sites in Riyadh and Khurais, and Pumping Station No. 8 in Dawadmi. The Houthi-run health ministry said Saudi strikes near Sanaa on Saturday killed at least 33 people; Saudi authorities said they were investigating.</p>
+    <p style="color:var(--t2)">The IRGC separately claimed two tankers hit mines in and near the Strait of Hormuz; no ships were named, and that claim is unconfirmed. Friday's US strike on an anti-aircraft launcher on Qeshm Island was covered in yesterday's brief. Diplomacy is still in motion: Qatari mediation continues, and no new ceasefire has been announced.</p>
+    <div class="take"><b>Why it matters (analysis)</b>The weekend pulled in opposite directions. Enforcement widened — from tankers to general cargo, and from sea lanes to land and Caspian routes — while Iran publicly discarded a range limit that had been part of its stated doctrine. At the same time, a hit on an Aramco building in the Saudi capital, even by falling debris, puts energy infrastructure back in view just after Brent fell more than 16% last week on hopes the war might ease. That is the main geopolitical risk for Monday's open, and for shippers still trying to move goods through the Gulf.</div>
+    <a class="cta" href="https://www.iranintl.com/en/202611076051">Iran International →</a><a class="cta" href="https://www.centcom.mil/MEDIA/PUBLIC-RELEASES/Article/4644273/us-forces-disable-cargo-vessel-attempting-to-violate-naval-blockade/">CENTCOM →</a><a class="cta" href="https://www.thenationalnews.com/news/gulf/2026/11/08/saudi-led-coalition-intercepts-two-houthi-missiles-fired-towards-riyadh/">The National →</a><a class="cta" href="https://www.aa.com.tr/en/world/morning-briefing-nov-8-2026/4115649">Anadolu →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-iran-drops-missile-range" data-term="story-2026-11-08-iran-drops-missile-range"></div></details>
+  </article>
+
+  <!-- AI -->
+  <div class="sec" id="ai"><h2>AI &amp; agents</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">CNBC · Nov 7</div>
+    <h3>Voters rejected data-center measures in 40 of 41 ballot races as Anthropic prepares to go public</h3>
+    <div class="meta"><span class="stat num">40 of 41 opposed</span><span class="stat num">$895.4B compute commitments</span><span class="stat">NBC: majority called it a vote factor</span></div>
+    <p>CNBC reports that local voters opposed data-center ballot measures in <strong>40 of 41</strong> cases in Tuesday's midterms, and that more than half of voters in an NBC News exit poll called AI data centers a "crucial" or "major factor" in their congressional choice. Anthropic, which is preparing a Nasdaq listing that CNBC says is likely aimed at mid-November, disclosed in an amended prospectus about <strong>$895.4 billion</strong> of purchase commitments and lease agreements, "substantially all" tied to compute and infrastructure. Its risk factors say opposition to data-center development has become more organized. A University of Southern California survey, cited by CNBC, found <strong>71%</strong> of respondents do not trust large technology companies "at all" to act in society's interest on data-center development. Anthropic declined to comment to CNBC.</p>
+    <p style="color:var(--t2)">Analysis: the commitment figure shows how much physical plant a frontier lab has already promised to buy or lease, just as permitting politics turned against those sites in many local votes. Yesterday's brief covered the markdown in Anthropic's discussed IPO range; the new element is how clearly voters singled out the buildings themselves.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/11/07/anthropic-ipo-ai-data-center-backlash.html">CNBC →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-voters-rejected-data-center" data-term="story-2026-11-08-voters-rejected-data-center"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">The Verge, citing the New York Times · Nov 7</div>
+    <h3>The US cleared a Chinese firm with an empty Beijing office to handle Nvidia H200 chips</h3>
+    <p>The New York Times found that <strong>New Matrix</strong> is on the Commerce Department list of firms approved to handle Nvidia's H200 chips, yet the Beijing address it lists is "a hollow gray shell with wires dangling," the company was formed 17 months ago, and the local property office had no record of it. Its owners have ties to a Chinese private-equity firm that has been on a US blacklist since 2024. The Times describes a broader pattern of approvals for firms linked to restricted entities. The Trump administration relaxed China chip limits after Nvidia agreed to give the government a <strong>15%</strong> cut of the sales. Neither a Nvidia nor a Commerce response was included in The Verge's write-up of the investigation.</p>
+    <p style="color:var(--t2)">Separately, TechCrunch and The Verge reported last week, citing a US intelligence memo, that China's Ministry of State Security recruited a Megaspeed executive close to Nvidia chief Jensen Huang. That report has not been independently confirmed in public documents reviewed here.</p>
+    <a class="cta" href="https://www.theverge.com/ai-artificial-intelligence/1029483/nvidia-ai-chips-china-blacklist-government">The Verge →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-us-cleared-chinese-firm" data-term="story-2026-11-08-us-cleared-chinese-firm"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Washington Post · Nov 8</div>
+    <h3>US AI safety staff now report to the White House, and the office has stopped publishing research</h3>
+    <p>The Washington Post reports that staff of the small US government unit that assesses new AI systems — CAISI, the Center for AI Standards and Innovation — now report to the White House. The office has no permanent leader and has stopped publishing research, the paper says, raising questions about its independence. Only the article's summary was available without a subscription, so further detail is not included here.</p>
+    <a class="cta" href="https://www.washingtonpost.com/business/2026/11/08/ai-safety-trump-white-house/6c563e8a-db4b-11f1-930a-e08f8086f5ac_story.html">Washington Post →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-us-ai-safety-staff" data-term="story-2026-11-08-us-ai-safety-staff"></div></details>
+  </article>
+
+  <!-- OPS -->
+  <div class="sec" id="ops"><h2>Ops &amp; commerce</h2><span class="ct">1</span></div>
+
+  <article class="story">
+    <div class="k">CENTCOM · Forwarder News · Anadolu · Nov 7</div>
+    <h3>The Gulf blockade now reaches general cargo, and a new task force watches overland routes</h3>
+    <p>No large logistics-company announcements landed over the weekend. The operational story is the same one in the featured section: CENTCOM's disabling of the cargo ship M/V Huda, after 147 compliant diversions since July, and the creation of Task Force Iron Gate to watch Iran's land borders and the Caspian Sea. That combination matters for anyone moving goods, not only oil, through the Gulf. Container and bulk operators have already been rerouting around the conflict; hitting a general-cargo hull, rather than a tanker, signals that enforcement is no longer limited to the shadow oil trade.</p>
+    <p style="color:var(--t2)">There were no new e-commerce or freight-startup raises in this window. Last week's Zipline, Harbinger and Humble Robotics rounds were covered yesterday.</p>
+    <a class="cta" href="https://www.centcom.mil/MEDIA/PUBLIC-RELEASES/Article/4644273/us-forces-disable-cargo-vessel-attempting-to-violate-naval-blockade/">CENTCOM →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-gulf-blockade-reaches-general" data-term="story-2026-11-08-gulf-blockade-reaches-general"></div></details>
+  </article>
+
+  <!-- STARTUPS -->
+  <div class="sec" id="startups"><h2>Startups &amp; tech</h2><span class="ct">This week, not the weekend</span></div>
+
+  <article class="story">
+    <div class="k">TechCrunch · Salesforce · Axios Pro · Nov 3–7</div>
+    <h3>The week's other large checks went to inference, contact-center AI and security</h3>
+    <p>Nothing material was announced Saturday or Sunday. Weekly roundups published over the weekend collected deals from November 3–6 that were not in yesterday's brief. <strong>Fal</strong>, which hosts and runs AI video, image and audio models, raised a <strong>$1.3 billion</strong> Series F led by Bessemer Venture Partners, with Nvidia, Sound Ventures and T. Rowe Price participating, valuing the company at <strong>$16 billion</strong> — double the $8 billion Bloomberg reported in April (TechCrunch). Fal said it announced its Series E and F together, for a combined <strong>$1.65 billion</strong>, and Bloomberg reported it had surpassed $800 million in annualized revenue earlier this year.</p>
+    <p>Salesforce said it signed a deal to buy <strong>Cresta</strong>, an AI contact-center startup; The Information reported a <strong>$2.7 billion</strong> price, which Salesforce did not disclose. Axios Pro's weekly tally also listed CrowdStrike agreeing to buy agent-observability firm <strong>Fiddler AI</strong> for <strong>$400 million</strong>, General Catalyst putting <strong>$500 million</strong> into revenue-agent startup <strong>Nooks</strong>, IonQ completing a <strong>$1.15 billion</strong> purchase of Elisity, and a planned <strong>$350 million</strong> Dropbox deal for Tigris Data. CD&amp;R and GTCR were reported by the Financial Times to be in early talks about taking payments firm <strong>Global Payments</strong> private at about <strong>$40 billion</strong> of enterprise value; there is no agreed price.</p>
+    <a class="cta" href="https://techcrunch.com/2026/11/03/ai-inference-startup-fal-doubles-its-valuation-to-16b-as-demand-surges/">TechCrunch →</a><a class="cta" href="https://www.salesforce.com/news/stories/salesforce-signs-definitive-agreement-to-acquire-cresta/">Salesforce →</a><a class="cta" href="https://www.axios.com/pro/enterprise-software-deals/2026/11/07/enterprise-software-deals-fal">Axios Pro →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-week-other-large-checks" data-term="story-2026-11-08-week-other-large-checks"></div></details>
+  </article>
+
+  <!-- DEALS -->
+  <div class="sec" id="deals"><h2>Deals &amp; funding</h2><span class="ct">This week · not in yesterday's list</span></div>
+
+  <div class="tx">
+    <div class="day">Confirmed this week</div>
+    <a class="row" href="https://techcrunch.com/2026/11/03/ai-inference-startup-fal-doubles-its-valuation-to-16b-as-demand-surges/"><div class="av" style="background:#5b4bff">F</div><div class="mid"><div class="n">Fal</div><div class="s">Series F · Bessemer, Nvidia · $16B</div></div><div class="amt"><div class="a num">$1.3B</div><div class="s">Inference</div></div></a>
+    <a class="row" href="https://www.salesforce.com/news/stories/salesforce-signs-definitive-agreement-to-acquire-cresta/"><div class="av" style="background:#00a1e0">S</div><div class="mid"><div class="n">Salesforce → Cresta</div><div class="s">AI contact center · price undisclosed</div></div><div class="amt"><div class="a num">$2.7B</div><div class="s">Reported</div></div></a>
+    <a class="row" href="https://www.axios.com/pro/enterprise-software-deals/2026/11/07/enterprise-software-deals-fal"><div class="av" style="background:#c23b22">C</div><div class="mid"><div class="n">CrowdStrike → Fiddler</div><div class="s">Agent observability</div></div><div class="amt"><div class="a num">$400M</div><div class="s">M&amp;A</div></div></a>
+    <a class="row" href="https://www.axios.com/pro/enterprise-software-deals/2026/11/07/enterprise-software-deals-fal"><div class="av" style="background:#1d6b5a">N</div><div class="mid"><div class="n">Nooks</div><div class="s">General Catalyst · revenue agents</div></div><div class="amt"><div class="a num">$500M</div><div class="s">Growth</div></div></a>
+    <a class="row" href="https://www.axios.com/pro/enterprise-software-deals/2026/11/07/enterprise-software-deals-fal"><div class="av" style="background:#2d5a8c">I</div><div class="mid"><div class="n">IonQ → Elisity</div><div class="s">Completed acquisition</div></div><div class="amt"><div class="a num">$1.15B</div><div class="s">M&amp;A</div></div></a>
+    <div class="day">Reported</div>
+    <a class="row" href="https://www.investing.com/news/stock-market-news/cdr-pursues-buyout-of-40-billion-payments-processor-global-payments-ft-reports-4988379"><div class="av" style="background:#1a6b4a">G</div><div class="mid"><div class="n">Global Payments</div><div class="s">CD&amp;R and GTCR · early talks · FT</div></div><div class="amt"><div class="a num">~$40B</div><div class="s">Reported EV</div></div></a>
+    <div class="day">Buybacks</div>
+    <a class="row" href="https://www.berkshirehathaway.com/news/nov0726.pdf"><div class="av" style="background:#2f2f38">B</div><div class="mid"><div class="n">Berkshire Hathaway</div><div class="s">Q3 treasury-share purchases · Abel</div></div><div class="amt"><div class="a num">$9.6B</div><div class="s">Confirmed</div></div></a>
+  </div>
+
+  <!-- MARKETS -->
+  <div class="sec" id="markets"><h2>Markets</h2><span class="ct">Friday close · Monday setup</span></div>
+
+  <div class="tx stk">
+    <div class="day">US close, Friday (MarketWatch · CNBC)</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">IXIC</div><div class="mid"><div class="n">Nasdaq Composite</div><div class="px num">24,579.42 · week −3.4%</div></div><span class="pct up num">+1.09%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPX</div><div class="mid"><div class="n">S&amp;P 500</div><div class="px num">7,376.86 · week about −2.7%</div></div><span class="pct up num">+0.31%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">DJI</div><div class="mid"><div class="n">Dow Jones</div><div class="px num">51,285.73 · week −0.9%</div></div><span class="pct dn num">−0.46%</span></div>
+    <div class="day">Oil, metals, Asia</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BRT</div><div class="mid"><div class="n">Brent crude</div><div class="px num">CNBC · biggest weekly drop in months</div></div><span class="pct dn num">$98.32 −16%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">WTI</div><div class="mid"><div class="n">WTI crude</div><div class="px num">Friday close</div></div><span class="pct dn num">$90.83 ≈ −13% wk</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">XAU</div><div class="mid"><div class="n">Comex gold</div><div class="px num">Dow Jones Data Talk via Morningstar</div></div><span class="pct up num">$4,064.50 +4.6%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">KOS</div><div class="mid"><div class="n">Kospi</div><div class="px num">5,059.69 · Fri −6.02%</div></div><span class="pct dn num">−11.7% wk</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">Seoul Economic Daily · CNBC · Nov 6–8</div>
+    <h3>Korea's 11.7% weekly drop, and a margin-loan waiver starting Monday</h3>
+    <p>The Kospi closed Friday at <strong>5,059.69</strong>, down 6.02% on the day and <strong>11.71%</strong> on the week, after a Level-1 circuit breaker, Seoul Economic Daily reports. Foreign investors sold more than ₩6 trillion (about $4.2 billion) over two sessions. SK hynix fell 10.44% and Samsung 6.35%; power-equipment names such as Hyosung Heavy (−12.11%) and LS Electric (−10.93%) were also hit. Starting <strong>November 9</strong>, the government will waive brokerages' 140% collateral-maintenance requirement on margin loans for three months, a step meant to limit forced selling.</p>
+    <p>That is the main Asia setup for Monday, alongside oil: Brent's more than 16% weekly decline priced in hopes of an Iran de-escalation that this weekend's events put back in question. There was no US cash session Saturday or Sunday.</p>
+    <a class="cta" href="https://en.sedaily.com/finance/2026/11/08/kospi-sinks-117-percent-in-a-week-as-foreigners-dump-4">Seoul Economic Daily →</a><a class="cta" href="https://www.cnbc.com/2026/11/06/oil-price-today-brent-wti.html">CNBC oil →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-korea-11-7-weekly" data-term="story-2026-11-08-korea-11-7-weekly"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Berkshire Hathaway release · 10-Q · Nov 7</div>
+    <h3>Berkshire bought back $9.6 billion of its own stock and held about $377 billion in cash and T-bills</h3>
+    <div class="meta"><span class="stat num">Buybacks $9.6B</span><span class="stat num">Operating earnings $12.71B</span><span class="stat num">Cash + T-bills $377.4B</span></div>
+    <p>Berkshire Hathaway's third-quarter release shows net earnings of <strong>$22.11 billion</strong>, down 28% from $30.80 billion a year earlier, and operating earnings of <strong>$12.71 billion</strong>, down 6% from $13.49 billion. The company bought about <strong>$9.6 billion</strong> of treasury shares in the quarter, bringing the nine-month total to about <strong>$14.4 billion</strong> — the first meaningful repurchase stretch since the program was quiet in 2025. The 10-Q lists cash and cash equivalents of $36.0 billion in the insurance-and-other group, $4.7 billion in railroad, utilities and energy, and <strong>$336.7 billion</strong> of short-term US Treasury bills, or about <strong>$377.4 billion</strong> together as of September 30. Insurance underwriting profit fell, while BNSF, Berkshire Hathaway Energy and the manufacturing group posted higher operating earnings.</p>
+    <p style="color:var(--t2)">Analysis: after a week in which public markets marked down AI-linked stocks, the world's best-known value investor spent more on its own shares than on a single large outside purchase. That is a signal about relative prices, not a forecast.</p>
+    <a class="cta" href="https://www.berkshirehathaway.com/news/nov0726.pdf">Release (PDF) →</a><a class="cta" href="https://www.berkshirehathaway.com/qtrly/3rdqtr26.pdf">10-Q (PDF) →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-berkshire-bought-back-9" data-term="story-2026-11-08-berkshire-bought-back-9"></div></details>
+  </article>
+
+  <!-- ARGENTINA -->
+  <div class="sec" id="argentina"><h2>Argentina</h2><span class="ct">Pope arrives today</span></div>
+
+  <div class="tx stk">
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">RP</div><div class="mid"><div class="n">Riesgo país</div><div class="px num">+150 bp / +19% on the week · since Oct 24, 2025 high</div></div><span class="pct dn num">939 bp</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:10px">MERV</div><div class="mid"><div class="n">S&amp;P Merval</div><div class="px num">Around 84,600 · −8% pesos / −9% CCL on the week</div></div><span class="pct dn num">−9% USD</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">BON</div><div class="mid"><div class="n">Sovereign dollar bonds</div><div class="px num">Bonares and Globales, weekly average</div></div><span class="pct dn num">−5%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">BNA</div><div class="mid"><div class="n">Dólar Banco Nación / blue</div><div class="px num">Wholesale $1,545.50 · BCRA bought $51M</div></div><span class="pct nt num">$1,570 / $1,555</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">Infobae · Ámbito · Nov 7–8</div>
+    <h3>Pope Leo XIV lands at 16:30, meets Milei, and local markets stay shut Monday and Tuesday</h3>
+    <p>Pope Leo XIV arrives at Aeroparque from Montevideo at <strong>16:30</strong> today, Infobae reports, for the first papal visit to Argentina in 39 years (John Paul II was last here in April 1987). He will visit the San Martín monument, meet President Javier Milei at Casa Rosada, and address officials at Palacio Libertad at 18:30. Monday is a national holiday under Decree 1103/2026; Tuesday is a holiday in CABA and Córdoba, and Wednesday in Buenos Aires province. The local financial market is fully closed Monday and Tuesday.</p>
+    <p>Friday's close, recapped by Infobae on Saturday rather than as a new shock: JP Morgan's country-risk index finished at <strong>939</strong> basis points, up more than 150 points or 19% on the week and its highest since October 24, 2025. Sovereign dollar bonds fell about <strong>5%</strong>. The Merval, around 84,600, was down about 8% in pesos and 9% in CCL dollars on the week, with losses in 12 of the last 15 sessions. Oil's weekly drop hit energy ADRs: YPF fell 17.6% to $38.70 and Vista 18.2%. The Banco Nación retail dollar was $1,570 and the blue $1,555 (its first weekly decline in a month). The central bank bought only <strong>$51 million</strong> this week; gross reserves were $49.64 billion after an $880 million IMF payment on Thursday.</p>
+    <p style="color:var(--t2)">The Paraguay crisis has a local labor footprint: about 943 staff at ITTI/Kaitel in Belgrano, as noted above. Peña had been an ally of Milei's government.</p>
+    <a class="cta" href="https://www.infobae.com/sociedad/2026/11/07/la-agenda-y-el-itinerario-del-papa-leon-xiv-en-su-visita-a-la-argentina-del-8-al-11-de-noviembre/">Infobae agenda →</a><a class="cta" href="https://www.infobae.com/economia/2026/11/07/el-riesgo-pais-paso-los-900-puntos-y-las-acciones-argentinas-se-hundieron-ante-un-incierto-contexto-externo/">Infobae markets →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-pope-leo-xiv-lands" data-term="story-2026-11-08-pope-leo-xiv-lands"></div></details>
+  </article>
+
+  <!-- GLOBAL -->
+  <div class="sec" id="global"><h2>Global</h2><span class="ct">4</span></div>
+
+  <article class="story">
+    <div class="k">BBC · Reuters · AP · Nov 7–8</div>
+    <h3>Six killed in Kraków's main square; officials say the gunman was likely far-right inspired</h3>
+    <div class="meta"><span class="stat num">6 killed · 16 injured</span><span class="stat">3 more bodies at his home</span><span class="stat">National mourning</span></div>
+    <p>A gunman drove onto Kraków's Main Market Square shortly before 15:00 local time on Saturday and fired at random for about three minutes, killing four women and two men. The BBC says three of the dead were Polish, one was British, and two have not been identified. Sixteen people were injured, including five foreign nationals — from Austria, Germany, Portugal, Russia and Britain — and two police officers, one of them critically. Police shot and arrested the suspect. Three more bodies, which Prime Minister Donald Tusk said were likely his parents and sister, were found at his home in Ostrowiec Świętokrzyski, about 200 km away.</p>
+    <p>The BBC identifies the suspect as a 25-year-old Polish man (Reuters has reported 24). Interior Minister Marcin Kierwiński said he appeared "fascinated by far-right ideologies" and held "ultra-nationalist" views. Tusk called the attack terrorism and said Poland had not seen "such drastic cases" of this kind. Kraków is in mourning until November 11; Reuters reported a two-day national mourning period. The suspect's name has not been officially confirmed.</p>
+    <a class="cta" href="https://www.bbc.com/news/articles/c6n9r01d2709o">BBC →</a><a class="cta" href="https://apnews.com/article/poland-shooting-krakow-market-dead-69a65400657ffd0c8b3fa104bd472b97">AP →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-six-killed-krak-w" data-term="story-2026-11-08-six-killed-krak-w"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Times of Israel · Al Jazeera · Nov 7–8</div>
+    <h3>Herzog asks Gadi Eisenkot, not Netanyahu, to form Israel's next government</h3>
+    <p>President Isaac Herzog announced Saturday evening that he would task Yashar leader Gadi Eisenkot with forming a government. Eisenkot received <strong>67</strong> party recommendations to Benjamin Netanyahu's <strong>46</strong>; United Torah Judaism's seven seats made no recommendation. The formal mandate ceremony is Sunday at 17:00 Israel time (12:00 ART). Eisenkot then has 28 days, extendable by 14.</p>
+    <p>The path is narrow. Netanyahu called for a "national unity government" that would include all of his previous allies, and labeled the Arab-led parties "terror supporters." Yashar said Likud could join only without "the extremists" and did not invite Netanyahu himself. Avigdor Liberman said he is open to "painful compromises" on Haredi enlistment to avoid another election. Channel 12 reported that Shas would not oppose a UTJ-backed Eisenkot government; Shas called reports that it might join such a cabinet "fake news." A combination of the 48-seat change bloc, UTJ's 7 and a Shas non-opposition of 6 would be a 61–59 majority.</p>
+    <a class="cta" href="https://www.timesofisrael.com/president-herzog-taps-eisenkot-to-form-coalition-but-path-remains-fraught/">Times of Israel →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-herzog-asks-gadi-eisenkot" data-term="story-2026-11-08-herzog-asks-gadi-eisenkot"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Reuters · Nov 8</div>
+    <h3>South Africa's ANC falls to about 31% in local elections</h3>
+    <p>With most ballots counted, Reuters reports the African National Congress at about <strong>31%</strong>, the Democratic Alliance at about <strong>25%</strong>, and Jacob Zuma's uMkhonto weSizwe party at about <strong>10%</strong>. ANC secretary-general Fikile Mbalula called the result "catastrophic." In Johannesburg the DA was near 35% and the ANC near 20%, opening a path for Helen Zille to become mayor if coalitions hold. Parties have 14 days to form councils. Final results were due Sunday afternoon.</p>
+    <a class="cta" href="https://www.streetinsider.com/Reuters/South+Africas+ANC+battered+by+local+election+losses+ahead+of+coalition+talks/27309437.html">Reuters via StreetInsider →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-south-africa-anc-falls" data-term="story-2026-11-08-south-africa-anc-falls"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Reuters · BBC · NHK · RTÉ · Nov 7–8</div>
+    <h3>Also: New Zealand's one-seat lead, a Zaporizhzhia blackout, a Japan quake, and floods in Gaza</h3>
+    <p>Updated preliminary results reported by Reuters give New Zealand's National–ACT–NZ First grouping <strong>67 of 131</strong> projected seats, one more than a majority. About 14% of votes are specials, which have historically leaned left, and the official count is due <strong>November 27</strong>. Both National and Labour fell below 30%. That is a firmer read than yesterday's "too close to call," not a final result.</p>
+    <p>The Russian-installed management at the Zaporizhzhia nuclear plant said an outside power line was disconnected again and that the plant is running on diesel generators (RTÉ, Reuters). An M5.7 earthquake in western Shizuoka early Sunday Japan time injured 22 people, NHK reported; there was no tsunami. In Gaza, the Hamas-run government media office said rain flooded at least <strong>70,000</strong> tents in about 12 hours, with injuries but no deaths reported (Reuters).</p>
+    <a class="cta" href="https://www.reuters.com/3fec1b0a85a0/world/asia-pacific/new-zealand-vote-leaves-national-labour-nearly-deadlocked-2026-11-07/">Reuters (NZ) →</a><a class="cta" href="https://www3.nhk.or.jp/nhkworld/news/20261108de72261/">NHK →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-also-zealand-one-seat" data-term="story-2026-11-08-also-zealand-one-seat"></div></details>
+  </article>
+
+  <!-- AHEAD -->
+  <div class="sec" id="ahead"><h2>Ahead</h2><span class="ct">ART dates</span></div>
+  <div class="tx ahead">
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">8</div></div><div class="mid"><div class="n">Pope Leo XIV arrives in Buenos Aires at 16:30</div><div class="s" style="white-space:normal">Meets Milei; Palacio Libertad at 18:30. Eisenkot formally receives Israel's mandate at 12:00 ART.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">9</div></div><div class="mid"><div class="n">Argentina national holiday; markets closed Mon and Tue</div><div class="s" style="white-space:normal">Stephen Miller starts as White House chief of staff. COP31 opens in Antalya. Korea's margin-collateral waiver begins. Anthropic IPO marketing expected this week.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">10</div></div><div class="mid"><div class="n">US October CPI at 8:30 ET</div><div class="s" style="white-space:normal">BLS says it will not publish most 12-month changes because October 2025 data are missing. US–Russia–Ukraine talks in Abu Dhabi, Tue–Wed. Pope in Córdoba.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">12</div></div><div class="mid"><div class="n">INDEC October CPI at 16:00 ART</div><div class="s" style="white-space:normal">Argentina's inflation print. US October PPI follows on Friday.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">16</div></div><div class="mid"><div class="n">Anthropic Nasdaq listing targeted this week</div><div class="s" style="white-space:normal">Reported target, not a confirmed pricing date. Nvidia reports Q3 after the close on Nov 17.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">27</div></div><div class="mid"><div class="n">New Zealand official election results</div><div class="s" style="white-space:normal">Special votes could still move the one-seat preliminary margin.</div></div></div>
+  </div>
+
+  <!-- giscus-feedback -->
+  <section class="card fbcard" id="feedback">
+    <span class="lbl">Feedback</span>
+    <h3>How was today's brief?</h3>
+    <p class="hint">React or leave a comment on format, depth, or topics. Feedback shapes what gets covered and how, never which side a story takes.</p>
+    <div class="gslot" id="fb-brief" data-term="brief-2026-11-08"></div>
+  </section>
+
+  <footer>Prepared for Matias Ricci · Sunday edition, Nov 8, 2026 · as of 07:00 ART (UTC−3)<br>Paraguay reporting from the Guardian, AFP, AP, Reuters and Ámbito. Iran and Gulf from Iran International, CENTCOM, The National and Anadolu. Kraków from the BBC and AP. Israel from the Times of Israel. Markets from MarketWatch, CNBC, Seoul Economic Daily and Berkshire's own Q3 release and 10-Q. Argentina from Infobae. Deal figures not already in Saturday's brief come from TechCrunch, Salesforce and Axios Pro weekly roundups dated Nov 3–7, and are labeled as such. No giscus feedback had been posted, so the format is unchanged.</footer>
+</main>
+
+<script>
+/* giscus loader: one embed at a time (client.js targets the first .giscus), per-iframe resizing */
+(function(){
+  var CFG={repo:"matiasriccibrochiero/daily-brief",repoId:"R_kgDOVQx5Jg",category:"Announcements",categoryId:"DIC_kwDOVQx5Js4DJrHP",mapping:"specific",strict:"1",
+    reactionsEnabled:"1",emitMetadata:"0",inputPosition:"top",theme:"transparent_dark",lang:"en",loading:"lazy"};
+  var frames=[],heights=new Map(),queue=Promise.resolve();
+  function kebab(k){return k.replace(/[A-Z]/g,function(c){return "-"+c.toLowerCase()})}
+  window.addEventListener("message",function(e){
+    if(e.origin!=="https://giscus.app")return;
+    var d=e.data; if(!d||typeof d!=="object"||!d.giscus)return;
+    var f=null; for(var i=0;i<frames.length;i++){if(frames[i].contentWindow===e.source){f=frames[i];break}}
+    if(d.giscus.resizeHeight&&f){heights.set(f,d.giscus.resizeHeight);f.style.height=d.giscus.resizeHeight+"px"}
+    var ks=Object.keys(d.giscus);
+    if(ks.length===1&&ks[0]==="resizeHeight"){e.stopImmediatePropagation();return}
+    setTimeout(function(){heights.forEach(function(h,fr){fr.style.height=h+"px"})},0);
+  });
+  function mount(slot){
+    if(!slot||slot.getAttribute("data-mounted"))return; slot.setAttribute("data-mounted","1");
+    queue=queue.then(function(){return new Promise(function(done){
+      slot.classList.add("giscus");
+      var s=document.createElement("script"); s.src="https://giscus.app/client.js"; s.async=true; s.crossOrigin="anonymous";
+      for(var k in CFG)s.setAttribute("data-"+kebab(k),CFG[k]);
+      s.setAttribute("data-term",slot.getAttribute("data-term"));
+      s.onload=s.onerror=function(){var fr=slot.querySelector("iframe");if(fr)frames.push(fr);
+        slot.classList.remove("giscus");slot.classList.add("gdone");done()};
+      slot.parentNode.insertBefore(s,slot);
+    })});
+  }
+  document.querySelectorAll("details.fb").forEach(function(d){
+    d.addEventListener("toggle",function(){if(d.open)mount(d.querySelector(".gslot"))});
+  });
+  mount(document.getElementById("fb-brief"));
+})();
+</script>
+</body>
+</html>
