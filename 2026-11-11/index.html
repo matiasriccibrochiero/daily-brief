@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Daily Brief · Wednesday · November 11, 2026</title>
+<style>
+  :root{
+    --bg:#000; --s1:#16161a; --s2:#1f1f25; --s3:#2a2a31;
+    --tx:#fff; --t2:#8a8a93; --t3:#5d5d66;
+    --blue:#3d7bff; --green:#2fd27a; --greenbg:rgba(47,210,122,.14);
+    --red:#ff5c5c; --redbg:rgba(255,92,92,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+  .app{max-width:460px;margin:0 auto;padding:12px 16px 48px}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{font-weight:600;color:#fff}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--s2);padding:1px 5px;border-radius:6px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0}
+  .me{width:36px;height:36px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .search{flex:1;margin:0 10px;height:36px;border-radius:18px;background:var(--s1);color:var(--t2);font-size:14px;display:flex;align-items:center;padding:0 14px;gap:8px}
+  .search svg{width:15px;height:15px;stroke:var(--t2)}
+  .toppill{background:var(--s1);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#d6d6dc}
+  .tz{font-size:12px;color:var(--t2);font-weight:600}
+
+  /* hero balance */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero .cap{font-size:14px;color:var(--t2);font-weight:500}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:8px 0 6px}
+  .hero .dt{font-size:15px;color:var(--t2);font-weight:500}
+  .pillbtn{display:inline-block;margin-top:16px;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px}
+
+  /* actions */
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 28px;text-align:center}
+  .actions a{color:var(--tx);font-size:12px;font-weight:500;text-decoration:none}
+  .actions .ic{width:52px;height:52px;border-radius:50%;background:var(--s2);display:grid;place-items:center;margin:0 auto 8px}
+  .actions svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;scrollbar-width:none;
+         position:sticky;top:0;background:var(--bg);z-index:5}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;text-decoration:none}
+  .chip.on{background:#fff;color:#000}
+  .chip:hover{text-decoration:none}
+
+  /* surfaces */
+  .card{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .sec{margin:32px 0 12px;display:flex;align-items:baseline;justify-content:space-between;padding:0 4px}
+  .sec h2{font-size:22px;font-weight:700;letter-spacing:-.025em}
+  .sec .ct{font-size:13px;color:var(--t2);font-weight:500}
+  .lbl{display:inline-block;background:var(--s3);color:#d6d6dc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;letter-spacing:.01em}
+
+  .lead p{font-size:16px;line-height:1.5;color:#e9e9ee;letter-spacing:-.005em}
+  .lead p + p{margin-top:12px;color:var(--t2)}
+
+  /* balance tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .tile{background:var(--s1);border-radius:24px;padding:18px}
+  .tile .k{font-size:13px;color:var(--t2);font-weight:500}
+  .tile .v{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-top:6px}
+  .tile .s{font-size:12px;color:var(--t2);margin-top:2px}
+  .tile .s.g{color:var(--green)} .tile .s.r{color:var(--red)}
+
+  /* feature cards */
+  .feat{background:var(--s1);border-radius:28px;padding:24px 22px 22px;margin-bottom:12px}
+  .feat h3{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:14px 0 8px}
+  .by{font-size:13px;color:var(--t2);margin-bottom:16px}
+  .feat p,.story p{color:#c9c9d0;margin-bottom:12px}
+  .feat p:last-of-type,.story p:last-of-type{margin-bottom:0}
+  .take{background:var(--s2);border-radius:18px;padding:14px 16px;margin-top:16px;font-size:14px;color:#e2e2e8}
+  .take b{display:block;font-size:12px;color:var(--t2);font-weight:600;margin-bottom:2px}
+  .cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600}
+  .cta + .cta{margin-left:16px}
+
+  /* scenario list (inside card) */
+  .scen{background:var(--s2);border-radius:20px;padding:4px 16px;margin:16px 0}
+  .scen .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
+  .scen .r + .r{box-shadow:0 -1px 0 rgba(255,255,255,.06)}
+  .scen .n{font-size:14px;font-weight:600}
+  .scen .d{font-size:12px;color:var(--t2);margin-top:1px;line-height:1.35}
+  .scen .a{font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .scen .cap{font-size:12px;color:var(--t2);padding:10px 0 4px}
+
+  /* story cards */
+  .story{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .story h3{font-size:19px;font-weight:700;letter-spacing:-.022em;line-height:1.22;margin-bottom:10px}
+  .story .k{font-size:12px;color:var(--t2);font-weight:600;margin-bottom:8px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stat{background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:#fff}
+
+  /* transaction list */
+  .tx{background:var(--s1);border-radius:24px;padding:6px 0;margin-bottom:12px}
+  .tx .day{font-size:13px;color:var(--t2);font-weight:600;padding:12px 20px 4px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 20px;color:var(--tx);text-decoration:none}
+  .row:hover{background:var(--s2);text-decoration:none}
+  .av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff}
+  .mid{flex:1;min-width:0}
+  .mid .n{font-size:15px;font-weight:600}
+  .mid .s{font-size:13px;color:var(--t2);line-height:1.35;margin-top:1px}
+  .amt{text-align:right;flex:none}
+  .amt .a{font-size:16px;font-weight:700;letter-spacing:-.02em}
+  .amt .s{font-size:12px;color:var(--t2)}
+
+  /* stocks */
+  .stk .row{cursor:default}
+  .stk .row:hover{background:none}
+  .px{font-size:13px;color:var(--t2);margin-top:1px}
+  .pct{flex:none;font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;min-width:74px;text-align:center}
+  .up{color:var(--green);background:var(--greenbg)}
+  .dn{color:var(--red);background:var(--redbg)}
+  .nt{color:#d6d6dc;background:var(--s3)}
+
+  /* ahead */
+  .ahead .row{align-items:flex-start}
+  .when{flex:none;width:48px;height:48px;border-radius:14px;background:var(--s2);text-align:center;padding-top:6px}
+  .when .m{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .when .d{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+
+  footer{font-size:11.5px;color:var(--t3);text-align:center;padding:28px 12px 0;line-height:1.5}
+
+  @media (min-width:600px){
+    body{padding-top:24px}
+    .app{background:#0b0b0f;border-radius:40px;padding:16px 20px 40px;margin-bottom:40px}
+    .chips{background:#0b0b0f;margin:0 -20px 8px;padding-left:20px;padding-right:20px;border-radius:0}
+  }
+
+
+  
+  /* feedback (giscus) */
+  .fb{margin-top:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+  .fb summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--t2);padding:6px 12px 6px 10px;border-radius:999px;background:var(--s2)}
+  .fb summary::-webkit-details-marker{display:none}
+  .fb summary svg{width:14px;height:14px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+  .fb[open] summary svg{transform:rotate(90deg)}
+  .fb summary:hover{color:#fff}
+  .fb .gslot{margin-top:12px}
+  .gslot{min-height:120px}
+  .gslot iframe{width:100%;border:0}
+  .fbcard{margin-top:32px;border-radius:28px;padding:24px 20px}
+  .fbcard h3{font-size:24px;font-weight:800;letter-spacing:-.035em;line-height:1.15;margin:14px 0 6px}
+  .fbcard .hint{font-size:14px;color:var(--t2);line-height:1.45;margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<main class="app">
+
+  <div class="top">
+    <div class="me">MR</div>
+    <div class="toppill">Wednesday · Wed 11 Nov</div>
+    <div class="tz">ART</div>
+  </div>
+
+  <section class="hero">
+    <div class="cap">Wednesday edition · Overnight</div>
+    <h1>Daily Brief</h1>
+    <div class="dt">November 11, 2026 · Tue 07:00 → Wed 07:00 ART</div>
+    <span class="pillbtn">11 min read</span>
+  </section>
+
+  <nav class="actions">
+    <a href="#featured"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div>Featured</a>
+    <a href="#ai"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>Agents</a>
+    <a href="#deals"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Deals</a>
+    <a href="#markets"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>Markets</a>
+  </nav>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">US CPI, October</div><div class="v num">+0.4%</div><div class="s r num">Est. +0.3% · core +0.3%</div></div>
+    <div class="tile"><div class="k">10-year Treasury</div><div class="v num">4.99%</div><div class="s r num">+13 bp · briefly above 5%</div></div>
+    <div class="tile"><div class="k">Anthropic IPO, top of range</div><div class="v num">$1.4T</div><div class="s num">$70–78 · trades Nov 19</div></div>
+    <div class="tile"><div class="k">Nvidia, 2 days</div><div class="v num">$168.89</div><div class="s r num">−5.47% Tue · ~−9.6% since Fri</div></div>
+  </div>
+
+  <div class="card lead">
+    <span class="lbl">Overnight, in two lines</span>
+    <p style="margin-top:14px">US consumer prices rose 0.4% in October, a tenth above forecasts for both headline and core, and Fed Governor Christopher Waller said a December hike is likely and a half-point move should be considered if data run hot. The 10-year Treasury yield touched 5%, stocks gave back part of Monday's rally, and Nvidia fell another 5.5% as a shareholder suit joined the Huang probe. Anthropic set its IPO range at $70 to $78, valuing it at up to $1.4 trillion fully diluted, with trading planned for November 19.</p>
+    <p>House Republicans voted 211–204 to send Rep. Massie's impeachment articles against Hegseth to committee, effectively ending the effort this session. Russia–Ukraine talks in Abu Dhabi were called "very productive" by Rubio with no breakthrough; day two is today. Iran denied any talks with Washington and said Hormuz stays shut, while tankers were hit again. Argentine markets reopen today after two holidays, with country risk at 853.</p>
+  </div>
+
+  <div class="chips">
+    <a class="chip on" href="#featured">Featured</a>
+    <a class="chip" href="#ai">AI &amp; agents</a>
+    <a class="chip" href="#ops">Ops &amp; commerce</a>
+    <a class="chip" href="#startups">Startups &amp; tech</a>
+    <a class="chip" href="#deals">Deals</a>
+    <a class="chip" href="#markets">Markets</a>
+    <a class="chip" href="#argentina">Argentina</a>
+    <a class="chip" href="#global">Global</a>
+    <a class="chip" href="#ahead">Ahead</a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec" id="featured"><h2>Featured</h2><span class="ct">2 stories</span></div>
+
+  <article class="feat">
+    <span class="lbl">US economy · Fed · Bonds</span>
+    <h3>Hotter October inflation and a hawkish Waller put a December rate hike all but priced in</h3>
+    <div class="by">BLS · Reuters · CNBC · Washington Post · Sharecast · Nov 10</div>
+    <div class="meta"><span class="stat num">CPI +0.4% m/m</span><span class="stat num">Core +0.3%</span><span class="stat num">2-yr 4.74%</span><span class="stat num">10-yr 4.99%</span></div>
+    <p><strong>What happened.</strong> The Bureau of Labor Statistics said consumer prices rose 0.4% in October after 0.6% in September, against a 0.3% consensus. Core prices, excluding food and energy, rose 0.3% for a third straight month, versus 0.2% expected. Reuters notes it is the third consecutive month of headline gains of 0.4% or more. Shelter rose 0.3% and accounted for more than 30% of the increase; food rose 0.5%, with beef up 0.9% and snacks up 1%; energy rose 0.7% even though pump prices have been falling in recent weeks, and transportation services jumped 0.8%. Used cars fell 1.2%. The BLS again published no year-over-year headline rate because October 2025 prices were never collected during last year's shutdown; economists polled by Reuters estimate annual core inflation rose to about 2.8% from 2.6%.</p>
+    <p><strong>The Fed.</strong> Hours earlier in London, Governor Christopher Waller said he is "leaning toward" a December increase even if October data came in soft, and that if readings ran higher than forecast "a 50 basis point hike in the policy rate should be considered," adding that "hiking only 25 basis points would put our credibility at risk" (CNBC). Dallas Fed President Lorie Logan said she sees two more quarter-point hikes before a pause. Chicago's Austan Goolsbee warned on Monday against letting the economy overheat. The Fed raised rates in September and held in October, with Lisa Cook and Beth Hammack dissenting.</p>
+    <div class="scen">
+      <div class="cap">December pricing after the data (CME FedWatch, via CNBC)</div>
+      <div class="r"><div><div class="n">Hold</div><div class="d">Effectively priced out</div></div><div class="a num">~0%</div></div>
+      <div class="r"><div><div class="n">+25 bp</div><div class="d">Fully priced in</div></div><div class="a num">Base case</div></div>
+      <div class="r"><div><div class="n">+50 bp</div><div class="d">Waller's "if hotter" scenario</div></div><div class="a num" style="color:var(--red)">12.5%</div></div>
+    </div>
+    <p><strong>Markets.</strong> The 2-year yield jumped more than 18 basis points to 4.736% and the 10-year rose 13 basis points to 4.992% after trading above 5%; a soft $42 billion 10-year auction, with dealers left holding 10%, the most since May, added to the selling (CNBC). The S&amp;P 500 fell 0.38% to 7,520.93 and the Nasdaq 0.74%, after Monday's best day since April. US bond markets are closed today for Veterans Day; producer prices follow on Friday.</p>
+    <div class="take"><b>Why it matters (analysis)</b>The debate has moved from whether the Fed hikes again to how much and how often. Falling oil is not yet showing up in the inflation numbers, and the strength is in food, shelter and services, which tend to be stickier than fuel. Mortgage, auto and credit-card rates key off the 10-year, which is back at levels last seen before the 2008 crisis, and the higher cost of debt is also the main reason investors cite for growing caution on capital-heavy AI infrastructure. Some economists, including Goldman Sachs Asset Management's Lindsay Rosner, say hikes could extend into 2027; others expect energy relief to cool prices by spring.</div>
+    <a class="cta" href="https://www.bls.gov/news.release/cpi.nr0.htm">BLS →</a><a class="cta" href="https://www.reuters.com/5f374b32b07b/world/us/us-consumer-prices-rise-above-expectations-october-2026-11-10/">Reuters →</a><a class="cta" href="https://www.cnbc.com/2026/11/10/fed-governor-waller-sees-december-hike-likely.html">CNBC on Waller →</a><a class="cta" href="https://www.cnbc.com/2026/11/10/us-bonds-treasurys-yields.html">CNBC bonds →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-hotter-october-inflation-hawkish" data-term="story-2026-11-11-hotter-october-inflation-hawkish"></div></details>
+  </article>
+
+  <article class="feat">
+    <span class="lbl">AI · Capital markets</span>
+    <h3>Anthropic sets an IPO range that values it at up to $1.4 trillion, with trading planned for November 19</h3>
+    <div class="by">CNBC · TechCrunch · Anthropic prospectus · Nov 10</div>
+    <div class="meta"><span class="stat num">825M shares</span><span class="stat num">$70–78</span><span class="stat num">Up to $64.35B raised</span><span class="stat">Nasdaq: ANT</span></div>
+    <p><strong>What happened.</strong> Anthropic's amended filing offers 825 million Class A shares at $70 to $78. At the top, it would net up to $64.35 billion and be worth up to about $1.405 trillion on a fully diluted basis, up from the $965 billion valuation of its May private round (CNBC). On shares outstanding after the offering, the implied market value is closer to $0.9 to $1.0 trillion. People familiar told CNBC it plans to price on November 18 and trade on the 19th, with about 20% of shares earmarked for retail investors, versus a typical 5% to 10%, and that the book is already covered at the range. In a separate $26 billion private placement at the IPO price, AMD, Broadcom, Google, Micron, Microsoft, Nvidia and TSMC will buy Class N shares not subject to lock-up.</p>
+    <p><strong>The numbers.</strong> Revenue for the nine months to September 30 was $33.24 billion, up about 1,200% year on year, and the company says run-rate revenue reached roughly $81 billion at the end of October, $10 billion more than a month earlier. It reported a $104 billion net loss for the period, mostly from changes in the fair value of convertible notes and derivatives, against a $25.1 billion loss a year earlier. The same day, Anthropic launched Claude Meetings, Whiteboards and Sheets in beta (see AI &amp; agents).</p>
+    <div class="scen">
+      <div class="cap">Reference points</div>
+      <div class="r"><div><div class="n">Anthropic, top of range</div><div class="d">Fully diluted</div></div><div class="a num">$1.405T</div></div>
+      <div class="r"><div><div class="n">Anthropic, May round</div><div class="d">Private valuation</div></div><div class="a num">$965B</div></div>
+      <div class="r"><div><div class="n">SpaceX IPO, June</div><div class="d">Record proceeds</div></div><div class="a num">$85.7B</div></div>
+    </div>
+    <p><strong>Context and caveats.</strong> CNBC reported last week that some investors had been bracing for less than the $2 trillion once discussed, with one calling $1.5 trillion "a stretch." The listing comes after a Democratic sweep in Congress, state ballot measures that could slow data-center construction, 10-year yields near 5%, and a week of turmoil at Nvidia, one of the placement buyers.</p>
+    <div class="take"><b>Why it matters (analysis)</b>This would be the first public listing of a frontier AI lab, giving markets a daily price on the economics of building large models rather than relying on private rounds. The size of the chipmaker and cloud-provider placement shows how tightly Anthropic's suppliers and its investors overlap, which critics describe as circular and supporters describe as strategic alignment. Demand in the book over the next week will be a direct read on whether the recent selloff in AI infrastructure stocks reflects a change in long-term conviction or a reaction to interest rates.</div>
+    <a class="cta" href="https://www.cnbc.com/2026/11/10/anthropic-sets-price-range-of-70-to-78-in-upcoming-ipo.html">CNBC →</a><a class="cta" href="https://techcrunch.com/2026/11/10/anthropic-sets-ipo-price-range-of-70-to-78-per-share-to-reach-an-implied-valuation-of-1-404-trillion/">TechCrunch →</a><a class="cta" href="https://www.anthropic.com/news/roadshow-launch">Anthropic →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-anthropic-sets-ipo-range" data-term="story-2026-11-11-anthropic-sets-ipo-range"></div></details>
+  </article>
+
+  <!-- AI -->
+  <div class="sec" id="ai"><h2>AI &amp; agents</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">Reuters · OpenAI · Nov 10</div>
+    <h3>OpenAI lets businesses claim ChatGPT profiles and deploy their own customer-facing agents</h3>
+    <div class="meta"><span class="stat">Beta</span><span class="stat">US e-commerce first</span><span class="stat">Shopify integration</span></div>
+    <p>OpenAI launched "Businesses" in ChatGPT. Through a Business Hub, a verified company can claim its listing, update details, upload product feeds with prices and availability, and see aggregated mentions, views and website clicks. A second tool, Business Agents, lets users chat with a company's own agent about its products or services; it starts with eligible US e-commerce and online-service businesses. Companies can sponsor their agent and use it as the landing point for ChatGPT Ads, with sponsored placements labeled. OpenAI says it does not share individual conversations with businesses and only shows insights above minimum volume thresholds. Shopify merchants can connect through Business Hub or the Shopify admin (Reuters).</p>
+    <p><em>Analysis:</em> it is a two-sided listing product, similar in structure to Google Business Profile, inside a chatbot. It moves some product discovery from search pages into conversations and gives OpenAI an ad unit tied to an agent rather than a link. Questions remain about how sponsored answers will be separated from organic ones in practice.</p>
+    <a class="cta" href="https://www.reuters.com/5f374b32b07b/technology/openai-lets-businesses-claim-chatgpt-profiles-adds-ai-agents-us-e-commerce-firms-2026-11-10/">Reuters →</a><a class="cta" href="https://openai.com/index/introducing-businesses-chatgpt">OpenAI →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-openai-lets-businesses-claim" data-term="story-2026-11-11-openai-lets-businesses-claim"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Google · TechCrunch · The Verge · n8n Lab · Nov 10</div>
+    <h3>Google opens Gemini 4 Carbon to developers; Anthropic puts Claude into meetings and spreadsheets</h3>
+    <div class="meta"><span class="stat">Carbon: paid API tier</span><span class="stat">Claude Meetings: Team &amp; Enterprise</span></div>
+    <p>Google made Gemini 4 Carbon, which it calls its strongest model for cybersecurity and long, multi-step agent work, available on the paid Gemini API tier in AI Studio and Android Studio, and to AI Ultra subscribers in its Antigravity coding platform; trade press reports a multi-agent "/swarm" preview there. Anthropic launched Claude Meetings, in which Claude joins a Google Meet call as a visible participant, drafts plans and action items, and per n8n Lab's account declines calls with external guests unless an admin allows it. It also released Whiteboards and Sheets in beta on paid plans and made Claude Data generally available. Adobe previewed local integrations that let outside AI agents operate Photoshop, Premiere and other desktop apps (reported).</p>
+    <p><em>Analysis:</em> the major labs are competing for the place where work happens, such as calls, documents and creative tools, not only on model benchmarks. Capability claims are the companies' own.</p>
+    <a class="cta" href="https://blog.google/innovation-and-ai/technology/developers-tools/gemini-4-carbon-developers/">Google →</a><a class="cta" href="https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks/">TechCrunch →</a><a class="cta" href="https://www.theverge.com/ai-artificial-intelligence/1030709/anthropic-has-its-own-ai-powered-office-suite-now">The Verge →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-google-opens-gemini-4" data-term="story-2026-11-11-google-opens-gemini-4"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">TechCrunch · NY DFS · Nov 10</div>
+    <h3>New York's AI safety law takes effect, with frontier labs required to register by January 1</h3>
+    <div class="meta"><span class="stat num">&gt;$500M revenue threshold</span><span class="stat num">72-hour incident reports</span></div>
+    <p>New York opened the registration portal for the RAISE Act. Frontier developers with more than $500 million in prior-year revenue, which includes OpenAI and Anthropic, must register by January 1, 2027, publish safety frameworks and report critical safety incidents within 72 hours. Trade reports put penalties at up to $1 million for a first violation and $3 million after. Supporters see it as the first concrete state reporting regime for large labs; industry groups have argued state-by-state rules risk a patchwork, and federal preemption remains debated.</p>
+    <a class="cta" href="https://techcrunch.com/2026/11/10/openai-anthropic-face-new-oversight-as-new-yorks-ai-safety-law-takes-effect/">TechCrunch →</a><a class="cta" href="https://www.dfs.ny.gov/digit/Frontier-Developers">NY DFS →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-york-ai-safety-law" data-term="story-2026-11-11-york-ai-safety-law"></div></details>
+  </article>
+
+  <!-- OPS -->
+  <div class="sec" id="ops"><h2>Ops &amp; commerce</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">AP · Next Edition · CNA · Nov 10–11</div>
+    <h3>Singles' Day peaks today with flat sales and no headline totals from Alibaba or JD</h3>
+    <div class="meta"><span class="stat num">~1T yuan to Oct 31</span><span class="stat">Roughly flat y/y</span><span class="stat num">China retail +1.1% Jan–Sep</span></div>
+    <p>China's biggest shopping festival peaks on November 11 after a campaign that began October 20. Retail data platform Syntun put cumulative sales at just over 1 trillion yuan ($154 billion) through October 31, broadly in line with a year ago; the full 2025 festival hit a record of almost 1.7 trillion yuan, largely because platforms keep stretching it (AP). Alibaba and JD again did not publish totals. Alibaba built its Qwen assistant into Taobao and Tmall for orders and recommendations, and AI "token plans" were sold as products for the first time. Analysts quoted by AP describe "discount fatigue" as year-round promotions erode the event's draw, while health and supplement categories grow. The backdrop is a split economy: exports rose 35% in October while domestic car sales fell almost 25% in the first nine months.</p>
+    <p><em>Analysis:</em> a flat Singles' Day says more about China's household demand than about e-commerce itself, and continued export strength keeps pressure on prices and competition in overseas markets.</p>
+    <a class="cta" href="https://abcnews.com/Business/wireStory/subdued-sales-singles-day-chinas-online-shopping-festival-138035152">AP →</a><a class="cta" href="https://www.channelnewsasia.com/east-asia/china-singles-day-shopping-alibaba-taobao-consumers-6520861">CNA →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-singles-day-peaks-today" data-term="story-2026-11-11-singles-day-peaks-today"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Freightos · CNBC · Al Jazeera · Nov 10–11</div>
+    <h3>LA–Long Beach strike deadline pushed to Nov 20; air cargo hits last year's peak early; Hormuz attacks continue</h3>
+    <div class="meta"><span class="stat num">Asia–USWC $8,200/FEU</span><span class="stat num">China–US air &gt;$8/kg</span><span class="stat num">37 ship attacks in Oct</span></div>
+    <p>The ILWU Local 26 watchmen union extended its strike deadline at the ports of Los Angeles and Long Beach to November 20. Most holiday goods have landed, but Freightos says a rail backlog means much still has to move inland. Transpacific ocean rates eased slightly but remain near peak at $8,200 per container to the West Coast and $9,700 to the East Coast; Asia–North Europe fell 5% to $3,400 but is up 50% on a year ago. China–US air rates rose 3% to over $8 per kilogram, already matching last December's high, helped by data-center hardware. US and China extended the pause on port call fees to January 10. In the Gulf, the Washington Institute counted 37 attacks on ships in and near Hormuz in October, the most of the war, and Iran's Revolutionary Guards said two more tankers caught fire after hitting mines on Tuesday. LSEG noted that even with a deal, flows would depend on mine clearance and insurance.</p>
+    <a class="cta" href="https://www.freightos.com/freight-resources/la-lb-strike-deadline-extended-dem-win-increasing-trade-uncertainty-november-10-2026-update/">Freightos →</a><a class="cta" href="https://www.cnbc.com/2026/11/11/oil-rises-from-two-month-low-as-hormuz-shipping-attacks-offset-iran-truce-hopes.html">CNBC →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-la-long-beach-strike" data-term="story-2026-11-11-la-long-beach-strike"></div></details>
+  </article>
+
+  <!-- STARTUPS -->
+  <div class="sec" id="startups"><h2>Startups &amp; tech</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">Reuters · Business Wire · CNBC · Nov 10</div>
+    <h3>Mercor doubles its valuation to $20 billion to train and test AI agents on professional work</h3>
+    <div class="meta"><span class="stat num">$750M Series D</span><span class="stat num">$20B valuation</span><span class="stat num">$10B a year ago</span></div>
+    <p>Mercor, which began as an AI hiring platform and now supplies subject-matter experts whose work is used to train and evaluate AI models, raised $750 million at a $20 billion valuation, double the roughly $10 billion of its October 2025 round. Benchmark, Felicis, Nvidia and Apollo-affiliated funds participated (Reuters). Co-CEO Brendan Foody said "every job in the economy will need its own AI agents and every company will need a way to train and evaluate them on its own work," and the money will go into environments where agents learn professional workflows. Crunchbase data cited by Reuters show AI startups took $102 billion, or 64% of global venture funding, in the third quarter. <em>Analysis:</em> evaluation and expert-data companies are a direct bet that enterprises will customize agents on their own processes rather than use generic ones.</p>
+    <a class="cta" href="https://www.investing.com/news/stock-market-news/ai-training-startup-mercor-valued-at-20-billion-in-latest-funding-round-5016179">Reuters →</a><a class="cta" href="https://www.businesswire.com/news/home/20261110410031/en/Mercor-Raises-%24750-Million-Series-D-at-%2420-Billion-Valuation-to-Help-Enterprises-Own-Their-Intelligence">Announcement →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-mercor-doubles-valuation-20" data-term="story-2026-11-11-mercor-doubles-valuation-20"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Path Robotics · SiliconANGLE · Axios Pro · Nov 10</div>
+    <h3>Path Robotics raises $300 million at $2.45 billion to take its welding AI to other factory tasks</h3>
+    <p>Columbus, Ohio-based Path Robotics raised a $300 million Series E led by Georgian at a $2.45 billion post-money valuation, with D. E. Shaw Ventures and NAVER Ventures joining. Its Obsidian model lets robots locate joints, plan welds and adapt on the factory floor, and the company is extending it to other manufacturing tasks and robot types, including Rove, a four-legged mobile welder. It was one of about 40 rounds totaling roughly $1.9 billion announced Tuesday, per RecentFunding's tally. <em>Analysis:</em> with skilled welders in short supply and reshoring under way, investors are paying up for robots that handle variation rather than fixed, repetitive cells.</p>
+    <a class="cta" href="https://www.path-robotics.com/news/path-robotics-announces-300-million-series-e-led-by-georgian">Announcement →</a><a class="cta" href="https://siliconangle.com/2026/11/10/industrial-automation-startup-path-robotics-raises-300m-in-funding/">SiliconANGLE →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-path-robotics-raises-300" data-term="story-2026-11-11-path-robotics-raises-300"></div></details>
+  </article>
+
+  <!-- DEALS -->
+  <div class="sec" id="deals"><h2>Deals &amp; funding</h2><span class="ct">Announced Tuesday</span></div>
+
+  <div class="tx">
+    <a class="row" href="https://www.cnbc.com/2026/11/10/anthropic-sets-price-range-of-70-to-78-in-upcoming-ipo.html"><div class="av" style="background:#c2652a">A</div><div class="mid"><div class="n">Anthropic</div><div class="s">IPO range set · Nasdaq: ANT</div></div><div class="amt"><div class="a num">$64.35B</div><div class="s">Max proceeds</div></div></a>
+    <a class="row" href="https://www.investing.com/news/stock-market-news/ai-training-startup-mercor-valued-at-20-billion-in-latest-funding-round-5016179"><div class="av" style="background:#2d5a8c">M</div><div class="mid"><div class="n">Mercor</div><div class="s">AI training &amp; evals · Benchmark, Felicis, Nvidia</div></div><div class="amt"><div class="a num">$750M</div><div class="s">Series D · $20B</div></div></a>
+    <a class="row" href="https://www.path-robotics.com/news/path-robotics-announces-300-million-series-e-led-by-georgian"><div class="av" style="background:#1a6b4a">P</div><div class="mid"><div class="n">Path Robotics</div><div class="s">Welding robots · Georgian</div></div><div class="amt"><div class="a num">$300M</div><div class="s">Series E · $2.45B</div></div></a>
+    <a class="row" href="https://techstartups.com/2026/11/10/startup-funding-news-today-november-10-2026-blackletter-nominal-project-omega-sumary-vessel-more/"><div class="av" style="background:#8a5a00">P</div><div class="mid"><div class="n">Project Omega</div><div class="s">Nuclear fuel recycling · B Capital</div></div><div class="amt"><div class="a num">$80M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-11-10"><div class="av" style="background:#5b4bff">G</div><div class="mid"><div class="n">Graphon Labs</div><div class="s">Agent memory infrastructure · RRE</div></div><div class="amt"><div class="a num">$35M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://www.alleywatch.com/2026/11/the-new-york-tech-daily-funding-report-11-10-2026/"><div class="av" style="background:#c23b22">N</div><div class="mid"><div class="n">Nidus</div><div class="s">Robotics in defense factories · Kleiner Perkins</div></div><div class="amt"><div class="a num">$30M</div><div class="s">Venture</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-11-10"><div class="av" style="background:#1d6b5a">L</div><div class="mid"><div class="n">Lumbra</div><div class="s">Auditable agent networks · Point72, Ansa</div></div><div class="amt"><div class="a num">$25M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://techstartups.com/2026/11/10/startup-funding-news-today-november-10-2026-blackletter-nominal-project-omega-sumary-vessel-more/"><div class="av" style="background:#6b2d8c">S</div><div class="mid"><div class="n">Sumary</div><div class="s">Accounting automation · Denmark</div></div><div class="amt"><div class="a num">$25M</div><div class="s">Round</div></div></a>
+  </div>
+
+  <!-- MARKETS -->
+  <div class="sec" id="markets"><h2>Markets</h2><span class="ct">US bonds shut today</span></div>
+
+  <div class="tx stk">
+    <div class="day">US close, Tuesday (Sharecast · Investing.com · CNBC)</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPX</div><div class="mid"><div class="n">S&amp;P 500</div><div class="px num">7,520.93</div></div><span class="pct dn num">−0.38%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">IXIC</div><div class="mid"><div class="n">Nasdaq Composite</div><div class="px num">25,065.87</div></div><span class="pct dn num">−0.74%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">DJI</div><div class="mid"><div class="n">Dow Jones</div><div class="px num">52,231.89 · −158 pts</div></div><span class="pct dn num">−0.30%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">NVDA</div><div class="mid"><div class="n">Nvidia</div><div class="px num">$168.89 · briefly under $4T cap</div></div><span class="pct dn num">−5.47%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">US10Y</div><div class="mid"><div class="n">10-year Treasury yield</div><div class="px num">4.992% · 2-yr 4.736%</div></div><span class="pct dn num">+13 bp</span></div>
+    <div class="day">Europe, Tuesday (Teletrade)</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">DAX</div><div class="mid"><div class="n">DAX</div><div class="px num">26,347.45</div></div><span class="pct up num">+0.31%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">CAC</div><div class="mid"><div class="n">CAC 40</div><div class="px num">8,278.59</div></div><span class="pct up num">+0.55%</span></div>
+    <div class="day">Commodities</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BRT</div><div class="mid"><div class="n">Brent crude</div><div class="px num">Settled $91.49 Tue · dipped under $90 · $92.20 early Wed</div></div><span class="pct dn num">−1.17%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">WTI</div><div class="mid"><div class="n">WTI crude</div><div class="px num">$86.53 early Wed</div></div><span class="pct up num">+0.57%</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">CNBC · Yahoo Finance · Anadolu · Nov 10–11</div>
+    <h3>Nvidia slides a second day as a shareholder suit and a new report add to the Huang probe</h3>
+    <div class="meta"><span class="stat">Class action filed</span><span class="stat num">$7.5B in shipments, per The Information</span><span class="stat num">Overnight +3%</span></div>
+    <p>Nvidia fell 5.47% to $168.89 on Tuesday, briefly dipping below a $4 trillion market value. The Rosen Law Firm filed a proposed class action in San Jose alleging the company and Jensen Huang misled investors about his relationship with former Megaspeed executive Alice Huang and Nvidia's ties to Megaspeed (CNBC). The Information reported that her relationships may have helped facilitate at least $7.5 billion of Nvidia chip shipments through Chinese companies; Nvidia and Megaspeed have denied wrongdoing, and China calls the allegations groundless. Dan Ives of Yorkville Ives &amp; Co. wrote that investor chatter puts about a 15% chance on Huang's removal and expects the board review to take four to six weeks. House Democratic leader Hakeem Jeffries said there are "real concerns that need to be addressed." Shares were about 3% higher in overnight trading.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/11/10/nvidia-nvda-jensen-huang-affair-chinese-spy.html">CNBC →</a><a class="cta" href="https://finance.yahoo.com/markets/article/nvidia-stock-drops-3-extending-decline-on-report-alleged-chinese-spy-linked-to-nvidia-ceo-aided-75-billion-in-china-chip-shipments-152654028.html">Yahoo Finance →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-nvidia-slides-second-day" data-term="story-2026-11-11-nvidia-slides-second-day"></div></details>
+  </article>
+
+  <!-- ARGENTINA -->
+  <div class="sec" id="argentina"><h2>Argentina</h2><span class="ct">Markets reopen today</span></div>
+
+  <article class="story">
+    <div class="k">Infobae · El Día · EFE · Perfil · Nov 10–11</div>
+    <h3>Markets reopen after two holidays with country risk at 853; the Pope draws a large crowd in Córdoba</h3>
+    <div class="meta"><span class="stat num">Riesgo país 853</span><span class="stat num">Globales +1.8% Mon, +0.36% Tue</span><span class="stat">INDEC CPI Thu</span></div>
+    <p>While local trading was closed for the papal visit, dollar bonds rose in New York and JP Morgan's country-risk index fell from above 900 last week to 873 on Monday and 853 on Tuesday (Infobae). Argentine ADRs fell on Tuesday with Wall Street: Bioceres −7.3%, Vista −4.3%, Mercado Libre −2.4% and YPF −2.1%, while Globant rose 3%. The Brazilian real weakened about 1.4% against the dollar over the two days, which traders expect to weigh on the peso when the market reopens. Today's session will have limited US references because the Treasury market and parts of US settlement are closed for Veterans Day. INDEC publishes October inflation on Thursday at 16:00. In Córdoba, Leo XIV celebrated Mass at the Escuela de Aviación Militar grounds before a crowd EFE described as hundreds of thousands, telling them "go and be saints" and invoking the Cura Brochero.</p>
+    <a class="cta" href="https://www.infobae.com/economia/2026/11/11/tras-dos-feriados-el-mercado-argentino-tendra-que-ponerse-al-dia-con-limitaciones-por-el-dia-festivo-en-eeuu/">Infobae →</a><a class="cta" href="https://efe.com/mundo/2026-11-10/papa-misa-multitudinaria-cordoba/">EFE →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-markets-reopen-two-holidays" data-term="story-2026-11-11-markets-reopen-two-holidays"></div></details>
+  </article>
+
+  <!-- GLOBAL -->
+  <div class="sec" id="global"><h2>Global</h2><span class="ct">4</span></div>
+
+  <article class="story">
+    <div class="k">NPR · BBC · Reuters · House Clerk · Nov 10</div>
+    <h3>House Republicans send the Hegseth impeachment articles to committee, ending the effort this session</h3>
+    <div class="meta"><span class="stat num">211–204</span><span class="stat">Massie the lone GOP no</span><span class="stat num">11 Democrats absent</span></div>
+    <p>The House voted 211–204 to refer Rep. Thomas Massie's eight impeachment articles against Defense Secretary Pete Hegseth to the Republican-led Judiciary Committee, which NPR and BBC say effectively kills them before this Congress ends. Republicans voted 210–1 for the motion, joined by the chamber's one independent; all 203 Democrats voting opposed it, and 11 Democrats did not vote. The articles accused Hegseth of waging war on Iran without authorization, extrajudicial killings in strikes on alleged drug boats, the seizure of Venezuela's Nicolás Maduro, and targeting Sen. Mark Kelly. At his first Pentagon briefing in six months, Hegseth called the effort a "farce" and "sabotage." Democrats, who take both chambers in January, have promised investigations; Hakeem Jeffries, expected to be Speaker, told NPR "He's got to go." Senate Republicans re-elected John Thune as their leader for the minority.</p>
+    <a class="cta" href="https://www.npr.org/2026/11/10/nx-s1-6036813/house-votes-to-effectively-end-the-impeachment-effort-against-pete-hegseth">NPR →</a><a class="cta" href="https://www.bbc.com/news/articles/cxly4y5jzl0qo">BBC →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-house-republicans-send-hegseth" data-term="story-2026-11-11-house-republicans-send-hegseth"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">AP · Foreign Policy · France 24 · Guardian · Nov 10</div>
+    <h3>First Russia–Ukraine talks in nine months are "very productive," per Rubio, but core gaps remain</h3>
+    <p>Delegations met for about four hours in Abu Dhabi with US envoy Jared Kushner, mainly on security guarantees for Ukraine, humanitarian issues, prisoner exchanges and the return of children; a second session is today. Zelensky called the day "constructive and quite substantive," Russia's Vladimir Medinsky voiced hope for progress, and Rubio, speaking at the G7 in France, said it is "not like something that's on the verge of being solved in the next 24 hours" and that Europeans should eventually join. Foreign Policy and ABC report the two main sticking points are unchanged: Kyiv and European allies want an immediate ceasefire before a settlement, which Moscow rejects, and Russia wants Ukraine to withdraw from four regions it claims, which Kyiv refuses. Industry sources told Reuters Russia's refining capacity is down about 30% since late October after Ukrainian drone strikes.</p>
+    <a class="cta" href="https://apnews.com/article/russia-ukraine-war-putin-zelenskyy-uae-3d878a3e56d5df5bd198a6d20c824d18">AP →</a><a class="cta" href="https://foreignpolicy.com/2026/11/10/us-russia-ukraine-peace-talks-progress-cease-fire-donbas/">Foreign Policy →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-first-russia-ukraine-talks" data-term="story-2026-11-11-first-russia-ukraine-talks"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Al Jazeera · Reuters · CNBC · Nov 10–11</div>
+    <h3>Iran denies talks with Washington and says Hormuz stays closed until its seven conditions are met</h3>
+    <p>A day after Trump said the war was "militarily effectively over," Iran's security chief Mohsen Rezaei told Al Mayadeen that reports of ongoing negotiations or a Qatar meeting are "a pure lie" and that Washington's initial response to Tehran's conditions was "insufficient and deceptive." Foreign Minister Abbas Araghchi said Hormuz could reopen within two days if demands, including lifting sanctions and the blockade and ending fighting in Lebanon, are met. In Paris, Rubio said the US is "open to diplomacy" and that "the economic campaign is so devastating that right now there is no need for major combat operations"; Qatar's prime minister met Saudi and European ministers there. Oil swung on the mixed signals, falling more than $3 before recovering part of the loss.</p>
+    <a class="cta" href="https://www.aljazeera.com/news/2026/11/11/iran-denies-talks-with-us-says-hormuz-will-stay-shut-until-demands-are-met">Al Jazeera →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-iran-denies-talks-washington" data-term="story-2026-11-11-iran-denies-talks-washington"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Also overnight</div>
+    <h3>Also: COP31 leaders gather in Antalya, emissions set to dip, and a French cold-chain cyberattack</h3>
+    <p>Leaders open a two-day summit at COP31 in Antalya today, where Türkiye is pushing for electricity to reach 35% of global energy use by 2035; Lula, von der Leyen, China's Han Zheng, UK Prime Minister Andy Burnham and Iran's Pezeshkian are among scheduled speakers. The Global Carbon Project projects fossil CO2 emissions will fall 0.4% in 2026, partly because of the energy disruption from the Iran war. France says it is weighing responses beyond sanctions to a cyberattack on refrigeration facilities. Israeli opposition parties agreed on candidates for Knesset speaker and the defense committee as they seek to replace Netanyahu's government. A highway crash in Bulgaria killed 11 (Anadolu, Xinhua).</p>
+    <a class="cta" href="https://www.aa.com.tr/en/world/morning-briefing-nov-11/4119658">Anadolu →</a><a class="cta" href="https://english.news.cn/20261111/2dad43f4501b4deea37c358c92aa9697/c.html">Xinhua →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-also-cop31-leaders-gather" data-term="story-2026-11-11-also-cop31-leaders-gather"></div></details>
+  </article>
+
+  <!-- AHEAD -->
+  <div class="sec" id="ahead"><h2>Ahead</h2><span class="ct">ART dates</span></div>
+  <div class="tx ahead">
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">11</div></div><div class="mid"><div class="n">Singles' Day peak; Abu Dhabi talks, day two</div><div class="s" style="white-space:normal">COP31 leaders' summit opens. Argentine markets reopen. US bond market closed for Veterans Day.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">12</div></div><div class="mid"><div class="n">INDEC October CPI at 16:00 ART</div><div class="s" style="white-space:normal">GP-Act III shareholders vote on the Dronamics deal extension.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">13</div></div><div class="mid"><div class="n">US producer prices for October</div><div class="s" style="white-space:normal">The last big inflation print before the December Fed meeting.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">17</div></div><div class="mid"><div class="n">Nvidia third-quarter results</div><div class="s" style="white-space:normal">The first call since the board probe began.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">18</div></div><div class="mid"><div class="n">Anthropic expected to price; APEC opens in Shenzhen</div><div class="s" style="white-space:normal">Trading as ANT planned for Nov 19. Trump expects to meet Xi and Putin at APEC, Nov 18–19.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">20</div></div><div class="mid"><div class="n">ILWU Local 26 strike deadline at LA–Long Beach</div><div class="s" style="white-space:normal">Extended from earlier this month to allow more talks.</div></div></div>
+  </div>
+
+  <!-- giscus-feedback -->
+  <section class="card fbcard" id="feedback">
+    <span class="lbl">Feedback</span>
+    <h3>How was today's brief?</h3>
+    <p class="hint">React or leave a comment on format, depth, or topics. Feedback shapes what gets covered and how, never which side a story takes.</p>
+    <div class="gslot" id="fb-brief" data-term="brief-2026-11-11"></div>
+  </section>
+
+  <footer>Prepared for Matias Ricci · Wednesday edition, Nov 11, 2026 · as of 07:00 ART (UTC−3)<br>Inflation and rates from the BLS, Reuters, CNBC and the Washington Post. Anthropic from CNBC, TechCrunch and the company's filing; the IPO timing and retail allocation come from people familiar, per CNBC. AI products from company posts, Reuters, TechCrunch, The Verge and n8n Lab; capability claims are the companies' own. Freight from Freightos, CNBC and Al Jazeera. Deals from Reuters, company releases, Axios Pro, AlleyWatch, Crosswalk and Tech Startups. Markets from Sharecast, Investing.com, CNBC and Teletrade. Argentina from Infobae, El Día, EFE and Perfil. No giscus feedback had been posted, so the format is unchanged.</footer>
+</main>
+
+<script>
+/* giscus loader: one embed at a time (client.js targets the first .giscus), per-iframe resizing */
+(function(){
+  var CFG={repo:"matiasriccibrochiero/daily-brief",repoId:"R_kgDOVQx5Jg",category:"Announcements",categoryId:"DIC_kwDOVQx5Js4DJrHP",mapping:"specific",strict:"1",
+    reactionsEnabled:"1",emitMetadata:"0",inputPosition:"top",theme:"transparent_dark",lang:"en",loading:"lazy"};
+  var frames=[],heights=new Map(),queue=Promise.resolve();
+  function kebab(k){return k.replace(/[A-Z]/g,function(c){return "-"+c.toLowerCase()})}
+  window.addEventListener("message",function(e){
+    if(e.origin!=="https://giscus.app")return;
+    var d=e.data; if(!d||typeof d!=="object"||!d.giscus)return;
+    var f=null; for(var i=0;i<frames.length;i++){if(frames[i].contentWindow===e.source){f=frames[i];break}}
+    if(d.giscus.resizeHeight&&f){heights.set(f,d.giscus.resizeHeight);f.style.height=d.giscus.resizeHeight+"px"}
+    var ks=Object.keys(d.giscus);
+    if(ks.length===1&&ks[0]==="resizeHeight"){e.stopImmediatePropagation();return}
+    setTimeout(function(){heights.forEach(function(h,fr){fr.style.height=h+"px"})},0);
+  });
+  function mount(slot){
+    if(!slot||slot.getAttribute("data-mounted"))return; slot.setAttribute("data-mounted","1");
+    queue=queue.then(function(){return new Promise(function(done){
+      slot.classList.add("giscus");
+      var s=document.createElement("script"); s.src="https://giscus.app/client.js"; s.async=true; s.crossOrigin="anonymous";
+      for(var k in CFG)s.setAttribute("data-"+kebab(k),CFG[k]);
+      s.setAttribute("data-term",slot.getAttribute("data-term"));
+      s.onload=s.onerror=function(){var fr=slot.querySelector("iframe");if(fr)frames.push(fr);
+        slot.classList.remove("giscus");slot.classList.add("gdone");done()};
+      slot.parentNode.insertBefore(s,slot);
+    })});
+  }
+  document.querySelectorAll("details.fb").forEach(function(d){
+    d.addEventListener("toggle",function(){if(d.open)mount(d.querySelector(".gslot"))});
+  });
+  mount(document.getElementById("fb-brief"));
+})();
+</script>
+</body>
+</html>
