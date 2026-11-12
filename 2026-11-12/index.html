@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Daily Brief · Thursday · November 12, 2026</title>
+<style>
+  :root{
+    --bg:#000; --s1:#16161a; --s2:#1f1f25; --s3:#2a2a31;
+    --tx:#fff; --t2:#8a8a93; --t3:#5d5d66;
+    --blue:#3d7bff; --green:#2fd27a; --greenbg:rgba(47,210,122,.14);
+    --red:#ff5c5c; --redbg:rgba(255,92,92,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+  .app{max-width:460px;margin:0 auto;padding:12px 16px 48px}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{font-weight:600;color:#fff}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--s2);padding:1px 5px;border-radius:6px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0}
+  .me{width:36px;height:36px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .search{flex:1;margin:0 10px;height:36px;border-radius:18px;background:var(--s1);color:var(--t2);font-size:14px;display:flex;align-items:center;padding:0 14px;gap:8px}
+  .search svg{width:15px;height:15px;stroke:var(--t2)}
+  .toppill{background:var(--s1);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#d6d6dc}
+  .tz{font-size:12px;color:var(--t2);font-weight:600}
+
+  /* hero balance */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero .cap{font-size:14px;color:var(--t2);font-weight:500}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:8px 0 6px}
+  .hero .dt{font-size:15px;color:var(--t2);font-weight:500}
+  .pillbtn{display:inline-block;margin-top:16px;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px}
+
+  /* actions */
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 28px;text-align:center}
+  .actions a{color:var(--tx);font-size:12px;font-weight:500;text-decoration:none}
+  .actions .ic{width:52px;height:52px;border-radius:50%;background:var(--s2);display:grid;place-items:center;margin:0 auto 8px}
+  .actions svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;scrollbar-width:none;
+         position:sticky;top:0;background:var(--bg);z-index:5}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;text-decoration:none}
+  .chip.on{background:#fff;color:#000}
+  .chip:hover{text-decoration:none}
+
+  /* surfaces */
+  .card{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .sec{margin:32px 0 12px;display:flex;align-items:baseline;justify-content:space-between;padding:0 4px}
+  .sec h2{font-size:22px;font-weight:700;letter-spacing:-.025em}
+  .sec .ct{font-size:13px;color:var(--t2);font-weight:500}
+  .lbl{display:inline-block;background:var(--s3);color:#d6d6dc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;letter-spacing:.01em}
+
+  .lead p{font-size:16px;line-height:1.5;color:#e9e9ee;letter-spacing:-.005em}
+  .lead p + p{margin-top:12px;color:var(--t2)}
+
+  /* balance tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .tile{background:var(--s1);border-radius:24px;padding:18px}
+  .tile .k{font-size:13px;color:var(--t2);font-weight:500}
+  .tile .v{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-top:6px}
+  .tile .s{font-size:12px;color:var(--t2);margin-top:2px}
+  .tile .s.g{color:var(--green)} .tile .s.r{color:var(--red)}
+
+  /* feature cards */
+  .feat{background:var(--s1);border-radius:28px;padding:24px 22px 22px;margin-bottom:12px}
+  .feat h3{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:14px 0 8px}
+  .by{font-size:13px;color:var(--t2);margin-bottom:16px}
+  .feat p,.story p{color:#c9c9d0;margin-bottom:12px}
+  .feat p:last-of-type,.story p:last-of-type{margin-bottom:0}
+  .take{background:var(--s2);border-radius:18px;padding:14px 16px;margin-top:16px;font-size:14px;color:#e2e2e8}
+  .take b{display:block;font-size:12px;color:var(--t2);font-weight:600;margin-bottom:2px}
+  .cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600}
+  .cta + .cta{margin-left:16px}
+
+  /* scenario list (inside card) */
+  .scen{background:var(--s2);border-radius:20px;padding:4px 16px;margin:16px 0}
+  .scen .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
+  .scen .r + .r{box-shadow:0 -1px 0 rgba(255,255,255,.06)}
+  .scen .n{font-size:14px;font-weight:600}
+  .scen .d{font-size:12px;color:var(--t2);margin-top:1px;line-height:1.35}
+  .scen .a{font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .scen .cap{font-size:12px;color:var(--t2);padding:10px 0 4px}
+
+  /* story cards */
+  .story{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .story h3{font-size:19px;font-weight:700;letter-spacing:-.022em;line-height:1.22;margin-bottom:10px}
+  .story .k{font-size:12px;color:var(--t2);font-weight:600;margin-bottom:8px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stat{background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:#fff}
+
+  /* transaction list */
+  .tx{background:var(--s1);border-radius:24px;padding:6px 0;margin-bottom:12px}
+  .tx .day{font-size:13px;color:var(--t2);font-weight:600;padding:12px 20px 4px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 20px;color:var(--tx);text-decoration:none}
+  .row:hover{background:var(--s2);text-decoration:none}
+  .av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff}
+  .mid{flex:1;min-width:0}
+  .mid .n{font-size:15px;font-weight:600}
+  .mid .s{font-size:13px;color:var(--t2);line-height:1.35;margin-top:1px}
+  .amt{text-align:right;flex:none}
+  .amt .a{font-size:16px;font-weight:700;letter-spacing:-.02em}
+  .amt .s{font-size:12px;color:var(--t2)}
+
+  /* stocks */
+  .stk .row{cursor:default}
+  .stk .row:hover{background:none}
+  .px{font-size:13px;color:var(--t2);margin-top:1px}
+  .pct{flex:none;font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;min-width:74px;text-align:center}
+  .up{color:var(--green);background:var(--greenbg)}
+  .dn{color:var(--red);background:var(--redbg)}
+  .nt{color:#d6d6dc;background:var(--s3)}
+
+  /* ahead */
+  .ahead .row{align-items:flex-start}
+  .when{flex:none;width:48px;height:48px;border-radius:14px;background:var(--s2);text-align:center;padding-top:6px}
+  .when .m{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .when .d{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+
+  footer{font-size:11.5px;color:var(--t3);text-align:center;padding:28px 12px 0;line-height:1.5}
+
+  @media (min-width:600px){
+    body{padding-top:24px}
+    .app{background:#0b0b0f;border-radius:40px;padding:16px 20px 40px;margin-bottom:40px}
+    .chips{background:#0b0b0f;margin:0 -20px 8px;padding-left:20px;padding-right:20px;border-radius:0}
+  }
+
+
+  
+  /* feedback (giscus) */
+  .fb{margin-top:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+  .fb summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--t2);padding:6px 12px 6px 10px;border-radius:999px;background:var(--s2)}
+  .fb summary::-webkit-details-marker{display:none}
+  .fb summary svg{width:14px;height:14px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+  .fb[open] summary svg{transform:rotate(90deg)}
+  .fb summary:hover{color:#fff}
+  .fb .gslot{margin-top:12px}
+  .gslot{min-height:120px}
+  .gslot iframe{width:100%;border:0}
+  .fbcard{margin-top:32px;border-radius:28px;padding:24px 20px}
+  .fbcard h3{font-size:24px;font-weight:800;letter-spacing:-.035em;line-height:1.15;margin:14px 0 6px}
+  .fbcard .hint{font-size:14px;color:var(--t2);line-height:1.45;margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<main class="app">
+
+  <div class="top">
+    <div class="me">MR</div>
+    <div class="toppill">Thursday · Thu 12 Nov</div>
+    <div class="tz">ART</div>
+  </div>
+
+  <section class="hero">
+    <div class="cap">Thursday edition · Overnight</div>
+    <h1>Daily Brief</h1>
+    <div class="dt">November 12, 2026 · Wed 07:00 → Thu 07:00 ART</div>
+    <span class="pillbtn">11 min read</span>
+  </section>
+
+  <nav class="actions">
+    <a href="#featured"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div>Featured</a>
+    <a href="#ai"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>Agents</a>
+    <a href="#deals"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Deals</a>
+    <a href="#markets"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>Markets</a>
+  </nav>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Nvidia, after hours</div><div class="v num">−8%</div><div class="s r num">+2.9% in regular trading · −7.2% premarket</div></div>
+    <div class="tile"><div class="k">S&amp;P 500, Wednesday</div><div class="v num">7,619</div><div class="s g num">+1.31% · 2.6% off record</div></div>
+    <div class="tile"><div class="k">Singles' Day GMV (Syntun)</div><div class="v num">¥1.78T</div><div class="s g num">+4.8% y/y · vs +14.2% in 2025</div></div>
+    <div class="tile"><div class="k">Argentina country risk</div><div class="v num">852</div><div class="s num">INDEC CPI today 16:00</div></div>
+  </div>
+
+  <div class="card lead">
+    <span class="lbl">Overnight, in two lines</span>
+    <p style="margin-top:14px">Nvidia's board met late Wednesday to decide whether to remove Jensen Huang after The New York Times reported a second extramarital affair, this one with an executive who reports to him; the Wall Street Journal said the board was preparing to oust him, and some directors favor CFO Colette Kress as interim CEO (Semafor). No decision had been announced by this morning, and Nvidia fell about 8% after hours. Earlier, CoreWeave's 24.7% jump led an AI rebound that lifted the S&amp;P 500 1.3%, and Bloomberg reported Anthropic's IPO is multiple times oversubscribed.</p>
+    <p>Russia–Ukraine talks in Abu Dhabi ended with agreement in principle on a large prisoner exchange and no breakthrough; US envoys meet Putin in Moscow today. Iran said enriched uranium will not leave the country, and Brent rose 1.4%. China's Singles' Day sales grew 4.8%, the slowest in years. Democrat Scott Colom won Mississippi's Senate seat, giving Democrats 55 seats. INDEC publishes October inflation at 16:00 ART.</p>
+  </div>
+
+  <div class="chips">
+    <a class="chip on" href="#featured">Featured</a>
+    <a class="chip" href="#ai">AI &amp; agents</a>
+    <a class="chip" href="#ops">Ops &amp; commerce</a>
+    <a class="chip" href="#startups">Startups &amp; tech</a>
+    <a class="chip" href="#deals">Deals</a>
+    <a class="chip" href="#markets">Markets</a>
+    <a class="chip" href="#argentina">Argentina</a>
+    <a class="chip" href="#global">Global</a>
+    <a class="chip" href="#ahead">Ahead</a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec" id="featured"><h2>Featured</h2><span class="ct">2 stories</span></div>
+
+  <article class="feat">
+    <span class="lbl">Semiconductors · Governance</span>
+    <h3>Nvidia's board weighs removing Jensen Huang, its founder of 33 years, as a second affair is reported</h3>
+    <div class="by">WSJ · New York Times · Reuters · Semafor · Bloomberg · TechCrunch · Nov 11–12</div>
+    <div class="meta"><span class="stat num">~−8% after hours</span><span class="stat num">11 directors</span><span class="stat num">Huang owns ~3.6%</span><span class="stat">Results Nov 17</span></div>
+    <p><strong>What happened.</strong> On Wednesday evening, The New York Times, citing five people who had worked at the company, reported that Huang had a relationship with Kimberly Powell, Nvidia's vice president of health care, who reports directly to him. The Wall Street Journal then reported that the board was preparing to oust him and would meet as soon as that night; Reuters confirmed a late meeting took place, but no decision had been announced by Thursday morning. Semafor reported that some directors favor CFO Colette Kress as interim CEO and that the board briefed the White House; Bloomberg reported Nvidia has hired an outside search firm, and Semafor said Apple hardware chief Johny Srouji is among people being considered. Nvidia has not commented.</p>
+    <p><strong>How it got here.</strong> The board opened an independent investigation on Sunday after reports that US intelligence believes Alice Huang, a Megaspeed executive with whom Huang acknowledged an affair, is a Chinese operative who helped arrange chip shipments to Chinese companies; Nvidia, Megaspeed and Beijing deny wrongdoing. Huang told employees he takes full responsibility. Senators Chris Coons and Elizabeth Warren asked the Commerce and State departments and the White House to preserve documents on Nvidia's exports and on Huang's contacts, writing that officials may have known of concerns "yet did not move to block the continued flow of advanced AI chips."</p>
+    <div class="scen">
+      <div class="cap">Market reaction</div>
+      <div class="r"><div><div class="n">Regular session, Wed</div><div class="d">Rebound with the AI trade</div></div><div class="a num" style="color:var(--green)">+2.9%</div></div>
+      <div class="r"><div><div class="n">After hours, Wed</div><div class="d">52-week low (Semafor)</div></div><div class="a num" style="color:var(--red)">−8%</div></div>
+      <div class="r"><div><div class="n">Polymarket, exit by year-end</div><div class="d">Late Wed, per The Next Web</div></div><div class="a num">88%</div></div>
+    </div>
+    <p><strong>The mechanics.</strong> Nvidia's bylaws let a majority of its 11 directors remove the CEO with or without cause, and all directors except Huang are classed as independent. In practice it is harder: Huang, 63, owns about 3.6% of the company, has said he has around 60 direct reports, and has never named a successor. If the after-hours drop holds, Nvidia will have lost roughly $600 billion in market value since the investigation began (The Next Web). Taiwan's Taiex fell 2.6% this morning and European chip stocks including ASML and ASM International fell 2.5% to 2.9%, while AMD and Broadcom rose after hours.</p>
+    <div class="take"><b>Why it matters (analysis)</b>Nvidia supplies most of the chips used to train frontier AI models and has signed billions of dollars of financing deals that underpin the data-center buildout, so a leadership change reaches well beyond one stock. Analysts quoted by Euronews expect little short-term effect on the business if the order book holds, and Quilter Cheviot's Ben Barringer said Huang could stay on in a reduced role. The open questions are who would run product strategy and customer relationships that have centered on one person, and whether the export-control inquiry widens. The company reports quarterly results on November 17, leaving the board little time.</div>
+    <a class="cta" href="https://techcrunch.com/2026/11/11/nvidias-stock-drops-as-board-reportedly-preps-to-oust-ceo-jensen-huang/">TechCrunch →</a><a class="cta" href="https://www.semafor.com/article/11/11/2026/nvidia-board-preparing-to-oust-ceo-huang-wsj">Semafor →</a><a class="cta" href="https://thenextweb.com/news/nvidia-board-meeting-jensen-huang-ouster-no-decision">The Next Web →</a><a class="cta" href="https://www.euronews.com/2026/11/12/nvidia-shares-fall-on-reports-board-may-oust-ceo-jensen-huang">Euronews →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-nvidia-board-weighs-removing" data-term="story-2026-11-12-nvidia-board-weighs-removing"></div></details>
+  </article>
+
+  <article class="feat">
+    <span class="lbl">Russia · Ukraine · Diplomacy</span>
+    <h3>Abu Dhabi talks end with a planned prisoner swap and no breakthrough; US envoys meet Putin today</h3>
+    <div class="by">AP · BBC · ABC · RFE/RL · Kyiv Independent · Nov 11</div>
+    <div class="meta"><span class="stat">First trilateral round since Feb</span><span class="stat num">&gt;1,000 each side, per TASS</span><span class="stat">Moscow, then Dublin</span></div>
+    <p><strong>What happened.</strong> The second day of US-mediated talks lasted under two hours. Both delegations confirmed an agreement "in principle," in Russian negotiator Vladimir Medinsky's words, on a large prisoner exchange; Ukraine's Rustem Umerov said details and implementation are still being worked out. Russian state agency TASS said it would be the largest ever, with more than 1,000 people on each side; Zelensky had floated 1,000-for-1,000 or 1,500-for-1,500 a day earlier. Neither side has confirmed numbers or timing. Jared Kushner called the round a "positive step" and said he and Steve Witkoff travel to Moscow on Thursday to meet Vladimir Putin, then to Dublin to brief Zelensky.</p>
+    <p><strong>The positions.</strong> The talks were framed around Europe's post-war "security architecture." For Kyiv that means guarantees allies would come to its aid if attacked again; for Moscow, limits on NATO in eastern Europe (BBC). Ukraine's Davyd Arakhamia called it "one of the hardest" rounds and said the Russians came "with very strict directives." Medinsky said "in some areas we found common ground, while in others we did not," and dismissed a role for European governments, which consulted with the US separately in Abu Dhabi: "We have not received a single peace initiative or a single concrete peace proposal from European countries." Zelensky said Europe "must be represented at every stage of real diplomacy." The two core gaps reported earlier in the week, an immediate ceasefire and Russia's demand that Ukraine leave four regions, were not publicly narrowed.</p>
+    <p><strong>On the ground.</strong> The sides traded large drone attacks during the talks. Kyiv Independent reported Russian strikes on six major power substations causing outages, and a strike on a market in Odesa Oblast that killed at least four; Ukrainian drones reportedly targeted Russia's largest oil refinery and a Baltic Sea port.</p>
+    <div class="take"><b>Why it matters (analysis)</b>Prisoner exchanges have been the one area where the two sides repeatedly deliver, so the swap is a measurable result but not a signal on territory or a ceasefire. Today's Putin meeting is the next test of whether Washington can move Moscow on sequencing. Energy markets watch the refinery strikes: industry sources told Reuters this week that Russian refining capacity is down about 30% since late October.</div>
+    <a class="cta" href="https://www.nbcnews.com/world/middle-east/us-russia-ukraine-start-second-day-abu-dhabi-peace-talks-rcna608714">AP via NBC →</a><a class="cta" href="https://www.bbc.com/news/articles/ck792we7zrz4o">BBC →</a><a class="cta" href="https://abcnews.com/International/ukraine-russia-exchange-hundreds-drones-day-2-abu/story?id=138038984">ABC →</a><a class="cta" href="https://kyivindependent.com/ukraine-war-latest-large-scale-prisoner-exchange-agreed-as-2nd-day-of-abu-dhabi-talks-concludes-umerov-says/">Kyiv Independent →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-abu-dhabi-talks-end" data-term="story-2026-11-12-abu-dhabi-talks-end"></div></details>
+  </article>
+
+  <!-- AI -->
+  <div class="sec" id="ai"><h2>AI &amp; agents</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">Reuters · CoreWeave · CNBC · Nov 10–11</div>
+    <h3>CoreWeave jumps 24.7% after promising profit in 2028 and saying it won't borrow unsecured at today's yields</h3>
+    <div class="meta"><span class="stat num">Q3 revenue $3.66B</span><span class="stat num">Backlog $132.5B</span><span class="stat num">Debt $46.9B</span><span class="stat num">2026 capex $37–39B</span></div>
+    <p>The AI cloud provider, which had fallen more than 40% in a month as it became the focus of worries about debt-funded data centers, reported third-quarter revenue up nearly 170% to $3.66 billion, above the $3.55 billion consensus, and a smaller-than-expected loss of 95 cents a share (LSEG via Reuters). It raised 2026 revenue guidance to $13.0–13.3 billion and said it expects positive adjusted net income in the first half of 2028. Its backlog rose to $132.5 billion from $104 billion in June, while quarterly capital spending rose to $14.5 billion from $9.4 billion. CEO Mike Intrator said it is largely sold out through next year, with $9 billion of customer prepayments due over three months, and that it expects to raise less than $5 billion of additional capital through 2027. He told Reuters the Democratic midterm win means more scrutiny and slower permitting but not a material change in costs.</p>
+    <p><em>Analysis:</em> the company addressed the specific fear, refinancing at 5% Treasury yields, by tying new borrowing to signed contracts. Skeptics note the backlog is concentrated in a few large AI customers, and the stock gave back about 6% after hours on the Nvidia news.</p>
+    <a class="cta" href="https://www.streetinsider.com/Reuters/CoreWeave+targets+2028+profitability+as+AI+demand+surges/27323446.html">Reuters →</a><a class="cta" href="https://investors.coreweave.com/news/news-details/2026/CoreWeave-Reports-Strong-Third-Quarter-2026-Results/default.aspx">CoreWeave →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-coreweave-jumps-24-7" data-term="story-2026-11-12-coreweave-jumps-24-7"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Bloomberg · FT · WSJ via Reuters · Nov 10–11</div>
+    <h3>Anthropic's book is reportedly several times covered, while OpenAI's quarterly revenue hits $10 billion with a similar loss</h3>
+    <div class="meta"><span class="stat">Reported</span><span class="stat num">Up to $90.4B incl. placement</span><span class="stat num">OpenAI op. loss $10.9B</span></div>
+    <p>Bloomberg, citing people familiar, said Anthropic's IPO has drawn multiple times the orders for shares on offer, driven by anchor-size indications, and the Financial Times reported bankers are weighing a price above the $70–78 range that could lift the valuation to $1.5 trillion or more. Including the private placement, filings show Anthropic and its co-founders seeking up to $90.4 billion, which would exceed SpaceX's record listing. Separately, the Wall Street Journal reported, from documents it reviewed, that OpenAI's third-quarter revenue rose about 50% from the second quarter to $10 billion, while its operating loss widened to $10.9 billion from $10.1 billion; adjusted operating margin improved to −109% from −150%. OpenAI did not comment to Reuters. A Fed official warned in remarks reported by Semafor that the Anthropic IPO could contribute to a "large correction" in markets.</p>
+    <p><em>Analysis:</em> the two numbers frame the same debate from opposite ends: demand for frontier-lab revenue growth is strong, while the cost of serving it still exceeds revenue at the largest private lab.</p>
+    <a class="cta" href="https://news.bloomberglaw.com/artificial-intelligence/anthropics-ipo-is-said-to-be-multiple-times-oversubscribed-1">Bloomberg →</a><a class="cta" href="https://www.ft.com/content/68bcba57-0575-44ee-80f4-2e5ea23a431e">FT →</a><a class="cta" href="https://www.investing.com/news/stock-market-news/openai-posts-steep-losses-even-as-quarterly-revenue-rises-to-10-billion-wsj-reports-5017353">Reuters on OpenAI →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-anthropic-book-reportedly-several" data-term="story-2026-11-12-anthropic-book-reportedly-several"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Google · DeepMind · The Neuron · trckr.ai · Nov 11</div>
+    <h3>Also in AI: Google's cheap "decisions" API, an AI-checked proof of Signal's encryption, and a $740,000 bill from stolen keys</h3>
+    <p>Google launched a Gemini Decisions API whose first model, Gemini Decision 1, returns predefined answers with confidence scores for up to 1,000 closed-ended questions at once across text, images, audio and video, priced at $0.10 per million input tokens with 150–250 ms responses, per the company. DeepMind said its AlphaProof Code verified specified security properties of Signal's encryption code in four weeks; it covers defined properties, not every possible attack. DeepMind also released AlphaGenome 2 for non-commercial research. Railway's breach report says attackers obtained customer secrets potentially affecting up to 100,000 workspaces, a maximum-exposure estimate, and that stolen credentials ran up about $740,000 in unauthorized AI usage. United Airlines said it will block personal AI agents from booking on its site, citing privacy and possible FAA and DOT rule issues (as summarized by trckr.ai).</p>
+    <p><em>Analysis:</em> the Railway figure illustrates a newer risk: leaked AI API keys convert directly into spending, which makes key management a cost-control issue as well as a security one.</p>
+    <a class="cta" href="https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-wednesday-november-11-2026/">The Neuron →</a><a class="cta" href="https://trckrai.com/news/2026-11-11">trckr.ai →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-also-ai-google-cheap" data-term="story-2026-11-12-also-ai-google-cheap"></div></details>
+  </article>
+
+  <!-- OPS -->
+  <div class="sec" id="ops"><h2>Ops &amp; commerce</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">Reuters · Syntun · JD.com · ChinaTechNews · Nov 11–12</div>
+    <h3>Singles' Day sales grow 4.8% to 1.78 trillion yuan, a third of last year's pace, as chatbots take a bigger role</h3>
+    <div class="meta"><span class="stat num">¥1.78T ($267B)</span><span class="stat num">+4.8% vs +14.2%</span><span class="stat">Oct 7–Nov 11</span><span class="stat num">AI token packs &gt;10x</span></div>
+    <p>Data provider Syntun said sales across major platforms during the October 7 to November 11 promotion rose 4.8% to 1.78 trillion yuan, against 14.2% growth last year, amid a property downturn, weak income expectations and job insecurity (Reuters). Alibaba and JD again published no headline totals. JD said it sold more than 50 million AI-related products, transaction value for AI PCs, glasses and recording devices more than doubled, and sales of large-language-model token packages rose more than tenfold. Reuters said it was unclear how much the platforms' shopping chatbots, which recommend and complete purchases, actually added to sales. On the logistics side, JD reported robot-processed orders up 45% year on year, and Guangzhou customs cleared more than 42 million cross-border shipments during the period. Analyst Liu Xingliang said that when a sale runs for weeks, "the sense that 'I have to grab deals tonight' fades."</p>
+    <p><em>Analysis:</em> growth in a stretched-out event is a weak signal of household demand; the AI angle is so far more visible in what is sold (devices, compute credits) than in measurable conversion gains.</p>
+    <a class="cta" href="https://au.marketscreener.com/news/china-s-singles-day-sales-rise-4-8-to-1-78-trillion-ai-takes-larger-role-ce785ed8da89fe2d">Reuters →</a><a class="cta" href="https://jdcorporateblog.com/from-tokens-to-ai-powered-shopping-how-jd-com-brings-ai-into-singles-day-2026/">JD →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-singles-day-sales-grow" data-term="story-2026-11-12-singles-day-sales-grow"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Reuters · Euronews · CNBC · Nov 11</div>
+    <h3>Iran hits navigation systems on an Omani island in Hormuz as Gulf exports run above 80% of pre-war levels</h3>
+    <div class="meta"><span class="stat num">Brent $92.76 +1.39%</span><span class="stat num">~−21% this month</span><span class="stat num">Outages ~3.8M bpd</span></div>
+    <p>Three sources confirmed to Reuters that Iran attacked ship navigation systems on Didamar island, Oman, which Tehran had claimed; shipping sources said the impact would be limited because other systems exist. Iran's army said another tanker hit a mine and caught fire, and India said a Liberia-flagged tanker was struck by a projectile, injuring four crew. Even so, Gulf oil exports recovered to more than 80% of pre-war levels in September and October with US-escorted transits and Saudi exports via Yanbu, and Kpler estimates Middle East outages are down to about 3.8 million barrels a day. Oil rose after Iran's security chief said no enriched nuclear material would leave the country; Washington says nuclear issues must be part of any initial talks.</p>
+    <a class="cta" href="https://www.investing.com/news/commodities-news/iran-attacks-shipping-navigation-systems-on-omans-didamarisland-sources-say-5019671">Reuters →</a><a class="cta" href="https://www.cnbc.com/2026/11/11/oil-rises-from-two-month-low-as-hormuz-shipping-attacks-offset-iran-truce-hopes.html">CNBC →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-iran-hits-navigation-systems" data-term="story-2026-11-12-iran-hits-navigation-systems"></div></details>
+  </article>
+
+  <!-- STARTUPS -->
+  <div class="sec" id="startups"><h2>Startups &amp; tech</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">TechCrunch · UK government · FT · Nov 11</div>
+    <h3>Britain's Fractile raises $720 million to ship inference chips with memory stacked on top</h3>
+    <div class="meta"><span class="stat num">$720M Series C</span><span class="stat num">"Over £5B" valuation</span><span class="stat">Ships 2027</span></div>
+    <p>Fractile's round was led by Thrive Capital, Founders Fund, Lightspeed and Redpoint and backed by the UK's Sovereign AI Fund, which the government said would give Britain "a greater stake in the hardware that will underpin its future economy." The government put the valuation at over £5 billion; the FT and a Reuters source reported about $7 billion. After a pivot, Fractile's design stacks ordinary DRAM directly on each chip to ease the trade-off between memory capacity and speed that long agent workloads strain, and it pairs the hardware with its own compiler. CEO Walter Goodwin said the money will let it ship its first chips and systems next year. <em>Analysis:</em> inference-specific chip startups such as Etched, Axelera and Fractile are now raising at sizes once reserved for model labs, on the bet that running models, not training them, becomes the larger compute market. None has yet shipped at scale.</p>
+    <a class="cta" href="https://techcrunch.com/2026/11/11/with-720m-round-britains-fractile-gets-a-leg-up-in-the-race-for-ai-chips/">TechCrunch →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-britain-fractile-raises-720" data-term="story-2026-11-12-britain-fractile-raises-720"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Tech Startups · Axios Pro · Nov 11</div>
+    <h3>Latin American fintech draws two rounds: Clara raises $65 million and Brazil's Nova $24 million</h3>
+    <p>Latin American corporate-card and spend-management company Clara raised a $65 million Series C anchored by Citius, Kaszek and DEG, the development-finance arm of Germany's KfW Group. Brazilian startup Nova, which lets consumers use existing credit cards to make instant Pix payments and pay bills, raised a $24 million Series A led by Canaan, CEO Rafael Matos told Axios Pro. Elsewhere in tax and finance software, Toronto's Blue J raised $176 million led by JMI Equity at more than $700 million. <em>Analysis:</em> Pix's growth keeps creating room for products that sit between Brazil's instant-payment rail and the card system's credit lines.</p>
+    <a class="cta" href="https://techstartups.com/2026/11/11/startup-funding-news-today-november-11-2026-alta-mercor-path-robotics-clara-reflect-orbital-more/">Tech Startups →</a><a class="cta" href="https://www.axios.com/pro/fintech-deals/2026/11/11/nova-24-million-series-a-canaan-pix-payments">Axios Pro →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-latin-american-fintech-draws" data-term="story-2026-11-12-latin-american-fintech-draws"></div></details>
+  </article>
+
+  <!-- DEALS -->
+  <div class="sec" id="deals"><h2>Deals &amp; funding</h2><span class="ct">Announced Wednesday</span></div>
+
+  <div class="tx">
+    <a class="row" href="https://techcrunch.com/2026/11/11/with-720m-round-britains-fractile-gets-a-leg-up-in-the-race-for-ai-chips/"><div class="av" style="background:#2d5a8c">F</div><div class="mid"><div class="n">Fractile</div><div class="s">AI inference chips · Thrive, Founders Fund</div></div><div class="amt"><div class="a num">$720M</div><div class="s">Series C · ~$7B</div></div></a>
+    <a class="row" href="https://techstartups.com/2026/11/11/startup-funding-news-today-november-11-2026-alta-mercor-path-robotics-clara-reflect-orbital-more/"><div class="av" style="background:#1a6b4a">B</div><div class="mid"><div class="n">Blue J</div><div class="s">AI tax research · JMI Equity</div></div><div class="amt"><div class="a num">$176M</div><div class="s">Series E · &gt;$700M</div></div></a>
+    <a class="row" href="https://techstartups.com/2026/11/11/startup-funding-news-today-november-11-2026-alta-mercor-path-robotics-clara-reflect-orbital-more/"><div class="av" style="background:#c23b22">D</div><div class="mid"><div class="n">Daylight Security</div><div class="s">AI managed security · Goldman Sachs Alts</div></div><div class="amt"><div class="a num">$80M</div><div class="s">Series B</div></div></a>
+    <a class="row" href="https://techstartups.com/2026/11/11/startup-funding-news-today-november-11-2026-alta-mercor-path-robotics-clara-reflect-orbital-more/"><div class="av" style="background:#8a5a00">R</div><div class="mid"><div class="n">Reflect Orbital</div><div class="s">Satellites redirecting sunlight</div></div><div class="amt"><div class="a num">$73.5M</div><div class="s">Round</div></div></a>
+    <a class="row" href="https://techstartups.com/2026/11/11/startup-funding-news-today-november-11-2026-alta-mercor-path-robotics-clara-reflect-orbital-more/"><div class="av" style="background:#5b4bff">C</div><div class="mid"><div class="n">Clara</div><div class="s">LatAm spend management · Citius, Kaszek, DEG</div></div><div class="amt"><div class="a num">$65M</div><div class="s">Series C</div></div></a>
+    <a class="row" href="https://www.startupbooted.com/five-health-startups-raise-200m-from-als-gene-therapy-to-ai-billing"><div class="av" style="background:#1d6b5a">C</div><div class="mid"><div class="n">Charta Health</div><div class="s">AI chart review for billing · Insight</div></div><div class="amt"><div class="a num">$55M</div><div class="s">Series B</div></div></a>
+    <a class="row" href="https://techstartups.com/2026/11/11/startup-funding-news-today-november-11-2026-alta-mercor-path-robotics-clara-reflect-orbital-more/"><div class="av" style="background:#6b2d8c">A</div><div class="mid"><div class="n">Alta</div><div class="s">Index Ventures, GV, Blackbird</div></div><div class="amt"><div class="a num">$47.5M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://techstartups.com/2026/11/11/startup-funding-news-today-november-11-2026-alta-mercor-path-robotics-clara-reflect-orbital-more/"><div class="av" style="background:#c2652a">B</div><div class="mid"><div class="n">Bay</div><div class="s">Cybersecurity · Israel</div></div><div class="amt"><div class="a num">$37M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://www.axios.com/pro/fintech-deals/2026/11/11/nova-24-million-series-a-canaan-pix-payments"><div class="av" style="background:#2d5a8c">N</div><div class="mid"><div class="n">Nova</div><div class="s">Card-funded Pix payments · Canaan</div></div><div class="amt"><div class="a num">$24M</div><div class="s">Series A</div></div></a>
+  </div>
+
+  <!-- MARKETS -->
+  <div class="sec" id="markets"><h2>Markets</h2><span class="ct">Futures lower</span></div>
+
+  <div class="tx stk">
+    <div class="day">US close, Wednesday (Reuters · AP · Teletrade)</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPX</div><div class="mid"><div class="n">S&amp;P 500</div><div class="px num">7,619.38</div></div><span class="pct up num">+1.31%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">IXIC</div><div class="mid"><div class="n">Nasdaq Composite</div><div class="px num">25,466.19 · post-election loss erased</div></div><span class="pct up num">+1.60%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">DJI</div><div class="mid"><div class="n">Dow Jones</div><div class="px num">52,486.49 · +255 pts</div></div><span class="pct up num">+0.49%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">CRWV</div><div class="mid"><div class="n">CoreWeave</div><div class="px num">Micron +11.9% · Broadcom +4%</div></div><span class="pct up num">+24.7%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">NVDA</div><div class="mid"><div class="n">Nvidia, after hours</div><div class="px num">+2.9% in regular session</div></div><span class="pct dn num">~−8%</span></div>
+    <div class="day">Thursday morning (Euronews)</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">NDX</div><div class="mid"><div class="n">Nasdaq 100 futures</div><div class="px num">Early European session</div></div><span class="pct dn num">−0.9%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">TWII</div><div class="mid"><div class="n">Taiex</div><div class="px num">Morning trade</div></div><span class="pct dn num">−2.6%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SX8P</div><div class="mid"><div class="n">STOXX Europe 600 Tech</div><div class="px num">ASML −2.5% · DAX +1%</div></div><span class="pct dn num">−1.3%</span></div>
+    <div class="day">Commodities</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BRT</div><div class="mid"><div class="n">Brent crude</div><div class="px num">Settled $92.76 Wed · $93.21 early Thu</div></div><span class="pct up num">+1.39%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">WTI</div><div class="mid"><div class="n">WTI crude</div><div class="px num">Settled $86.53 · $86.80 early Thu</div></div><span class="pct up num">+0.57%</span></div>
+  </div>
+
+  <!-- ARGENTINA -->
+  <div class="sec" id="argentina"><h2>Argentina</h2><span class="ct">CPI today</span></div>
+
+  <article class="story">
+    <div class="k">Infobae · Bloomberg Línea · Rava · Nov 11–12</div>
+    <h3>Merval falls a fourth session as dollar bonds rebound; October inflation due at 16:00, seen near 2%</h3>
+    <div class="meta"><span class="stat num">Merval −0.6%</span><span class="stat num">Riesgo país 852</span><span class="stat num">Mayorista $1,544</span><span class="stat num">REM 1.8%</span></div>
+    <p>On the first session back from the holidays, the MSCI Merval fell 0.6% to 83,576, its fourth straight decline and a new low in dollar terms since October 24, while Globales and Bonares rose about 1% on average and up to 3.2% in longer foreign-law bonds as they caught up with Monday and Tuesday's gains abroad (Infobae). With US bonds closed, JP Morgan's country-risk index barely moved, at 852. The wholesale dollar eased to 1,544 pesos, the Banco Nación retail rate held at 1,570, the central bank bought $29 million, and gross reserves fell $312 million to $49.33 billion. The Treasury rolled over 103% of maturities, awarding 8.87 trillion pesos. Economist Gustavo Ber said local assets are being driven by flows rather than fundamentals. INDEC releases October CPI at 16:00 ART; private forecasts range from 1.8% to 2.1% and the central bank's REM survey expects 1.8%, versus 1.9% in September (Bloomberg Línea, Infobae).</p>
+    <a class="cta" href="https://www.infobae.com/economia/2026/11/11/la-bolsa-portena-cayo-por-cuarta-rueda-seguida-y-se-mantiene-la-cautela-sobre-las-acciones-y-los-bonos-argentinos/">Infobae →</a><a class="cta" href="https://www.bloomberglinea.com/latinoamerica/argentina/inflacion-de-octubre-que-esperan-las-consultoras-para-el-dato-que-publicara-el-indec/">Bloomberg Línea →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-merval-falls-fourth-session" data-term="story-2026-11-12-merval-falls-fourth-session"></div></details>
+  </article>
+
+  <!-- GLOBAL -->
+  <div class="sec" id="global"><h2>Global</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">AP · NPR · CNBC · Washington Post · Nov 11</div>
+    <h3>Democrat Scott Colom wins Mississippi's Senate seat, widening the incoming majority to 55, as a December 11 funding deadline nears</h3>
+    <div class="meta"><span class="stat num">55 Democratic seats</span><span class="stat">Alaska undecided</span><span class="stat">Funding runs out Dec 11</span></div>
+    <p>Colom narrowly defeated Republican incumbent Cindy Hyde-Smith and becomes Mississippi's first Black US senator since Reconstruction (AP), giving Democrats 55 seats in the next Senate with Alaska still uncalled. The lame-duck Congress returned with government funding at the top of its list and, per the Washington Post, is far from a deal: Democrats favor a short-term extension into the new Congress, while Republicans want to advance priorities before losing control. Separately, a watchdog filed an FEC complaint alleging a Democratic-aligned nonprofit that spent nearly $20 million in Mississippi, Kansas and Alaska hid its donors (Washington Post).</p>
+    <a class="cta" href="https://apnews.com/article/scott-colom-mississippi-senate-midterms-56c18f292a734443992f9466c3b0f346">AP →</a><a class="cta" href="https://www.washingtonpost.com/politics/2026/11/11/one-month-shutdown-congress-is-far-deal-fund-government/">Washington Post →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-democrat-scott-colom-wins" data-term="story-2026-11-12-democrat-scott-colom-wins"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">AP · Reuters · UN News · Nov 11</div>
+    <h3>At COP31, Guterres calls for a "Climate Justice Compact" as leaders warn wars are crowding out climate action</h3>
+    <p>Opening the leaders' segment in Antalya, UN Secretary-General António Guterres proposed a compact to speed the move away from fossil fuels and expand adaptation and climate finance, calling it "make or bake time." Türkiye's Erdoğan and Brazil's Lula warned that geopolitical conflict is diverting attention and money, and delegates discussed the host's proposed target for electricity to reach 35% of global energy use by 2035. Developing countries pressed for finance, with Mozambique's president saying his country needs $37.2 billion for climate threats. Erdoğan also met Iran's President Pezeshkian on the sidelines (Anadolu).</p>
+    <a class="cta" href="https://apnews.com/article/climate-change-cop31-turkey-un-conference-056ff011b2e6f324c2cd089862c13824">AP →</a><a class="cta" href="https://news.un.org/en/story/2026/11/1168783">UN News →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-cop31-guterres-calls-climate" data-term="story-2026-11-12-cop31-guterres-calls-climate"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Reuters · CNBC · SCOTUSblog · Nov 11</div>
+    <h3>Also: Iran rules out shipping out enriched uranium, and the Supreme Court lets Big Bend wall work continue</h3>
+    <p>Iran's security chief said Tehran will not allow any enriched nuclear material to leave the country; the US says nuclear issues must be part of any initial negotiations, which Iran denies are taking place. The US Supreme Court allowed border-wall construction in Texas's Big Bend region to proceed and is considering a petition related to the White House ballroom project (SCOTUSblog). UK Prime Minister Andy Burnham said Britain is pressing Israel to lift restrictions on aid into Gaza.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/11/11/oil-rises-from-two-month-low-as-hormuz-shipping-attacks-offset-iran-truce-hopes.html">CNBC →</a><a class="cta" href="https://www.scotusblog.com/2026/11/a-white-house-ballroom-petition-and-border-wall-backlash/">SCOTUSblog →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-also-iran-rules-shipping" data-term="story-2026-11-12-also-iran-rules-shipping"></div></details>
+  </article>
+
+  <!-- AHEAD -->
+  <div class="sec" id="ahead"><h2>Ahead</h2><span class="ct">ART dates</span></div>
+  <div class="tx ahead">
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">12</div></div><div class="mid"><div class="n">INDEC October CPI at 16:00; Witkoff and Kushner meet Putin</div><div class="s" style="white-space:normal">Then Zelensky in Dublin. Nvidia board decision possible. US crude inventories, delayed a day.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">13</div></div><div class="mid"><div class="n">US producer prices for October</div><div class="s" style="white-space:normal">Amodei and Jamie Dimon livestream for Anthropic's roadshow (reported by Bloomberg).</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">17</div></div><div class="mid"><div class="n">Nvidia third-quarter results</div><div class="s" style="white-space:normal">First report since the board investigation began.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">18</div></div><div class="mid"><div class="n">Anthropic expected to price; APEC opens in Shenzhen</div><div class="s" style="white-space:normal">Trading as ANT planned for Nov 19.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">20</div></div><div class="mid"><div class="n">ILWU Local 26 strike deadline at LA–Long Beach</div><div class="s" style="white-space:normal">Extended earlier this month for more talks.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Dec</div><div class="d">11</div></div><div class="mid"><div class="n">US government funding expires</div><div class="s" style="white-space:normal">No deal in sight, per the Washington Post.</div></div></div>
+  </div>
+
+  <!-- giscus-feedback -->
+  <section class="card fbcard" id="feedback">
+    <span class="lbl">Feedback</span>
+    <h3>How was today's brief?</h3>
+    <p class="hint">React or leave a comment on format, depth, or topics. Feedback shapes what gets covered and how, never which side a story takes.</p>
+    <div class="gslot" id="fb-brief" data-term="brief-2026-11-12"></div>
+  </section>
+
+  <footer>Prepared for Matias Ricci · Thursday edition, Nov 12, 2026 · as of 07:00 ART (UTC−3)<br>Nvidia from the Wall Street Journal and New York Times as relayed by TechCrunch, Semafor, Reuters, Bloomberg, The Next Web and Euronews; board deliberations come from people familiar and had not been confirmed by Nvidia. Ukraine talks from AP, BBC, ABC, RFE/RL and Kyiv Independent. AI from Reuters, Bloomberg, the FT, company posts, The Neuron and trckr.ai; capability claims are the companies' own. Singles' Day from Reuters and Syntun. Deals from TechCrunch, Tech Startups, Axios Pro and StartupBooted. Markets from Reuters, AP, Teletrade and Euronews. Argentina from Infobae, Bloomberg Línea and Rava. No giscus feedback had been posted, so the format is unchanged.</footer>
+</main>
+
+<script>
+/* giscus loader: one embed at a time (client.js targets the first .giscus), per-iframe resizing */
+(function(){
+  var CFG={repo:"matiasriccibrochiero/daily-brief",repoId:"R_kgDOVQx5Jg",category:"Announcements",categoryId:"DIC_kwDOVQx5Js4DJrHP",mapping:"specific",strict:"1",
+    reactionsEnabled:"1",emitMetadata:"0",inputPosition:"top",theme:"transparent_dark",lang:"en",loading:"lazy"};
+  var frames=[],heights=new Map(),queue=Promise.resolve();
+  function kebab(k){return k.replace(/[A-Z]/g,function(c){return "-"+c.toLowerCase()})}
+  window.addEventListener("message",function(e){
+    if(e.origin!=="https://giscus.app")return;
+    var d=e.data; if(!d||typeof d!=="object"||!d.giscus)return;
+    var f=null; for(var i=0;i<frames.length;i++){if(frames[i].contentWindow===e.source){f=frames[i];break}}
+    if(d.giscus.resizeHeight&&f){heights.set(f,d.giscus.resizeHeight);f.style.height=d.giscus.resizeHeight+"px"}
+    var ks=Object.keys(d.giscus);
+    if(ks.length===1&&ks[0]==="resizeHeight"){e.stopImmediatePropagation();return}
+    setTimeout(function(){heights.forEach(function(h,fr){fr.style.height=h+"px"})},0);
+  });
+  function mount(slot){
+    if(!slot||slot.getAttribute("data-mounted"))return; slot.setAttribute("data-mounted","1");
+    queue=queue.then(function(){return new Promise(function(done){
+      slot.classList.add("giscus");
+      var s=document.createElement("script"); s.src="https://giscus.app/client.js"; s.async=true; s.crossOrigin="anonymous";
+      for(var k in CFG)s.setAttribute("data-"+kebab(k),CFG[k]);
+      s.setAttribute("data-term",slot.getAttribute("data-term"));
+      s.onload=s.onerror=function(){var fr=slot.querySelector("iframe");if(fr)frames.push(fr);
+        slot.classList.remove("giscus");slot.classList.add("gdone");done()};
+      slot.parentNode.insertBefore(s,slot);
+    })});
+  }
+  document.querySelectorAll("details.fb").forEach(function(d){
+    d.addEventListener("toggle",function(){if(d.open)mount(d.querySelector(".gslot"))});
+  });
+  mount(document.getElementById("fb-brief"));
+})();
+</script>
+</body>
+</html>
