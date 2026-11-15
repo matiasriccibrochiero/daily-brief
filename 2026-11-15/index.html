@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Daily Brief · Sunday · November 15, 2026</title>
+<style>
+  :root{
+    --bg:#000; --s1:#16161a; --s2:#1f1f25; --s3:#2a2a31;
+    --tx:#fff; --t2:#8a8a93; --t3:#5d5d66;
+    --blue:#3d7bff; --green:#2fd27a; --greenbg:rgba(47,210,122,.14);
+    --red:#ff5c5c; --redbg:rgba(255,92,92,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+  .app{max-width:460px;margin:0 auto;padding:12px 16px 48px}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{font-weight:600;color:#fff}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--s2);padding:1px 5px;border-radius:6px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0}
+  .me{width:36px;height:36px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .search{flex:1;margin:0 10px;height:36px;border-radius:18px;background:var(--s1);color:var(--t2);font-size:14px;display:flex;align-items:center;padding:0 14px;gap:8px}
+  .search svg{width:15px;height:15px;stroke:var(--t2)}
+  .toppill{background:var(--s1);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#d6d6dc}
+  .tz{font-size:12px;color:var(--t2);font-weight:600}
+
+  /* hero balance */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero .cap{font-size:14px;color:var(--t2);font-weight:500}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:8px 0 6px}
+  .hero .dt{font-size:15px;color:var(--t2);font-weight:500}
+  .pillbtn{display:inline-block;margin-top:16px;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px}
+
+  /* actions */
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 28px;text-align:center}
+  .actions a{color:var(--tx);font-size:12px;font-weight:500;text-decoration:none}
+  .actions .ic{width:52px;height:52px;border-radius:50%;background:var(--s2);display:grid;place-items:center;margin:0 auto 8px}
+  .actions svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;scrollbar-width:none;
+         position:sticky;top:0;background:var(--bg);z-index:5}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;text-decoration:none}
+  .chip.on{background:#fff;color:#000}
+  .chip:hover{text-decoration:none}
+
+  /* surfaces */
+  .card{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .sec{margin:32px 0 12px;display:flex;align-items:baseline;justify-content:space-between;padding:0 4px}
+  .sec h2{font-size:22px;font-weight:700;letter-spacing:-.025em}
+  .sec .ct{font-size:13px;color:var(--t2);font-weight:500}
+  .lbl{display:inline-block;background:var(--s3);color:#d6d6dc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;letter-spacing:.01em}
+
+  .lead p{font-size:16px;line-height:1.5;color:#e9e9ee;letter-spacing:-.005em}
+  .lead p + p{margin-top:12px;color:var(--t2)}
+
+  /* balance tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .tile{background:var(--s1);border-radius:24px;padding:18px}
+  .tile .k{font-size:13px;color:var(--t2);font-weight:500}
+  .tile .v{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-top:6px}
+  .tile .s{font-size:12px;color:var(--t2);margin-top:2px}
+  .tile .s.g{color:var(--green)} .tile .s.r{color:var(--red)}
+
+  /* feature cards */
+  .feat{background:var(--s1);border-radius:28px;padding:24px 22px 22px;margin-bottom:12px}
+  .feat h3{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:14px 0 8px}
+  .by{font-size:13px;color:var(--t2);margin-bottom:16px}
+  .feat p,.story p{color:#c9c9d0;margin-bottom:12px}
+  .feat p:last-of-type,.story p:last-of-type{margin-bottom:0}
+  .take{background:var(--s2);border-radius:18px;padding:14px 16px;margin-top:16px;font-size:14px;color:#e2e2e8}
+  .take b{display:block;font-size:12px;color:var(--t2);font-weight:600;margin-bottom:2px}
+  .cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600}
+  .cta + .cta{margin-left:16px}
+
+  /* scenario list (inside card) */
+  .scen{background:var(--s2);border-radius:20px;padding:4px 16px;margin:16px 0}
+  .scen .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
+  .scen .r + .r{box-shadow:0 -1px 0 rgba(255,255,255,.06)}
+  .scen .n{font-size:14px;font-weight:600}
+  .scen .d{font-size:12px;color:var(--t2);margin-top:1px;line-height:1.35}
+  .scen .a{font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .scen .cap{font-size:12px;color:var(--t2);padding:10px 0 4px}
+
+  /* story cards */
+  .story{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .story h3{font-size:19px;font-weight:700;letter-spacing:-.022em;line-height:1.22;margin-bottom:10px}
+  .story .k{font-size:12px;color:var(--t2);font-weight:600;margin-bottom:8px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stat{background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:#fff}
+
+  /* transaction list */
+  .tx{background:var(--s1);border-radius:24px;padding:6px 0;margin-bottom:12px}
+  .tx .day{font-size:13px;color:var(--t2);font-weight:600;padding:12px 20px 4px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 20px;color:var(--tx);text-decoration:none}
+  .row:hover{background:var(--s2);text-decoration:none}
+  .av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff}
+  .mid{flex:1;min-width:0}
+  .mid .n{font-size:15px;font-weight:600}
+  .mid .s{font-size:13px;color:var(--t2);line-height:1.35;margin-top:1px}
+  .amt{text-align:right;flex:none}
+  .amt .a{font-size:16px;font-weight:700;letter-spacing:-.02em}
+  .amt .s{font-size:12px;color:var(--t2)}
+
+  /* stocks */
+  .stk .row{cursor:default}
+  .stk .row:hover{background:none}
+  .px{font-size:13px;color:var(--t2);margin-top:1px}
+  .pct{flex:none;font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;min-width:74px;text-align:center}
+  .up{color:var(--green);background:var(--greenbg)}
+  .dn{color:var(--red);background:var(--redbg)}
+  .nt{color:#d6d6dc;background:var(--s3)}
+
+  /* ahead */
+  .ahead .row{align-items:flex-start}
+  .when{flex:none;width:48px;height:48px;border-radius:14px;background:var(--s2);text-align:center;padding-top:6px}
+  .when .m{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .when .d{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+
+  footer{font-size:11.5px;color:var(--t3);text-align:center;padding:28px 12px 0;line-height:1.5}
+
+  @media (min-width:600px){
+    body{padding-top:24px}
+    .app{background:#0b0b0f;border-radius:40px;padding:16px 20px 40px;margin-bottom:40px}
+    .chips{background:#0b0b0f;margin:0 -20px 8px;padding-left:20px;padding-right:20px;border-radius:0}
+  }
+
+
+  
+  /* feedback (giscus) */
+  .fb{margin-top:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+  .fb summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--t2);padding:6px 12px 6px 10px;border-radius:999px;background:var(--s2)}
+  .fb summary::-webkit-details-marker{display:none}
+  .fb summary svg{width:14px;height:14px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+  .fb[open] summary svg{transform:rotate(90deg)}
+  .fb summary:hover{color:#fff}
+  .fb .gslot{margin-top:12px}
+  .gslot{min-height:120px}
+  .gslot iframe{width:100%;border:0}
+  .fbcard{margin-top:32px;border-radius:28px;padding:24px 20px}
+  .fbcard h3{font-size:24px;font-weight:800;letter-spacing:-.035em;line-height:1.15;margin:14px 0 6px}
+  .fbcard .hint{font-size:14px;color:var(--t2);line-height:1.45;margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<main class="app">
+
+  <div class="top">
+    <div class="me">MR</div>
+    <div class="toppill">Sunday · Sun 15 Nov</div>
+    <div class="tz">ART</div>
+  </div>
+
+  <section class="hero">
+    <div class="cap">Sunday edition · Overnight</div>
+    <h1>Daily Brief</h1>
+    <div class="dt">November 15, 2026 · Sat 07:00 → Sun 07:00 ART</div>
+    <span class="pillbtn">9 min read</span>
+  </section>
+
+  <nav class="actions">
+    <a href="#featured"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div>Featured</a>
+    <a href="#ai"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>Agents</a>
+    <a href="#deals"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Deals</a>
+    <a href="#markets"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>Markets</a>
+  </nav>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Starship flight time</div><div class="v num">22.5 h</div><div class="s g num">First upper-stage tower catch</div></div>
+    <div class="tile"><div class="k">US flights canceled, Sat</div><div class="v num">6,400+</div><div class="s r num">after ~9,200 Fri · FlightAware</div></div>
+    <div class="tile"><div class="k">Bitcoin</div><div class="v num">~$65K</div><div class="s r num">Lowest since August · −14% week</div></div>
+    <div class="tile"><div class="k">Startup rounds, Thu–Sun</div><div class="v num">$3.2B</div><div class="s num">21 rounds ≥$5M · Startupbooted</div></div>
+  </div>
+
+  <div class="card lead">
+    <span class="lbl">Overnight, in two lines</span>
+    <p style="margin-top:14px">SpaceX caught a Starship upper stage with its launch tower for the first time on Saturday, after a 22.5-hour orbital flight. The booster did not make it back, but recovering the ship is the step the program has been missing for full reuse. In Washington, officials traced Friday's nationwide ground stop to a single router installed by contractor L3Harris during a copper-to-fiber upgrade. Airlines canceled more than 6,400 more flights on Saturday, and the FAA expects schedules to normalize by late Sunday.</p>
+    <p>Zelensky said US negotiators had floated, for the first time, NATO membership in exchange for Ukraine leaving the Donbas; Washington did not confirm it. A Trump–Xi–Putin meeting in Shenzhen next week still has no agenda, per Reuters. Bitcoin fell below $65,000 for the first time since August. ASEAN opened its summit in Manila on Sunday.</p>
+  </div>
+
+  <div class="chips">
+    <a class="chip on" href="#featured">Featured</a>
+    <a class="chip" href="#ai">AI &amp; agents</a>
+    <a class="chip" href="#ops">Ops &amp; commerce</a>
+    <a class="chip" href="#startups">Startups &amp; tech</a>
+    <a class="chip" href="#deals">Deals</a>
+    <a class="chip" href="#markets">Markets</a>
+    <a class="chip" href="#argentina">Argentina</a>
+    <a class="chip" href="#global">Global</a>
+    <a class="chip" href="#ahead">Ahead</a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec" id="featured"><h2>Featured</h2><span class="ct">2 stories</span></div>
+
+  <article class="feat">
+    <span class="lbl">Space · Launch infrastructure</span>
+    <h3>SpaceX catches a Starship upper stage with its tower for the first time, after a full day in orbit</h3>
+    <div class="by">SpaceX · Space.com · Aviation Week · The Verge · Aerospace America · Nov 14</div>
+    <div class="meta"><span class="stat">Flight 15 · Ship 42</span><span class="stat num">14 orbits</span><span class="stat num">26 Starlink V3 deployed</span><span class="stat">Booster lost in Gulf</span></div>
+    <p><strong>What happened.</strong> Starship lifted off from Starbase, Texas, at 4:47 pm Central on Friday. The plan was to bring both stages back and catch them with the launch tower's "chopstick" arms, which would have been the first full recovery of an orbital rocket. The Super Heavy booster relit 32 of 33 engines for its return burn, but the burn ended early on low fuel. SpaceX says its guidance system triggered an automatic abort and diverted it offshore, where its flight termination system fired after the landing burn; the root cause is under investigation. The upper stage reached orbit, deployed 26 next-generation Starlink V3 satellites, and coasted for about 20 hours. On Saturday it relit one engine to deorbit, crossed Baja California and northern Mexico, and lowered itself into the tower's arms at 4:20 pm Eastern (18:20 ART), 22.5 hours after launch. "That was the missing link," SpaceX commentator Dan Huot said on the webcast.</p>
+    <p><strong>Why the ship catch is different.</strong> SpaceX had caught the booster on three earlier flights, but never the ship. The upper stage comes back from orbit, much faster and hotter, and has to survive reentry on about 18,000 heat-shield tiles before it can be caught (Aerospace America). This was only the second Starship flight to reach orbit, after Flight 14 on September 28.</p>
+    <div class="scen">
+      <div class="cap">Flight 15, per SpaceX's timeline</div>
+      <div class="r"><div><div class="n">Booster</div><div class="d">Boostback cut short · aborted catch · lost offshore</div></div><div class="a num" style="color:var(--red)">Lost</div></div>
+      <div class="r"><div><div class="n">Payload</div><div class="d">Starlink V3 satellites, all in contact</div></div><div class="a num">26</div></div>
+      <div class="r"><div><div class="n">Ship catch</div><div class="d">Liftoff to tower, Sat 4:20 pm ET</div></div><div class="a num" style="color:var(--green)">22.5 h</div></div>
+    </div>
+    <div class="take"><b>Why it matters (analysis)</b>Recovering both stages intact is the premise behind Starship's projected cost per launch, which in turn underpins plans such as the 100,000-satellite Starlink constellation SpaceX has described and NASA's lunar lander contract. Saturday shows the hardest half of that is possible; it does not yet show it is repeatable, or how much refurbishment a caught ship needs before flying again. The booster loss is a reminder that the earlier booster catches are not yet routine. Huot's "holy grail" framing is the company's; independent observers will judge by turnaround times on the next flights.</div>
+    <a class="cta" href="https://www.spacex.com/launches/starship-flight-15/">SpaceX →</a><a class="cta" href="https://www.space.com/space-exploration/launches-spacecraft/spacex-chopsticks-catch-starship-upper-stage-flight-14">Space.com →</a><a class="cta" href="https://aerospaceamerica.aiaa.org/spacex-achieves-first-starship-tower-catch/">Aerospace America →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-spacex-catches-starship-upper" data-term="story-2026-11-15-spacex-catches-starship-upper"></div></details>
+  </article>
+
+  <article class="feat">
+    <span class="lbl">Aviation · Infrastructure · Follow-up</span>
+    <h3>One router, 1,000 connection attempts every five seconds: officials trace the US ground stop to an L3Harris upgrade</h3>
+    <div class="by">US DOT · Reuters · CNBC · AP · USA Today · Nov 14</div>
+    <div class="meta"><span class="stat num">20,000+ flights disrupted</span><span class="stat num">6,400+ canceled Sat</span><span class="stat num">875 Sun already</span><span class="stat">Normal by late Sun (FAA)</span></div>
+    <p><strong>The cause, as officials describe it.</strong> At a Saturday briefing, Transportation Secretary Sean Duffy said an L3Harris contractor was doing routine work at "at least one" remote FAA site, moving telecom lines from copper wire that was being discontinued to fiber, which also meant moving from older TDM circuits to IP networking. L3Harris owns the network the FAA uses to control US airspace and has run it for more than 20 years. A newly installed router "started flooding other routers" with more than 1,000 connection attempts every four to five seconds, Duffy said, which disrupted communication with aircraft and some radar feeds, so the FAA shut the airspace. Officials told Reuters there may have been problems with routers in both Arkansas and Texas. Duffy said investigators have not determined whether it was installation error or a faulty router. FAA Administrator Bryan Bedford said there was "zero evidence" of anything "nefarious" or AI-related. L3Harris said it is "supporting the FAA in its investigation."</p>
+    <p><strong>Recovery.</strong> FlightAware counted more than 6,400 US cancellations and 8,000 delays on Saturday as of 9:35 pm ET, after about 9,200 cancellations on Friday; some of Friday's disruption was weather (CNBC). Reuters tallies more than 20,000 flights disrupted since Friday. Bedford apologized, said "the worst is behind us," and expects airline schedules to be largely back to normal by late Sunday. House Speaker Mike Johnson backed Duffy's request for more air traffic control funding, saying "we need a lot more."</p>
+    <div class="take"><b>Why it matters (analysis)</b>The explanation moves the story from "aging system fails" to "upgrade of an aging system fails," which cuts two ways. Supporters of the $30–50 billion modernization requests can point to how much of the network still runs on discontinued copper. Critics will ask why a single site's change could cascade nationwide, which is a network-design and change-management question as much as a funding one. The findings are preliminary and come from the government, which is also a party to the contract.</div>
+    <a class="cta" href="https://www.transportation.gov/briefing-room/icymi-us-transportation-secretary-sean-p-duffy-provides-update-restoration-airspace">US DOT →</a><a class="cta" href="https://www.reuters.com/3fec1b0a85a0/business/aerospace-defense/thousands-us-flights-canceled-delayed-air-travel-system-recovers-shutdown-2026-11-14/">Reuters →</a><a class="cta" href="https://www.cnbc.com/2026/11/14/faa-ground-stop-flights-resume-delays.html">CNBC →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-one-router-1-000" data-term="story-2026-11-15-one-router-1-000"></div></details>
+  </article>
+
+  <!-- AI -->
+  <div class="sec" id="ai"><h2>AI &amp; agents</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">AP · Politico · Public Citizen · Just Security · Nov 12–14</div>
+    <h3>Four nonprofits sue five AI labs in California, asking a court to freeze development of more capable models</h3>
+    <div class="meta"><span class="stat">SF Superior Court</span><span class="stat">Unfair Competition Law</span><span class="stat">5 defendants</span></div>
+    <p>Public Citizen, the Irreplaceable Education Fund, Heat Initiative and The Alliance for Secure AI sued Anthropic, Google, Meta, OpenAI and SpaceX Super Intelligence. They ask for an injunction barring the companies from building or deploying systems more capable than today's most advanced models, and from letting AI systems autonomously direct AI research. The complaint cites risks including AI-enabled cyberattacks, bioweapons and loss of control, and rests on a single claim under California's Unfair Competition Law (AP, Public Citizen). The companies had not filed responses in the coverage reviewed; industry defenders argue such claims lack a legal basis. <em>Analysis:</em> a court ordering a halt is widely seen as unlikely, but the case could force discovery into safety practices and adds a state-court front to a debate that has so far played out in legislatures.</p>
+    <a class="cta" href="https://apnews.com/article/artificial-intelligence-ai-lawsuit-cyberattacks-anthropic-openai-03ece37b96979fe834f60976648504ba">AP →</a><a class="cta" href="https://www.politico.com/news/2026/11/12/nonprofits-sue-ai-companies-over-existential-risk-01161965">Politico →</a><a class="cta" href="https://www.justsecurity.org/164494/nonprofits-lawsuit-freeze-frontier-ai-development/">Just Security →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-four-nonprofits-sue-five" data-term="story-2026-11-15-four-nonprofits-sue-five"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Google · The Verge · TechCrunch · Search Engine Journal · Nov 12–14</div>
+    <h3>Google makes Gemini 4 Hydrogen the default in Search's AI Mode worldwide and prices it at $1.50 per million input tokens</h3>
+    <div class="meta"><span class="stat num">$1.50 / $7.50 per M tokens</span><span class="stat num">1M context</span><span class="stat">New "xhigh" thinking level</span></div>
+    <p>Google released Gemini 4 Hydrogen, a model it pitches for fast coding and agent work, and made it the default for AI Mode in Search for all users, citing better handling of complicated questions, more visual answers and wider link discovery (Google, The Verge, TechCrunch). Google says it scores 51 on the Artificial Analysis Intelligence Index at its default setting and finishes tasks 2.5 times faster than Gemini 3.8 Flash; those are company figures. Separately, Google began letting US Gemini users connect Google Wallet so the assistant can read, but not move, spending data. A day earlier OpenAI's ChatGPT Wallet went the other way, letting agents pay with user approval. <em>Analysis:</em> putting a cheaper, faster model behind Search is the largest-scale deployment decision here, since it touches far more users than any API launch.</p>
+    <a class="cta" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/">Google →</a><a class="cta" href="https://www.theverge.com/ai-artificial-intelligence/1032505/google-search-ai-mode-gemini-4-hydrogen">The Verge →</a><a class="cta" href="https://techcrunch.com/2026/11/12/googles-latest-search-upgrade-promises-better-answers-to-your-most-complicated-questions/">TechCrunch →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-google-makes-gemini-4" data-term="story-2026-11-15-google-makes-gemini-4"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">BetaKit via The Signal Room · Nov 13–14</div>
+    <h3>Cohere buys code-review startup Cubic and Czech security firm Aisle, its third and fourth deals this year</h3>
+    <p>Cohere completed acquisitions of London-based Cubic, which uses AI to review code, and Prague-based Aisle, a roughly 50-person cybersecurity company. Terms were not disclosed. Cubic's team will form a secure-coding unit and Aisle will anchor a cyber-defense center, per reports. The deals follow Cohere's purchase of Reliant AI and its pending merger with Germany's Aleph Alpha. <em>Analysis:</em> independent model makers are adding application layers, here code security, to compete with hyperscalers on enterprise contracts. Coverage so far is thin, so treat details as reported.</p>
+    <a class="cta" href="https://betabriefing.ai/channels/the-signal-room/briefings/2026-11-14/">Signal Room summary →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-cohere-buys-code-review" data-term="story-2026-11-15-cohere-buys-code-review"></div></details>
+  </article>
+
+  <!-- OPS -->
+  <div class="sec" id="ops"><h2>Ops &amp; commerce</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">Tech Times · European Commission via Mayer Brown, Paul Weiss · Nov 12–14</div>
+    <h3>JD.com closes its takeover of MediaMarkt owner Ceconomy and must open its European logistics to rivals for 10 years</h3>
+    <div class="meta"><span class="stat num">€1.335B paid</span><span class="stat num">85.2% with Convergenta</span><span class="stat num">1,000+ stores</span><span class="stat">First FSR equal-access remedy</span></div>
+    <p>JD.com completed the purchase of 59.8% of Ceconomy at €4.60 a share in cash on November 12; with existing holder Convergenta, the two control 85.2%. Ceconomy runs more than 1,000 stores in 11 countries with over 50,000 staff. To win EU clearance under the Foreign Subsidies Regulation, JD.com committed for 10 years to deal with Ceconomy on market terms and to offer its warehousing, logistics and technology services to rival retailers on the same terms Ceconomy gets, monitored by a trustee. The Commission says Chinese subsidies to JD.com could distort competition; JD.com disputes that, and Beijing called the probe unlawful. Law firm Mayer Brown notes the full decision is unpublished, and that "same terms" on capacity and priority will be hard to police. JD.com says no workforce or site changes are planned. <em>Analysis:</em> the network rivals can now tap, JoyExpress, launched only in February, so whether the remedy matters depends on take-up.</p>
+    <a class="cta" href="https://www.techtimes.com/articles/330605/20261114/jdcom-completes-takeover-mediamarkt-owner-ceconomy-eu-terms-open-logistics-rivals.htm">Tech Times →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-jd-com-closes-takeover" data-term="story-2026-11-15-jd-com-closes-takeover"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Drewry via Logistics News · China Logistics Daily · Supply Chain Digital · Nov 14</div>
+    <h3>Container rates slip again as carriers lean on surcharges; Walmart adds 300 Zipline drone sites</h3>
+    <div class="meta"><span class="stat num">WCI $4,305 / 40ft −2%</span><span class="stat num">Shanghai–Rotterdam $3,504 −3%</span><span class="stat num">Maersk +$1,000 Dec 1</span></div>
+    <p>Drewry's World Container Index fell 2% to $4,305 per 40-foot container, with Shanghai–Rotterdam down 3% to $3,504, as weak demand weighs on rates. Carriers are responding with blank sailings and surcharges, including a $1,000 Maersk peak-season fee on Asia–Europe lanes from December 1. In last-mile delivery, Walmart signed a multi-year deal with Zipline to add 300 US drone delivery sites, expanding a partnership dating to 2021, and Boston Dynamics released Stretch Gen 2, a trailer-unloading robot built on data from more than 100,000 operating hours. US domestic air cargo carried in passenger planes was also caught in the FAA disruption.</p>
+    <a class="cta" href="https://logisticsnews.ph/2026/11/14/drewry-world-container-index-falls-2-to-4305-as-weak-demand-weighs-on-global-freight-rates/">Logistics News →</a><a class="cta" href="https://supplychaindigital.com/news/this-weeks-top-five-stories-in-supply-chain-14-november">Supply Chain Digital →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-container-rates-slip-again" data-term="story-2026-11-15-container-rates-slip-again"></div></details>
+  </article>
+
+  <!-- STARTUPS -->
+  <div class="sec" id="startups"><h2>Startups &amp; tech</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">Startupbooted · Axios Pro · Nov 12–15</div>
+    <h3>The week's tally: $3.2 billion across 21 rounds, with six $100M-plus deals taking about 90%</h3>
+    <div class="meta"><span class="stat num">AI: 10 rounds · ~$1.47B</span><span class="stat num">Defense/quantum/space ~$1.01B</span><span class="stat num">Robotics $500M</span></div>
+    <p>Startupbooted counted 21 rounds of $5 million or more announced from Thursday to Sunday morning (India time), totaling about $3.23 billion, of which six rounds of $100 million or more made up roughly $2.89 billion. AI led by count, mostly for agent tooling, compute and data plumbing rather than new foundation models. The largest non-AI checks went to strategic sectors: UFORCE, a London/Kyiv maker of sea, air and ground drones, raised $700 million at a $6 billion valuation co-led by Valor and the UK National Wealth Fund, and Munich's Agile Robots raised $500 million led by SoftBank at a reported $8.5 billion. Bloomberg also reported Kalshi is in talks to raise at a $65 billion valuation; that round has not closed. <em>Analysis:</em> concentration remains the defining feature, with defense tech now drawing state-backed capital alongside venture funds.</p>
+    <a class="cta" href="https://www.startupbooted.com/startup-funding-rounds-november-14-2026">Startupbooted →</a><a class="cta" href="https://www.axios.com/pro/climate-deals/2026/11/14/climate-deals-week-torus-path-robotics-mavria">Axios Pro →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-week-tally-3-2" data-term="story-2026-11-15-week-tally-3-2"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">The Hindu · AP · Nov 14</div>
+    <h3>Microsoft's outage reached more than 70 countries, hitting courts, hospitals and governments</h3>
+    <p>New detail on this week's Microsoft 365 outage: Downdetector received reports from more than 70 countries and territories, and governments including Japan, Singapore and Australia said their operations were affected, along with courts, healthcare services, airlines and banks (The Hindu, citing wire reports). Microsoft said on X that it had "restored service to the remaining impacted customers and regions." Microsoft attributes the outage to a problem during a network-capacity upgrade, not an attack. <em>Analysis:</em> with the FAA failure also tied to an upgrade, the week produced two large examples of change-management risk in critical systems.</p>
+    <a class="cta" href="https://www.thehindu.com/news/top-news-of-the-day-november-14-2026/article71701553.ece">The Hindu →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-microsoft-outage-reached-more" data-term="story-2026-11-15-microsoft-outage-reached-more"></div></details>
+  </article>
+
+  <!-- DEALS -->
+  <div class="sec" id="deals"><h2>Deals &amp; funding</h2><span class="ct">New since Friday's brief</span></div>
+
+  <div class="tx">
+    <a class="row" href="https://www.techtimes.com/articles/330605/20261114/jdcom-completes-takeover-mediamarkt-owner-ceconomy-eu-terms-open-logistics-rivals.htm"><div class="av" style="background:#c23b22">J</div><div class="mid"><div class="n">JD.com → Ceconomy</div><div class="s">MediaMarkt, Saturn · closed Nov 12</div></div><div class="amt"><div class="a num">€1.34B</div><div class="s">M&amp;A · 59.8%</div></div></a>
+    <a class="row" href="https://www.startupbooted.com/startup-funding-rounds-november-14-2026"><div class="av" style="background:#2d5a8c">H</div><div class="mid"><div class="n">Hatz AI</div><div class="s">AI platform for IT providers · Nadia Partners</div></div><div class="amt"><div class="a num">$24M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://www.startupbooted.com/startup-funding-rounds-november-14-2026"><div class="av" style="background:#1a6b4a">N</div><div class="mid"><div class="n">Nova</div><div class="s">Pay Pix bills by credit card · Canaan · Brazil</div></div><div class="amt"><div class="a num">$24M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://www.startupbooted.com/startup-funding-rounds-november-14-2026"><div class="av" style="background:#5b4bff">N</div><div class="mid"><div class="n">Nebuly</div><div class="s">ROI analytics for AI agents · Planven</div></div><div class="amt"><div class="a num">$21M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://www.startupbooted.com/startup-funding-rounds-november-14-2026"><div class="av" style="background:#8a5a00">G</div><div class="mid"><div class="n">Griffin</div><div class="s">UK banking-as-a-service · Octagon</div></div><div class="amt"><div class="a num">$20M</div><div class="s">Series B</div></div></a>
+    <a class="row" href="https://www.startupbooted.com/startup-funding-rounds-november-14-2026"><div class="av" style="background:#1d6b5a">B</div><div class="mid"><div class="n">Biomatter</div><div class="s">AI enzyme design · Astanor, UVC · Vilnius</div></div><div class="amt"><div class="a num">$18M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://www.startupbooted.com/startup-funding-rounds-november-14-2026"><div class="av" style="background:#6b2d8c">G</div><div class="mid"><div class="n">Gama</div><div class="s">Folding solar for satellites · Paris</div></div><div class="amt"><div class="a num">€15M</div><div class="s">Seed</div></div></a>
+    <a class="row" href="https://www.startupbooted.com/startup-funding-rounds-november-14-2026"><div class="av" style="background:#c2652a">T</div><div class="mid"><div class="n">Tristar AI</div><div class="s">Factory-line visual inspection · Isogon</div></div><div class="amt"><div class="a num">$12.4M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://www.startupbooted.com/startup-funding-rounds-november-14-2026"><div class="av" style="background:#2d5a8c">D</div><div class="mid"><div class="n">Delphina</div><div class="s">Agents for business context · Radical, Costanoa</div></div><div class="amt"><div class="a num">$7.5M</div><div class="s">Undisclosed</div></div></a>
+    <a class="row" href="https://betabriefing.ai/channels/the-signal-room/briefings/2026-11-14/"><div class="av" style="background:#1a4f8c">C</div><div class="mid"><div class="n">Cohere → Cubic, Aisle</div><div class="s">Code review · cybersecurity</div></div><div class="amt"><div class="a num">n/d</div><div class="s">M&amp;A</div></div></a>
+    <a class="row" href="https://betabriefing.ai/channels/the-signal-room/briefings/2026-11-14/"><div class="av" style="background:#1a6b4a">D</div><div class="mid"><div class="n">Deloitte → Edisyl</div><div class="s">AI data curation, from Flipside · 24 staff</div></div><div class="amt"><div class="a num">n/d</div><div class="s">M&amp;A</div></div></a>
+  </div>
+
+  <!-- MARKETS -->
+  <div class="sec" id="markets"><h2>Markets</h2><span class="ct">Weekend · stocks closed</span></div>
+
+  <div class="tx stk">
+    <div class="day">Weekend moves (CoinDesk · Bitcoin Magazine · WAM)</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BTC</div><div class="mid"><div class="n">Bitcoin</div><div class="px num">~$65,100 · low ~$62,000 intraday</div></div><span class="pct dn num">−4.2%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BTC</div><div class="mid"><div class="n">Bitcoin, 7 days</div><div class="px num">7th straight day of ETF outflows</div></div><span class="pct dn num">−14%</span></div>
+    <div class="day">Friday close, for reference (Reuters · CNBC)</div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPX</div><div class="mid"><div class="n">S&amp;P 500</div><div class="px num">7,561.67 · week +2.5%</div></div><span class="pct dn num">−0.40%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">US10Y</div><div class="mid"><div class="n">10-year Treasury</div><div class="px num">5.151%</div></div><span class="pct dn num">+2.4 bp</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">MERV</div><div class="mid"><div class="n">Merval</div><div class="px num">Riesgo país 830 · −109 bp week</div></div><span class="pct up num">+2.9%</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">CoinDesk · Yahoo Finance · TokenPost · WAM · Nov 14–15</div>
+    <h3>Bitcoin breaks below $65,000 for the first time since August as ETF outflows run a seventh day</h3>
+    <p>Bitcoin slid through Saturday to about $64,700, its lowest since mid-August, and traded around $65,000 early Sunday, down roughly 14% on the week (Bitcoin Magazine, WAM). Coverage attributes the drop to seven straight days of spot-ETF outflows, forced selling of leveraged positions, and the same macro pressures hitting tech stocks: a 10-year Treasury yield above 5.1%, a fully priced December Fed hike and a strong dollar. Thin weekend liquidity amplified the moves. A CoinDesk-cited analyst called current levels a "deep value zone"; that is one view, and others in the same coverage point to continued outflows. Stock markets reopen Monday, with Nvidia's results on Tuesday and Anthropic's IPO pricing on Wednesday as the week's main tests for risk appetite.</p>
+    <a class="cta" href="https://www.coindesk.com/markets/2026/11/14/bitcoin-drifts-back-to-usd65-000-deep-value-zone-says-analyst">CoinDesk →</a><a class="cta" href="https://bitcoinmagazine.com/markets/bitcoin-price-crashes-13-percent-65600">Bitcoin Magazine →</a><a class="cta" href="https://www.wam.ae/en/article/17iysls-bitcoin-falls-below-65000-for-first-time-since">WAM →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-bitcoin-breaks-below-65" data-term="story-2026-11-15-bitcoin-breaks-below-65"></div></details>
+  </article>
+
+  <!-- ARGENTINA -->
+  <div class="sec" id="argentina"><h2>Argentina</h2><span class="ct">Policy push</span></div>
+
+  <article class="story">
+    <div class="k">TN · Infobae · Boletín Oficial · Nov 13–14</div>
+    <h3>With inflation at 2.2% and activity weak, the government speeds up road concessions and approves two Vaca Muerta projects over $3 billion</h3>
+    <div class="meta"><span class="stat num">27 road sections</span><span class="stat num">16 provinces</span><span class="stat num">RIGI: US$3B+</span><span class="stat num">AySA: US$340M Dec 17</span></div>
+    <p><strong>What happened.</strong> A resolution in Friday's Boletín Oficial authorized tendering 27 more sections of national highways in 16 provinces as toll concessions, adding to the 9,000 km already concessioned this year; private operators would take on maintenance and expansion in exchange for tolls (TN). The government also approved two large projects under the RIGI investment regime tied to Vaca Muerta: a natural-gas-liquids processing plant and pipelines from the Neuquén basin to Bahía Blanca, together worth more than US$3 billion, which it says will create 19,000 jobs from 2030. The handover of the state's AySA water-utility shares to the winning consortium was set for December 17, pushing back US$340 million in proceeds by a few weeks.</p>
+    <p><strong>Context and views.</strong> October inflation of 2.2% was the highest monthly reading since April, though Economy Minister Luis Caputo highlighted core inflation at a 15-month low. TN reports private analysts and business leaders are worried about falling purchasing power and weak domestic demand; consultancy LCG projects inflation stabilizing slightly below 2% and says a 1% target will be hard to reach, especially with exchange-rate pressure likely before the October 2027 election. The government maintains that fiscal and monetary order must come before a sustained recovery. Bonds gained about 3% on the week and country risk fell more than 100 points to about 830 (Infobae).</p>
+    <a class="cta" href="https://tn.com.ar/economia/2026/11/14/pese-al-dato-de-inflacion-y-la-caida-de-la-actividad-el-gobierno-acelera-su-plan-economico-dolar-privatizaciones-y-rigi/">TN →</a><a class="cta" href="https://www.infobae.com/economia/2026/11/14/los-bonos-rebotaron-3-y-el-riesgo-pais-argentino-desconto-mas-de-100-puntos-basicos-en-una-semana-de-alta-volatilidad-externa/">Infobae →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-inflation-2-2-activity" data-term="story-2026-11-15-inflation-2-2-activity"></div></details>
+  </article>
+
+  <!-- GLOBAL -->
+  <div class="sec" id="global"><h2>Global</h2><span class="ct">4</span></div>
+
+  <article class="story">
+    <div class="k">BBC · NBC · Politico · Washington Post · Euronews · Nov 14</div>
+    <h3>Zelensky says the US floated NATO membership if Ukraine leaves the Donbas. Kushner calls for "confidentiality"</h3>
+    <div class="meta"><span class="stat">Unconfirmed by US</span><span class="stat">Referendum pledge</span><span class="stat">Moscow softens on EU seat</span></div>
+    <p>"The Americans raised a question: 'What if Ukraine joins Nato? Would Ukraine withdraw from Donbas?' This was the first time this had been raised," Zelensky said in remarks released Saturday (BBC). He said Ukraine will not cede territory, but that any concrete package with security guarantees, no limits on its military and reconstruction money would go to a referendum. The US did not confirm it; an official told the BBC "many ideas continue to be discussed." Envoy Jared Kushner later urged "confidentiality" and criticized "maximalist" proposals and "strong political rhetoric" being aired, which the BBC read as a reproach to Kyiv. Russia's stated position has not changed: it wants the rest of the Donbas before any ceasefire, and Moscow's talk of a "new European security architecture" is, per the BBC, long-standing code for a weaker NATO. Other NATO members are wary of Ukrainian membership. Moscow said it will not dictate the EU delegation's participation in talks, softening its earlier stance (Euronews). On the ground, a Russian attack on Zaporizhzhia injured 22 people on Saturday, Ukraine's emergency service said.</p>
+    <a class="cta" href="https://www.bbc.com/news/articles/cwvg2l312ylqo">BBC →</a><a class="cta" href="https://www.politico.eu/article/us-suggested-ukraine-could-give-up-donbas-for-nato-membership-zelenskyy-says/">Politico →</a><a class="cta" href="https://www.washingtonpost.com/world/2026/11/14/russia-seeks-nato-pullback-zelensky-says-us-asked-about-ceding-territory/">Washington Post →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-zelensky-says-us-floated" data-term="story-2026-11-15-zelensky-says-us-floated"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Reuters analysis · Euronews · Nov 14</div>
+    <h3>A Trump–Xi–Putin meeting in Shenzhen is expected next week, but there is no agenda yet and Beijing is said to be wary</h3>
+    <p>The White House said the three leaders will meet in China; Trump leaves Washington on Monday for the ASEAN meetings in the Philippines before traveling to Shenzhen for APEC (Euronews). Reuters, citing two people familiar with the planning, reports that no agenda or format has been agreed. A senior US official said "we do not expect to get to any kind of agreement" on nuclear arms but that "it's time for China to sort of step up"; Russia and the US each hold more than 5,000 warheads and China about 500. Trump wants to discuss arms control, Putin wants Ukraine on the table, and a US official said Trump was unlikely to raise Ukraine in the three-way talks. Reuters' analysis says smaller countries fear a new "Yalta"-style carve-up by major powers and that Xi is wary of hosting. <em>Analysis:</em> a first three-way meeting would itself be the news; expectations for substance are low on all sides.</p>
+    <a class="cta" href="https://www.reuters.com/5f374b32b07b/world/china/new-yalta-trump-putin-push-meeting-that-xi-is-wary-hosting-2026-11-14/">Reuters →</a><a class="cta" href="https://www.euronews.com/2026/11/14">Euronews →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-trump-xi-putin-meeting" data-term="story-2026-11-15-trump-xi-putin-meeting"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Al Jazeera · Euronews · Turkish MFA · World Brief Now · Nov 13–14</div>
+    <h3>Qatar and Turkey sign a mutual defense pact as Gulf security realigns around the Iran war</h3>
+    <p>Qatar's emir and Turkish President Erdoğan signed an agreement in Istanbul committing both to a unified response to an external armed attack on either, with joint exercises, defense-industry cooperation and training (Turkish MFA, Al Jazeera). Euronews describes it as part of a fast-moving reshaping of regional security as the US signals changes to its long-standing presence. Related: IEA figures reviewed by Iran International put Iran's October crude output at 1.86 million barrels a day, 46% below pre-war levels, and Iran's Revolutionary Guards navy said two tankers hit mines on an "unauthorized" route through Hormuz. That claim did not identify the ships and has not been independently verified.</p>
+    <a class="cta" href="https://www.aljazeera.com/news/2026/11/14/qatar-and-turkiye-sign-a-mutual-defence-pact-what-do-we-know">Al Jazeera →</a><a class="cta" href="https://www.euronews.com/2026/11/14/qatar-and-turkey-sign-defence-agreement-for-unified-position-facing-external-attacks">Euronews →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-qatar-turkey-sign-mutual" data-term="story-2026-11-15-qatar-turkey-sign-mutual"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">AP · Nikkei Asia · PNA · Euronews · Nov 14–15</div>
+    <h3>Also: ASEAN opens in Manila and keeps Myanmar's junta out; Canada and the Philippines conclude a trade deal; protests in France and Portugal</h3>
+    <p>ASEAN's 49th summit opened in Manila on Sunday with conflicts and energy prices topping the agenda. Leaders reaffirmed the Five-Point Consensus on Myanmar and are expected to defer any decision on readmitting its military leaders to Singapore's 2027 chairmanship (PNA, Manila Standard). Canada and the Philippines concluded free-trade talks, Prime Minister Mark Carney said. France saw a fifth straight Saturday of nationwide protests over living costs and education funding, and dozens of Portuguese cities protested the housing shortage (Euronews).</p>
+    <a class="cta" href="https://apnews.com/article/asean-summit-manila-philippines-china-trump-ca9bb47cc109a1ca9e57be787b137095">AP →</a><a class="cta" href="https://asia.nikkei.com/politics/international-relations/asean-leaders-kick-off-manila-summits-as-friction-persists-on-myanmar-haze">Nikkei Asia →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-also-asean-opens-manila" data-term="story-2026-11-15-also-asean-opens-manila"></div></details>
+  </article>
+
+  <!-- AHEAD -->
+  <div class="sec" id="ahead"><h2>Ahead</h2><span class="ct">ART dates</span></div>
+  <div class="tx ahead">
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">15</div></div><div class="mid"><div class="n">US airline schedules expected to normalize by late Sunday</div><div class="s" style="white-space:normal">875 Sunday flights already canceled as of Saturday night. ASEAN summit runs through Nov 17.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">16</div></div><div class="mid"><div class="n">Trump departs for the Philippines</div><div class="s" style="white-space:normal">ASEAN meetings, then APEC in Shenzhen.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">17</div></div><div class="mid"><div class="n">Nvidia third-quarter results, after the close</div><div class="s" style="white-space:normal">First report under interim CEO Colette Kress.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">18</div></div><div class="mid"><div class="n">Anthropic prices its IPO</div><div class="s" style="white-space:normal">Range $70–78. Nasdaq trading as ANT planned for Nov 19.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">19</div></div><div class="mid"><div class="n">Expected Trump–Xi–Putin meeting at APEC Shenzhen</div><div class="s" style="white-space:normal">No agenda agreed as of Saturday, per Reuters.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">20</div></div><div class="mid"><div class="n">ILWU Local 26 strike deadline at LA–Long Beach</div><div class="s" style="white-space:normal">SCO dialogue in New Delhi, Nov 20–22, with Pakistan's first ministerial visit to India in three years.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Dec</div><div class="d">9</div></div><div class="mid"><div class="n">Fed decision</div><div class="s" style="white-space:normal">A 25 bp hike fully priced. ECB on Dec 17.</div></div></div>
+  </div>
+
+  <!-- giscus-feedback -->
+  <section class="card fbcard" id="feedback">
+    <span class="lbl">Feedback</span>
+    <h3>How was today's brief?</h3>
+    <p class="hint">React or leave a comment on format, depth, or topics. Feedback shapes what gets covered and how, never which side a story takes.</p>
+    <div class="gslot" id="fb-brief" data-term="brief-2026-11-15"></div>
+  </section>
+
+  <footer>Prepared for Matias Ricci · Sunday edition, Nov 15, 2026 · as of 07:00 ART (UTC−3)<br>Starship from SpaceX's flight summary, Space.com, Aviation Week, The Verge and Aerospace America; the booster's root cause is under investigation. Ground stop from the US DOT briefing, Reuters, CNBC, AP and USA Today; the cause is preliminary and comes from the government. AI from AP, Politico, Public Citizen, Just Security, Google, The Verge and TechCrunch; Cohere and Deloitte deals come from a secondary roundup and are reported. Ops from Tech Times (citing the Commission, Mayer Brown and Paul Weiss), Drewry and Supply Chain Digital. Deals from Startupbooted and Axios Pro. Crypto from CoinDesk, Bitcoin Magazine, Yahoo Finance and WAM; Friday closes repeated from Saturday's brief. Argentina from TN and Infobae. Global from the BBC, NBC, Politico, the Washington Post, Reuters, Euronews, Al Jazeera, AP, Nikkei Asia and PNA; Iranian claims are unverified, and the US has not confirmed Zelensky's account. No giscus feedback had been posted, so the format is unchanged.</footer>
+</main>
+
+<script>
+/* giscus loader: one embed at a time (client.js targets the first .giscus), per-iframe resizing */
+(function(){
+  var CFG={repo:"matiasriccibrochiero/daily-brief",repoId:"R_kgDOVQx5Jg",category:"Announcements",categoryId:"DIC_kwDOVQx5Js4DJrHP",mapping:"specific",strict:"1",
+    reactionsEnabled:"1",emitMetadata:"0",inputPosition:"top",theme:"transparent_dark",lang:"en",loading:"lazy"};
+  var frames=[],heights=new Map(),queue=Promise.resolve();
+  function kebab(k){return k.replace(/[A-Z]/g,function(c){return "-"+c.toLowerCase()})}
+  window.addEventListener("message",function(e){
+    if(e.origin!=="https://giscus.app")return;
+    var d=e.data; if(!d||typeof d!=="object"||!d.giscus)return;
+    var f=null; for(var i=0;i<frames.length;i++){if(frames[i].contentWindow===e.source){f=frames[i];break}}
+    if(d.giscus.resizeHeight&&f){heights.set(f,d.giscus.resizeHeight);f.style.height=d.giscus.resizeHeight+"px"}
+    var ks=Object.keys(d.giscus);
+    if(ks.length===1&&ks[0]==="resizeHeight"){e.stopImmediatePropagation();return}
+    setTimeout(function(){heights.forEach(function(h,fr){fr.style.height=h+"px"})},0);
+  });
+  function mount(slot){
+    if(!slot||slot.getAttribute("data-mounted"))return; slot.setAttribute("data-mounted","1");
+    queue=queue.then(function(){return new Promise(function(done){
+      slot.classList.add("giscus");
+      var s=document.createElement("script"); s.src="https://giscus.app/client.js"; s.async=true; s.crossOrigin="anonymous";
+      for(var k in CFG)s.setAttribute("data-"+kebab(k),CFG[k]);
+      s.setAttribute("data-term",slot.getAttribute("data-term"));
+      s.onload=s.onerror=function(){var fr=slot.querySelector("iframe");if(fr)frames.push(fr);
+        slot.classList.remove("giscus");slot.classList.add("gdone");done()};
+      slot.parentNode.insertBefore(s,slot);
+    })});
+  }
+  document.querySelectorAll("details.fb").forEach(function(d){
+    d.addEventListener("toggle",function(){if(d.open)mount(d.querySelector(".gslot"))});
+  });
+  mount(document.getElementById("fb-brief"));
+})();
+</script>
+</body>
+</html>
