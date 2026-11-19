@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Daily Brief · Thursday · November 19, 2026</title>
+<style>
+  :root{
+    --bg:#000; --s1:#16161a; --s2:#1f1f25; --s3:#2a2a31;
+    --tx:#fff; --t2:#8a8a93; --t3:#5d5d66;
+    --blue:#3d7bff; --green:#2fd27a; --greenbg:rgba(47,210,122,.14);
+    --red:#ff5c5c; --redbg:rgba(255,92,92,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+  .app{max-width:460px;margin:0 auto;padding:12px 16px 48px}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{font-weight:600;color:#fff}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--s2);padding:1px 5px;border-radius:6px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0}
+  .me{width:36px;height:36px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .search{flex:1;margin:0 10px;height:36px;border-radius:18px;background:var(--s1);color:var(--t2);font-size:14px;display:flex;align-items:center;padding:0 14px;gap:8px}
+  .search svg{width:15px;height:15px;stroke:var(--t2)}
+  .toppill{background:var(--s1);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#d6d6dc}
+  .tz{font-size:12px;color:var(--t2);font-weight:600}
+
+  /* hero balance */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero .cap{font-size:14px;color:var(--t2);font-weight:500}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:8px 0 6px}
+  .hero .dt{font-size:15px;color:var(--t2);font-weight:500}
+  .pillbtn{display:inline-block;margin-top:16px;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px}
+
+  /* actions */
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 28px;text-align:center}
+  .actions a{color:var(--tx);font-size:12px;font-weight:500;text-decoration:none}
+  .actions .ic{width:52px;height:52px;border-radius:50%;background:var(--s2);display:grid;place-items:center;margin:0 auto 8px}
+  .actions svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;scrollbar-width:none;
+         position:sticky;top:0;background:var(--bg);z-index:5}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;text-decoration:none}
+  .chip.on{background:#fff;color:#000}
+  .chip:hover{text-decoration:none}
+
+  /* surfaces */
+  .card{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .sec{margin:32px 0 12px;display:flex;align-items:baseline;justify-content:space-between;padding:0 4px}
+  .sec h2{font-size:22px;font-weight:700;letter-spacing:-.025em}
+  .sec .ct{font-size:13px;color:var(--t2);font-weight:500}
+  .lbl{display:inline-block;background:var(--s3);color:#d6d6dc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;letter-spacing:.01em}
+
+  .lead p{font-size:16px;line-height:1.5;color:#e9e9ee;letter-spacing:-.005em}
+  .lead p + p{margin-top:12px;color:var(--t2)}
+
+  /* balance tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .tile{background:var(--s1);border-radius:24px;padding:18px}
+  .tile .k{font-size:13px;color:var(--t2);font-weight:500}
+  .tile .v{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-top:6px}
+  .tile .s{font-size:12px;color:var(--t2);margin-top:2px}
+  .tile .s.g{color:var(--green)} .tile .s.r{color:var(--red)}
+
+  /* feature cards */
+  .feat{background:var(--s1);border-radius:28px;padding:24px 22px 22px;margin-bottom:12px}
+  .feat h3{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:14px 0 8px}
+  .by{font-size:13px;color:var(--t2);margin-bottom:16px}
+  .feat p,.story p{color:#c9c9d0;margin-bottom:12px}
+  .feat p:last-of-type,.story p:last-of-type{margin-bottom:0}
+  .take{background:var(--s2);border-radius:18px;padding:14px 16px;margin-top:16px;font-size:14px;color:#e2e2e8}
+  .take b{display:block;font-size:12px;color:var(--t2);font-weight:600;margin-bottom:2px}
+  .cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600}
+  .cta + .cta{margin-left:16px}
+
+  /* scenario list (inside card) */
+  .scen{background:var(--s2);border-radius:20px;padding:4px 16px;margin:16px 0}
+  .scen .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
+  .scen .r + .r{box-shadow:0 -1px 0 rgba(255,255,255,.06)}
+  .scen .n{font-size:14px;font-weight:600}
+  .scen .d{font-size:12px;color:var(--t2);margin-top:1px;line-height:1.35}
+  .scen .a{font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .scen .cap{font-size:12px;color:var(--t2);padding:10px 0 4px}
+
+  /* story cards */
+  .story{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .story h3{font-size:19px;font-weight:700;letter-spacing:-.022em;line-height:1.22;margin-bottom:10px}
+  .story .k{font-size:12px;color:var(--t2);font-weight:600;margin-bottom:8px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stat{background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:#fff}
+
+  /* transaction list */
+  .tx{background:var(--s1);border-radius:24px;padding:6px 0;margin-bottom:12px}
+  .tx .day{font-size:13px;color:var(--t2);font-weight:600;padding:12px 20px 4px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 20px;color:var(--tx);text-decoration:none}
+  .row:hover{background:var(--s2);text-decoration:none}
+  .av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff}
+  .mid{flex:1;min-width:0}
+  .mid .n{font-size:15px;font-weight:600}
+  .mid .s{font-size:13px;color:var(--t2);line-height:1.35;margin-top:1px}
+  .amt{text-align:right;flex:none}
+  .amt .a{font-size:16px;font-weight:700;letter-spacing:-.02em}
+  .amt .s{font-size:12px;color:var(--t2)}
+
+  /* stocks */
+  .stk .row{cursor:default}
+  .stk .row:hover{background:none}
+  .px{font-size:13px;color:var(--t2);margin-top:1px}
+  .pct{flex:none;font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;min-width:74px;text-align:center}
+  .up{color:var(--green);background:var(--greenbg)}
+  .dn{color:var(--red);background:var(--redbg)}
+  .nt{color:#d6d6dc;background:var(--s3)}
+
+  /* ahead */
+  .ahead .row{align-items:flex-start}
+  .when{flex:none;width:48px;height:48px;border-radius:14px;background:var(--s2);text-align:center;padding-top:6px}
+  .when .m{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .when .d{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+
+  footer{font-size:11.5px;color:var(--t3);text-align:center;padding:28px 12px 0;line-height:1.5}
+
+  @media (min-width:600px){
+    body{padding-top:24px}
+    .app{background:#0b0b0f;border-radius:40px;padding:16px 20px 40px;margin-bottom:40px}
+    .chips{background:#0b0b0f;margin:0 -20px 8px;padding-left:20px;padding-right:20px;border-radius:0}
+  }
+
+
+  
+  /* feedback (giscus) */
+  .fb{margin-top:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+  .fb summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--t2);padding:6px 12px 6px 10px;border-radius:999px;background:var(--s2)}
+  .fb summary::-webkit-details-marker{display:none}
+  .fb summary svg{width:14px;height:14px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+  .fb[open] summary svg{transform:rotate(90deg)}
+  .fb summary:hover{color:#fff}
+  .fb .gslot{margin-top:12px}
+  .gslot{min-height:120px}
+  .gslot iframe{width:100%;border:0}
+  .fbcard{margin-top:32px;border-radius:28px;padding:24px 20px}
+  .fbcard h3{font-size:24px;font-weight:800;letter-spacing:-.035em;line-height:1.15;margin:14px 0 6px}
+  .fbcard .hint{font-size:14px;color:var(--t2);line-height:1.45;margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<main class="app">
+
+  <div class="top">
+    <div class="me">MR</div>
+    <div class="toppill">Thursday · Thu 19 Nov</div>
+    <div class="tz">ART</div>
+  </div>
+
+  <section class="hero">
+    <div class="cap">Thursday edition · Overnight</div>
+    <h1>Daily Brief</h1>
+    <div class="dt">November 19, 2026 · Wed 07:00 → Thu 07:00 ART</div>
+    <span class="pillbtn">9 min read</span>
+  </section>
+
+  <nav class="actions">
+    <a href="#featured"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div>Featured</a>
+    <a href="#ai"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>Agents</a>
+    <a href="#deals"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Deals</a>
+    <a href="#markets"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>Markets</a>
+  </nav>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Anthropic IPO raised</div><div class="v num">$81.3B</div><div class="s g num">$83/share · above $70–78 range</div></div>
+    <div class="tile"><div class="k">S&amp;P 500, Wednesday close</div><div class="v num">−0.23%</div><div class="s r num">7,323.63 · Dow −1.11%</div></div>
+    <div class="tile"><div class="k">Kospi, Thursday close</div><div class="v num">+1.39%</div><div class="s g num">5,137.89 · ahead of ANT debut</div></div>
+    <div class="tile"><div class="k">Argentina country risk</div><div class="v num">848</div><div class="s g num">−8 bp · CCL gap 10.2%</div></div>
+  </div>
+
+  <div class="card lead">
+    <span class="lbl">Overnight, in two lines</span>
+    <p style="margin-top:14px">Anthropic priced the largest IPO on record: 980 million shares at $83, above its range, raising $81.3 billion and valuing the company at about $1.5 trillion fully diluted. It starts trading on the Nasdaq as "ANT" today. The same day, Fed minutes showed most officials worried about fast-growing, opaque AI-related debt, and Nvidia spelled out the limits of its loan guarantees for data-center builders.</p>
+    <p>Wall Street split: the Nasdaq rose while the Dow fell 1.1% as health insurers sank on a proposed Medicare audit rule and energy dropped with oil. Google released Gemini 4 Neon, Palo Alto Networks agreed to buy Applied Compute for $4.5 billion, and Trump, Xi and Putin opened their first three-way talks in Shenzhen.</p>
+  </div>
+
+  <div class="chips">
+    <a class="chip on" href="#featured">Featured</a>
+    <a class="chip" href="#ai">AI &amp; agents</a>
+    <a class="chip" href="#ops">Ops &amp; commerce</a>
+    <a class="chip" href="#startups">Startups &amp; tech</a>
+    <a class="chip" href="#deals">Deals</a>
+    <a class="chip" href="#markets">Markets</a>
+    <a class="chip" href="#argentina">Argentina</a>
+    <a class="chip" href="#global">Global</a>
+    <a class="chip" href="#ahead">Ahead</a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec" id="featured"><h2>Featured</h2><span class="ct">2 stories</span></div>
+
+  <article class="feat">
+    <span class="lbl">Capital markets · AI labs</span>
+    <h3>Anthropic prices the biggest IPO ever at $83 a share and debuts on the Nasdaq today</h3>
+    <div class="by">Anthropic · CNBC · AP · TechCrunch · Bloomberg Law · Nov 18–19</div>
+    <div class="meta"><span class="stat num">980M shares at $83</span><span class="stat num">$81.3B raised</span><span class="stat num">~$1.5T fully diluted</span><span class="stat num">Ticker ANT</span></div>
+    <p><strong>What happened.</strong> Anthropic priced 980 million Class A shares at $83 on Wednesday evening, above the $70–78 range it set last week. It had planned to sell 825 million. About 956.4 million shares come from the company and about 23.6 million from its seven co-founders, who each sold 3.38 million shares (Anthropic, CNBC). Underwriters have a 30-day option on another 147 million shares. Trading starts today on the Nasdaq Global Select Market, and the offering is expected to close Friday, November 20 (Anthropic).</p>
+    <p><strong>The record.</strong> The $81.3 billion raised tops SpaceX's June IPO, which raised $75 billion initially and $85.7 billion after underwriters exercised their extra-share option (CNBC). Bloomberg reports a combined $107.3 billion when a private placement alongside the IPO is included. A group of tech companies including Google, Microsoft, Nvidia and AMD agreed to invest $26 billion together at the IPO price, and Amazon's and Google's existing stakes are each worth more than $100 billion (CNBC). The roughly $1.5 trillion valuation compares with $965 billion in Anthropic's May private round and is below the $2 trillion it was reportedly aiming for months ago (TechCrunch).</p>
+    <p><strong>The business behind it.</strong> Revenue for the nine months to September 30 was $33.24 billion, up about 1,200%, and the company says run-rate revenue reached about $81 billion at the end of October. It reported a $104 billion net loss for those nine months, mostly from fair-value changes on convertible notes and derivatives, and its prospectus lists more than 90 pages of risk factors (CNBC). OpenAI has confidentially filed for an IPO and has said a debut is likely in 2027.</p>
+    <div class="scen">
+      <div class="cap">How the deal changed from the marketed terms</div>
+      <div class="r"><div><div class="n">Price per share</div><div class="d">Marketed range $70–78</div></div><div class="a num">$83</div></div>
+      <div class="r"><div><div class="n">Shares sold</div><div class="d">Up from 825M planned</div></div><div class="a num">980M</div></div>
+      <div class="r"><div><div class="n">Gross proceeds</div><div class="d">SpaceX's initial raise was $75B</div></div><div class="a num">$81.3B</div></div>
+      <div class="r"><div><div class="n">Strategic commitment</div><div class="d">Google, Microsoft, Nvidia, AMD and others, at IPO price</div></div><div class="a num">$26B</div></div>
+    </div>
+    <div class="take"><b>Why it matters (analysis)</b>This is the first frontier AI lab to list, and it comes in a rough week for AI stocks: Nvidia's CEO departure, a software selloff and rising rates. Pricing above the range shows strong institutional demand; today's trading will show whether that extends to the broader market. The circularity is worth noting too: some of the biggest buyers, like Google, Amazon, Nvidia and AMD, are also Anthropic's suppliers of compute, so its results now flow directly into theirs and into index funds once it becomes eligible.</div>
+    <a class="cta" href="https://www.anthropic.com/news/anthropic-prices-initial-public-offering">Anthropic →</a><a class="cta" href="https://www.cnbc.com/2026/11/18/anthropic-ipo-ai-offering-price.html">CNBC →</a><a class="cta" href="https://techcrunch.com/2026/11/18/anthropic-reportedly-prices-ipo-at-83-a-share-above-projected-range/">TechCrunch →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-anthropic-prices-biggest-ipo" data-term="story-2026-11-19-anthropic-prices-biggest-ipo"></div></details>
+  </article>
+
+  <article class="feat">
+    <span class="lbl">Monetary policy · AI financing</span>
+    <h3>Fed minutes flag opaque AI debt as Nvidia narrows what its data-center guarantees cover</h3>
+    <div class="by">Federal Reserve · CNBC · Yahoo Finance · TechCrunch · Axios · Nov 17–18</div>
+    <div class="meta"><span class="stat num">Funds rate 3.75–4.00%</span><span class="stat num">Oct vote 10–2 to hold</span><span class="stat num">Nvidia Q3 net income $64.9B</span></div>
+    <p><strong>The minutes.</strong> At the October 27–28 meeting, "almost all participants" judged that further rate increases "would likely be appropriate" to bring inflation back to 2%. The committee held at 3.75–4.00% by a 10–2 vote, with Governor Lisa Cook and Cleveland Fed President Beth Hammack dissenting in favor of a quarter-point hike, and "a couple" of participants raised the possibility of a larger move in December (Federal Reserve, CNBC). Governor Christopher Waller told CNBC on Wednesday the Fed should consider a half-point hike in December. Officials still expect inflation to fall sharply in 2027 and beyond.</p>
+    <p><strong>The AI angle.</strong> Officials called AI-related demand "a material source of inflation risk." Staff warned that "off-balance-sheet leasing commitments and circular financing arrangements among AI-related firms could amplify losses if returns on AI investment were to disappoint," and "most participants" noted that AI-related debt had grown rapidly through "complex and opaque financing structures," with exposures concentrating in a few firms (minutes via CNBC).</p>
+    <p><strong>Nvidia's clarification.</strong> In its CFO commentary and Tuesday's call, interim CEO Colette Kress said Nvidia's loan guarantees for neoclouds and data-center projects only take effect after the customer has raised its own financing, built the facility and installed Nvidia equipment; if a project is delayed or fails before that, "our guarantee doesn't exist anymore." She cited OpenAI's Ohio campus, backed by a $105 billion guarantee, as an example, said this is a clarification rather than a policy change, and said Nvidia will be "far more selective" in future while prioritizing projects with land, power and buildings in place (TechCrunch, Axios). TechCrunch notes these terms had not been disclosed publicly before.</p>
+    <div class="take"><b>Why it matters (analysis)</b>The two items speak to the same question: who carries the risk if AI data-center spending outruns returns. The Fed is signaling higher rates and naming AI financing as a stability concern; Nvidia, the biggest single backstop, is signaling that its support shifts construction risk back to builders and lenders. For heavily leveraged data-center developers, that combination means costlier and more conditional money. Supporters of the spending point to Nvidia's 103% revenue growth and Anthropic's demand as evidence that the returns are real.</div>
+    <a class="cta" href="https://www.cnbc.com/2026/11/18/fed-minutes-october-2026.html">CNBC →</a><a class="cta" href="https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm">Fed →</a><a class="cta" href="https://techcrunch.com/2026/11/18/nvidia-clarifies-when-it-will-and-wont-keep-financing-neoclouds/">TechCrunch →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-fed-minutes-flag-opaque" data-term="story-2026-11-19-fed-minutes-flag-opaque"></div></details>
+  </article>
+
+  <!-- AI -->
+  <div class="sec" id="ai"><h2>AI &amp; agents</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">Google · Nov 18</div>
+    <h3>Google releases Gemini 4 Neon, a mid-tier model aimed at fast agent work at lower cost</h3>
+    <div class="meta"><span class="stat num">$3 / $15 per M tokens</span><span class="stat num">1M-token context</span></div>
+    <p>Neon sits between Gemini 4 Carbon, Google's largest model, and the fast Hydrogen. Google prices it at $3 per million input tokens and $15 per million output, with cached input at $0.15, and says it is built for long, tool-heavy agent sessions, including acting as an orchestrator directing parallel Hydrogen subagents in its Antigravity coding environment. Google cites third-party rankings: third overall on the Artificial Analysis Intelligence Index at its highest thinking level, first on that firm's coding-agent index, and second on the Vals Index. Those placements come from Google's announcement, and some benchmarks quoted are run in Google's own harness. It is rolling out in the Gemini API, Gemini for business, and to paid Pro and Ultra subscribers; a cybersecurity variant goes to vetted defenders in the coming days. Google also opened its Genie 4 world model in Project Genie.</p>
+    <a class="cta" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/">Google →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-google-releases-gemini-4" data-term="story-2026-11-19-google-releases-gemini-4"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Palo Alto Networks · CNBC · Ctech · Nov 18</div>
+    <h3>Palo Alto Networks will buy Applied Compute for $4.5 billion to secure companies' own open-weight models</h3>
+    <p>The all-stock deal brings in a platform for post-training and serving open-weight AI models, which companies tune on their own data and run in public or sovereign clouds. Palo Alto argues most enterprises will run a mix of open and closed models and that no large provider currently delivers open models securely; Applied Compute CEO Yash Patil becomes co-chief AI officer at close, expected in Palo Alto's fiscal third quarter of 2027 (company release). The deal came with fiscal Q1 results: revenue of $3.44 billion, up 39%, adjusted EPS of $1.05 against $0.97 expected, and a raised 2027 outlook. The shares rose 9.9% in regular trading, and CrowdStrike rose about 8% (CNBC, Investing.com).</p>
+    <a class="cta" href="https://www.paloaltonetworks.com/company/press/2026/palo-alto-networks-to-acquire-applied-compute--bringing-secure-open-weight-ai-to-the-enterprise">Palo Alto →</a><a class="cta" href="https://www.cnbc.com/2026/11/18/palo-alto-networks-panw-q1-2027-earnings-.html">CNBC →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-palo-alto-networks-will" data-term="story-2026-11-19-palo-alto-networks-will"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Google Labs · Slack · Pulumi · Oracle · Nov 18</div>
+    <h3>Agents keep spreading into everyday software: code that improves itself, workflow builders and infrastructure ops</h3>
+    <p>Several vendors shipped agents the same day. Google Labs introduced Stitch Loop, which watches a product's code and metrics and proposes changes as pull requests for human review. Slack added agents as steps inside Workflow Builder, so automations can hand a task to an agent mid-flow. Pulumi launched agents for infrastructure incidents, planning and maintenance, and Oracle introduced agents to coordinate clinical-trial operations. Each description here comes from the company's own announcement. <em>Context:</em> the pattern across launches is agents embedded in tools teams already use, with a human approval step, rather than standalone assistants.</p>
+    <a class="cta" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-loop/">Google Labs →</a><a class="cta" href="https://slack.com/blog/news/agents-in-workflow-builder">Slack →</a><a class="cta" href="https://www.pulumi.com/blog/introducing-pulumi-agents/">Pulumi →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-agents-keep-spreading-everyday" data-term="story-2026-11-19-agents-keep-spreading-everyday"></div></details>
+  </article>
+
+  <!-- OPS -->
+  <div class="sec" id="ops"><h2>Ops &amp; commerce</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">PMA · FreightWaves · Reuters · Bloomberg Law · Nov 18</div>
+    <h3>Strike risk rises at LA–Long Beach as employers say talks with port watchmen have stalled</h3>
+    <div class="meta"><span class="stat">Contract ends 00:01 PT Nov 21 (05:01 ART)</span><span class="stat num">~250 watchmen</span></div>
+    <p>The Pacific Maritime Association said there has been no movement in talks with ILWU Local 26, which represents about 250 security watchmen at the two ports, the busiest in the US. Reports say the union is unwilling to extend the contract past 12:01 a.m. on November 21, and its members have already authorized a strike. Talks are scheduled to resume November 20 (PMA, FreightWaves, Reuters). The union's own account of the sticking points was not in the coverage reviewed. <em>Why it matters:</em> the unit is small, but if other ILWU workers honor picket lines, terminals could slow or stop just as holiday-season imports peak.</p>
+    <a class="cta" href="https://www.freightwaves.com/news/la-long-beach-port-strike-risk-grows-as-employers-say-ilwu-talks-stalled">FreightWaves →</a><a class="cta" href="https://www.pmanet.org/press_releases/statement-from-the-pacific-maritime-association-on-contract-talks-with-ilwu-local-26-at-ports-of-la-and-long-beach/">PMA →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-strike-risk-rises-la" data-term="story-2026-11-19-strike-risk-rises-la"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">CNBC · Reuters · Vantage Markets · Nov 18</div>
+    <h3>Target posts its best sales growth in five years and TJX raises its outlook, while tariff refunds flatter margins</h3>
+    <div class="meta"><span class="stat num">Target comps +5.6%</span><span class="stat num">Digital comps ~+10%</span><span class="stat num">TJX comps +4%</span></div>
+    <p>Target's net sales rose 7.1% and comparable sales 5.6%, against 3.8% expected, driven by 5% more store and site traffic. Adjusted EPS was $2.65 against $2.07 expected, and the company raised full-year EPS guidance to $10.65–11.40. It plans $5–6 billion in capital spending next year, up from about $3.8 billion, for remodels, technology and supply chain (CNBC). The shares rose as much as about 7% and closed up 4%, partly because roughly 1.1 points of this year's 6.2% operating margin come from tariff refunds (CNBC, Vantage). Off-price retailer TJX lifted its full-year comparable-sales forecast to 4% after 4% growth in the quarter, though it guided the holiday quarter softer on fuel costs; its shares rose 8% (Reuters).</p>
+    <a class="cta" href="https://www.cnbc.com/2026/11/18/target-tgt-q3-2026-earnings.html">CNBC →</a><a class="cta" href="https://www.investing.com/news/stock-market-news/offprice-retailer-tjx-beats-quarterly-sales-estimates-5035816">Reuters →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-target-posts-best-sales" data-term="story-2026-11-19-target-posts-best-sales"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Rockwell Automation · Supply Chain Dive · Nov 18</div>
+    <h3>Rockwell agrees to buy Austrian robot-forklift maker AGILOX, more than doubling its warehouse-robot business</h3>
+    <p>AGILOX, founded in 2017, makes AI-driven autonomous forklifts that coordinate as a swarm and has deployed more than 2,500 robots, mostly in automotive, third-party logistics, food and pharma. Rockwell will pair it with its OTTO flatbed robots, which are strong in North America while AGILOX is strong in Europe. Terms were not disclosed, and closing is expected in the second quarter of Rockwell's fiscal 2027 (Rockwell). Separately, Amazon opened its first delivery station in Puerto Rico, which it says cuts San Juan-area delivery from up to two weeks to about two days, and started drone deliveries in central Ohio (Supply Chain Dive, 10TV).</p>
+    <a class="cta" href="https://www.rockwellautomation.com/en-us/company/news/press-releases/Rockwell-Automation-Signs-Definitive-Agreement-to-Acquire-AGILOX.html">Rockwell →</a><a class="cta" href="https://www.supplychaindive.com/news/amazons-first-puerto-rico-delivery-station-speeds-up-shipping/874996/">Supply Chain Dive →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-rockwell-agrees-buy-austrian" data-term="story-2026-11-19-rockwell-agrees-buy-austrian"></div></details>
+  </article>
+
+  <!-- STARTUPS -->
+  <div class="sec" id="startups"><h2>Startups &amp; tech</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">TechCrunch · Sifted · Nov 18</div>
+    <h3>Payhawk raises $280 million at a $2 billion valuation, one of Europe's largest Series C rounds this year</h3>
+    <p>Goldman Sachs' growth equity arm led the round in the UK-based spend-management company, with Greenoaks, Lightspeed and QED joining. Payhawk, founded in 2018, now pitches AI agents for expense and procurement work on top of its cards and payments, operates in 33 countries, and competes with Pleo, Moss and Spendesk. It says it still has 70% of the $100 million it raised in 2022 at a $1 billion valuation, so the valuation doubled while it burned relatively little of its last round (TechCrunch). Separately, Cutoff Report's tally, citing TechCrunch, lists a $250 million round for finance-AI startup Model ML.</p>
+    <a class="cta" href="https://techcrunch.com/2026/11/18/spend-management-platform-payhawk-announces-280m-raise-2b-valuation/">TechCrunch →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-payhawk-raises-280-million" data-term="story-2026-11-19-payhawk-raises-280-million"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">TechCrunch · Nov 18</div>
+    <h3>India's Humyn Labs raises $47 million to film people doing everyday tasks as robot training data</h3>
+    <p>The round is $26 million in equity led by Accel, with Prosus Ventures and others, plus $21 million in venture debt led by Lighthouse Canton. The Bengaluru startup records people with its own two-camera rig across more than 20 countries, mainly Brazil, India and South Korea, then labels the footage for robotics and world-model developers. It says it made $10 million in revenue from April to October, has $20 million more in signed contracts, and gets about 90% of revenue from the US. The debt bridges a practical gap: it pays collectors daily or weekly but waits 30–60 days for AI labs to pay (TechCrunch).</p>
+    <a class="cta" href="https://techcrunch.com/2026/11/18/accel-backs-indias-humyn-labs-to-supply-training-data-needed-by-u-s-robotics-ai-developers/">TechCrunch →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-india-humyn-labs-raises" data-term="story-2026-11-19-india-humyn-labs-raises"></div></details>
+  </article>
+
+  <!-- DEALS -->
+  <div class="sec" id="deals"><h2>Deals &amp; funding</h2><span class="ct">New since Wednesday's brief</span></div>
+
+  <div class="tx">
+    <div class="day">IPOs, exits &amp; M&amp;A</div>
+    <a class="row" href="https://www.anthropic.com/news/anthropic-prices-initial-public-offering"><div class="av" style="background:#8c5a2d">A</div><div class="mid"><div class="n">Anthropic IPO</div><div class="s">980M shares at $83 · Nasdaq: ANT</div></div><div class="amt"><div class="a num">$81.3B</div><div class="s">Record</div></div></a>
+    <a class="row" href="https://www.paloaltonetworks.com/company/press/2026/palo-alto-networks-to-acquire-applied-compute--bringing-secure-open-weight-ai-to-the-enterprise"><div class="av" style="background:#c2652a">P</div><div class="mid"><div class="n">Palo Alto → Applied Compute</div><div class="s">Open-weight model post-training</div></div><div class="amt"><div class="a num">$4.5B</div><div class="s">All stock</div></div></a>
+    <a class="row" href="https://www.rockwellautomation.com/en-us/company/news/press-releases/Rockwell-Automation-Signs-Definitive-Agreement-to-Acquire-AGILOX.html"><div class="av" style="background:#2d5a8c">R</div><div class="mid"><div class="n">Rockwell → AGILOX</div><div class="s">Autonomous forklifts, Austria</div></div><div class="amt"><div class="a">n/d</div><div class="s">Undisclosed</div></div></a>
+    <a class="row" href="https://www.blackrock.com/corporate/newsroom/media/press-releases/blackrock-to-acquire-sulamerica-investimentos"><div class="av" style="background:#1f1f25">B</div><div class="mid"><div class="n">BlackRock → SulAmérica Investimentos</div><div class="s">Brazilian asset manager</div></div><div class="amt"><div class="a">n/d</div><div class="s">Undisclosed</div></div></a>
+    <a class="row" href="https://www.payward.com/press-release/payward-to-acquire-tribe-capital"><div class="av" style="background:#5b4bff">K</div><div class="mid"><div class="n">Payward (Kraken) → Tribe Capital</div><div class="s">Private-markets capabilities</div></div><div class="amt"><div class="a">n/d</div><div class="s">Undisclosed</div></div></a>
+    <div class="day">Venture rounds</div>
+    <a class="row" href="https://techcrunch.com/2026/11/18/spend-management-platform-payhawk-announces-280m-raise-2b-valuation/"><div class="av" style="background:#1a6b4a">P</div><div class="mid"><div class="n">Payhawk</div><div class="s">Spend management · Series C · Goldman</div></div><div class="amt"><div class="a num">$280M</div><div class="s">$2B val.</div></div></a>
+    <a class="row" href="https://cutoffreport.com/posts/ai-startup-funding-roundup-2026-11-18"><div class="av" style="background:#2a6b8c">M</div><div class="mid"><div class="n">Model ML</div><div class="s">AI for finance · per Cutoff Report</div></div><div class="amt"><div class="a num">$250M</div><div class="s">Round n/d</div></div></a>
+    <a class="row" href="https://cutoffreport.com/posts/ai-startup-funding-roundup-2026-11-18"><div class="av" style="background:#b02a2a">C</div><div class="mid"><div class="n">Commit Biologics</div><div class="s">Biotech · Seed · EU-Startups</div></div><div class="amt"><div class="a num">€54M</div><div class="s">Seed</div></div></a>
+    <a class="row" href="https://techcrunch.com/2026/11/18/accel-backs-indias-humyn-labs-to-supply-training-data-needed-by-u-s-robotics-ai-developers/"><div class="av" style="background:#c2652a">H</div><div class="mid"><div class="n">Humyn Labs</div><div class="s">Robotics training data · Accel</div></div><div class="amt"><div class="a num">$47M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://cutoffreport.com/posts/ai-startup-funding-roundup-2026-11-18"><div class="av" style="background:#3a5a2a">D</div><div class="mid"><div class="n">Dcubed</div><div class="s">Space hardware · Warsaw Equity</div></div><div class="amt"><div class="a num">€27.2M</div><div class="s">Series A</div></div></a>
+    <a class="row" href="https://cutoffreport.com/posts/ai-startup-funding-roundup-2026-11-18"><div class="av" style="background:#6b3a8c">V</div><div class="mid"><div class="n">Voyage Labs</div><div class="s">AI · per TechCrunch</div></div><div class="amt"><div class="a num">$12M</div><div class="s">Round n/d</div></div></a>
+    <a class="row" href="https://techcrunch.com/2026/11/18/felicis-leads-7-5m-bet-on-unsiloed-ai-to-make-enterprise-documents-usable-by-ai-agents/"><div class="av" style="background:#1a4f8c">U</div><div class="mid"><div class="n">Unsiloed AI</div><div class="s">Documents for agents · Felicis</div></div><div class="amt"><div class="a num">$7.5M</div><div class="s">Seed</div></div></a>
+    <a class="row" href="https://cutoffreport.com/posts/ai-startup-funding-roundup-2026-11-18"><div class="av" style="background:#1d6b5a">N</div><div class="mid"><div class="n">Nomadic</div><div class="s">Climate &amp; energy · Foundamental</div></div><div class="amt"><div class="a num">$6M</div><div class="s">Seed</div></div></a>
+  </div>
+
+  <!-- MARKETS -->
+  <div class="sec" id="markets"><h2>Markets</h2><span class="ct">US close Wed · Asia Thu</span></div>
+
+  <div class="tx stk">
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPX</div><div class="mid"><div class="n">S&amp;P 500</div><div class="px num">7,323.63 · 6 of 11 sectors down</div></div><span class="pct dn num">−0.23%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">IXIC</div><div class="mid"><div class="n">Nasdaq Composite</div><div class="px num">24,429.88 · snapped 2-day slide</div></div><span class="pct up num">+0.42%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">DJI</div><div class="mid"><div class="n">Dow</div><div class="px num">50,198.17 · −561.25 pts</div></div><span class="pct dn num">−1.11%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">NVDA</div><div class="mid"><div class="n">Nvidia</div><div class="px num">$150.96 · 5th straight loss after beat</div></div><span class="pct dn num">−2.89%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">AMD</div><div class="mid"><div class="n">AMD</div><div class="px num">$530.14</div></div><span class="pct up num">+5.31%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">PANW</div><div class="mid"><div class="n">Palo Alto Networks</div><div class="px num">$339.92 · beat + Applied Compute</div></div><span class="pct up num">+9.90%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">UNH</div><div class="mid"><div class="n">UnitedHealth</div><div class="px num">Humana −13.0% · CMS audit proposal</div></div><span class="pct dn num">−10.21%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">TGT</div><div class="mid"><div class="n">Target</div><div class="px num">$165.96 · TJX +8.05%</div></div><span class="pct up num">+4.03%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">KOSPI</div><div class="mid"><div class="n">South Korea, Thu</div><div class="px num">5,137.89</div></div><span class="pct up num">+1.39%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">N225</div><div class="mid"><div class="n">Nikkei 225, Thu</div><div class="px num">59,444.21</div></div><span class="pct up num">+0.71%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">US10Y</div><div class="mid"><div class="n">10-year Treasury</div><div class="px num">~5.06–5.07% · Wed</div></div><span class="pct nt num">≈ flat</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">BRENT</div><div class="mid"><div class="n">Brent crude, Wed settle</div><div class="px num">$91.95 / bbl · US stocks rose</div></div><span class="pct dn num">−1.28%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">XAU</div><div class="mid"><div class="n">Gold, Wed</div><div class="px num">~$3,725 / oz</div></div><span class="pct dn num">−3.2%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BTC</div><div class="mid"><div class="n">Bitcoin, Wed</div><div class="px num">~$62,500</div></div><span class="pct dn num">−3.3%</span></div>
+  </div>
+
+  <article class="story">
+    <div class="k">Xinhua · AP · Yahoo Finance · Stock Analysis · CNBC · Nov 18</div>
+    <h3>A proposed Medicare audit rule sank health insurers and oil dragged energy, while the Nasdaq edged up</h3>
+    <p>Energy (−3.51%) and health care (−2.18%) led six falling S&amp;P sectors; consumer discretionary rose 2.24% (Xinhua). Insurers fell for a second day after CMS proposed its "CRUSH" anti-fraud rule on Monday. The part that hit them would let CMS extrapolate findings from sampled Medicare Advantage record audits to a plan's wider payments, starting with 2018 audits; CMS estimates about $9 billion recovered per payment year and nearly $90 billion in savings over 10 years across programs. CMS Administrator Mehmet Oz framed it as protecting taxpayer money; Oppenheimer analysts expect court challenges because a court threw out a similar framework in 2025, and say insurers would likely pass costs into future bids (Stock Analysis, citing Yahoo Finance). Comments are open until January 19, 2027. Oil fell after US crude and fuel inventories rose more than expected, and Exxon and Chevron each lost about 4% (CNBC). Gold and bitcoin both fell more than 3% as bets on Fed hikes built (FXStreet).</p>
+    <a class="cta" href="https://stockanalysis.com/news/unitedhealth-humana-fall-cms-medicare-advantage-audit-rule/">Stock Analysis →</a><a class="cta" href="https://english.news.cn/20261119/037e127c9b0449f2bd598c7c4c5b4c6d/c.html">Xinhua →</a><a class="cta" href="https://www.cnbc.com/2026/11/18/oil-prices-fall-as-higher-us-crude-stocks-temper-supply-risks.html">CNBC →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-proposed-medicare-audit-rule" data-term="story-2026-11-19-proposed-medicare-audit-rule"></div></details>
+  </article>
+
+  <!-- ARGENTINA -->
+  <div class="sec" id="argentina"><h2>Argentina</h2><span class="ct">Markets &amp; macro</span></div>
+
+  <article class="story">
+    <div class="k">Infobae · Rava · Perfil · Nov 18</div>
+    <h3>Country risk dips below 850 but the gap between official and financial dollars hits its widest in a year</h3>
+    <div class="meta"><span class="stat num">Wholesale $1,559.50 (+0.5%)</span><span class="stat num">Blue $1,630 (record)</span><span class="stat num">CCL $1,718 · gap 10.2%</span></div>
+    <p>JP Morgan's country-risk index fell 8 points to 848 as dollar bonds gained about 0.2%. The MSCI Merval rose 0.2% in pesos to 82,367, but most ADRs fell: YPF −3.6% with oil, Vista −3.8%, and Grupo Galicia −2.6% to $27.78, its lowest since September 2025 (Infobae). The wholesale dollar rose to $1,559.50, up 1.7% so far in November, and the blue dollar hit a nominal record of $1,630. With the CCL up 1.9% to $1,718.16, the gap over the wholesale rate reached 10.2%, the widest since the currency stress of October last year. The central bank bought $11 million; gross reserves fell $190 million to $49.51 billion on gold's drop. The Brazilian real weakened 1.8% to 5.87 per dollar, its weakest since April 2025. Analysts quoted by Infobae point to more than $20 billion in debt maturities through 2027, with a presidential election in between, as the main question for bonds.</p>
+    <a class="cta" href="https://www.infobae.com/economia/2026/11/18/el-dolar-volvio-a-subir-las-acciones-cayeron-por-el-contagio-externo-y-el-riesgo-pais-perforo-los-850-puntos/">Infobae →</a><a class="cta" href="https://www.rava.com/cotizaciones/historico/riesgo-pais/2026/11/18/">Rava →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-country-risk-dips-below" data-term="story-2026-11-19-country-risk-dips-below"></div></details>
+  </article>
+
+  <!-- GLOBAL -->
+  <div class="sec" id="global"><h2>Global</h2><span class="ct">4</span></div>
+
+  <article class="story">
+    <div class="k">Reuters · CNA · AP · Washington Post · Guardian · Nov 19</div>
+    <h3>Trump, Xi and Putin open the first-ever three-way leaders' talks in Shenzhen</h3>
+    <p>The three leaders sat at a round table at a lakeside state villa on the sidelines of APEC on Thursday afternoon local time and gave opening remarks, saying they would discuss the war in Ukraine and nuclear arms control (Reuters, CNA). AP reports Iran is also on the agenda. Trump said the meeting was "making history" (Guardian). The Washington Post describes three competing agendas and a "politically weakened" US president, and analysts quoted across outlets expect little chance of major agreements given divisions on Ukraine, Iran, arms control and trade. Talks were still under way at publication time; no outcomes had been announced.</p>
+    <a class="cta" href="https://www.reuters.com/3fec1b0a85a0/world/china/trumps-historic-meeting-with-xi-putin-headlines-asia-trip-2026-11-18/">Reuters →</a><a class="cta" href="https://www.washingtonpost.com/politics/2026/11/18/trump-xi-putin-meet-with-conflicting-agendas-sharp-divides/">Washington Post →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-trump-xi-putin-open" data-term="story-2026-11-19-trump-xi-putin-open"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Reuters · RFE/RL · Goodman Macro · Nov 18</div>
+    <h3>Iran fires at a US base in Kuwait after a US strike on Qeshm, its first attack on Kuwait since September</h3>
+    <p>Iran's army said it targeted US drone and missile installations at Kuwait's Ali Al Salem base; Kuwait said its air defenses were countering drones. Bahrain said it intercepted Iranian attacks for a third time in a week. The US military said no US personnel were hurt in this week's attempted attacks. ADNOC Logistics said one crew member was missing and 11 injured after one of its vessels was attacked in Hormuz on Tuesday (Reuters). Qatar met Iranian officials to narrow gaps between proposals. The core dispute is sequencing: Tehran wants the US to end hostilities, lift oil sanctions and the naval blockade, and release frozen assets before it reopens Hormuz, while Washington wants simultaneous steps and upfront nuclear commitments (Goodman Macro, Al-Akhbar via Newsquawk). Secretary of State Rubio said he saw no imminent threat to Washington after CNN's "dirty bomb" report, which Iran calls baseless.</p>
+    <a class="cta" href="https://www.investing.com/news/world-news/iran-attacks-us-bases-in-gulf-countries-despite-diplomatic-efforts-5034906">Reuters →</a><a class="cta" href="https://www.rferl.org/a/iran-qeshm-oman-bahrain-kuwait-attacks/33900601.html">RFE/RL →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-iran-fires-us-base" data-term="story-2026-11-19-iran-fires-us-base"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">European Commission · Guardian · Politico · Al Jazeera · Nov 18</div>
+    <h3>The EU proposes a €45 billion loan to cover most of Ukraine's 2027 funding gap, as strikes hit Odesa and Crimea</h3>
+    <p>The Commission's plan covers about two-thirds of an estimated €70 billion gap for 2027: up to €25 billion for military aid and €20 billion in budget support tied to reforms. The EU would borrow on markets, backed by its budget, and Ukraine would repay principal only after Russia pays reparations (European Commission, Reuters). The plan needs member-state approval. On the ground, Russian strikes killed at least five people, four in Odesa, and damaged the city's historic center and power supply, while Ukraine hit two refineries in Krasnodar after collapsing part of the Kerch Bridge (Al Jazeera). Kyiv urged Trump and Xi to press Putin in Shenzhen (The Independent).</p>
+    <a class="cta" href="https://www.theguardian.com/world/2026/nov/18/eu-loan-ukraine-cash-crisis-defences-von-der-leyen-kyiv">Guardian →</a><a class="cta" href="https://www.aljazeera.com/news/2026/11/18/russian-attacks-on-ukraine-kill-at-least-five-people">Al Jazeera →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-eu-proposes-45-billion" data-term="story-2026-11-19-eu-proposes-45-billion"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Reuters World News Summary · Nov 18</div>
+    <h3>Also: Ethiopia and Eritrea build up forces at their border, and Bangladesh deploys paramilitaries amid unrest</h3>
+    <p>Reuters' daily world summary reported troop build-ups by Ethiopia and Eritrea along their shared border and the deployment of paramilitary forces in Bangladesh as unrest continued. Both items are from a single summary source here; details on casualties or the triggers were not available in the coverage reviewed.</p>
+    <a class="cta" href="https://www.devdiscourse.com/article/international/4009110-reuters-world-news-summary">Reuters summary →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-also-ethiopia-eritrea-build" data-term="story-2026-11-19-also-ethiopia-eritrea-build"></div></details>
+  </article>
+
+  <!-- AHEAD -->
+  <div class="sec" id="ahead"><h2>Ahead</h2><span class="ct">ART dates</span></div>
+  <div class="tx ahead">
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">19</div></div><div class="mid"><div class="n">ANT starts trading · Walmart Q3</div><div class="s" style="white-space:normal">Trump–Xi–Putin talks continue in Shenzhen.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">20</div></div><div class="mid"><div class="n">Anthropic offering closes · Local 26 talks resume</div><div class="s" style="white-space:normal">Ports of Los Angeles and Long Beach.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">21</div></div><div class="mid"><div class="n">Watchmen contract expires, 05:01 ART</div><div class="s" style="white-space:normal">Union has authorized a strike.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Dec</div><div class="d">4</div></div><div class="mid"><div class="n">First Gemini alliance sailing back via Suez</div><div class="s" style="white-space:normal">AE2 loads at Ningbo.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Jan</div><div class="d">19</div></div><div class="mid"><div class="n">CMS "CRUSH" comment deadline</div><div class="s" style="white-space:normal">Medicare Advantage audit extrapolation.</div></div></div>
+  </div>
+
+  <!-- giscus-feedback -->
+  <section class="card fbcard" id="feedback">
+    <span class="lbl">Feedback</span>
+    <h3>How was today's brief?</h3>
+    <p class="hint">React or leave a comment on format, depth, or topics. Feedback shapes what gets covered and how, never which side a story takes.</p>
+    <div class="gslot" id="fb-brief" data-term="brief-2026-11-19"></div>
+  </section>
+
+  <footer>Prepared for Matias Ricci · Thursday edition, Nov 19, 2026 · as of 07:00 ART (UTC−3)<br>Anthropic from its release, CNBC, AP, TechCrunch and Bloomberg Law. Fed from its minutes, CNBC and Yahoo Finance. Nvidia financing from TechCrunch and Axios. AI from Google, Palo Alto Networks, Slack, Pulumi and Oracle. Ops from PMA, FreightWaves, Reuters, CNBC, Rockwell Automation and Supply Chain Dive. Startups from TechCrunch, Sifted and Cutoff Report. Markets from Xinhua, AP, Yahoo Finance, Stock Analysis, CNBC, FXStreet, Nikkei and Yonhap. Argentina from Infobae, Rava and Perfil. Global from Reuters, CNA, AP, the Washington Post, The Guardian, RFE/RL, the European Commission, Politico and Al Jazeera. Reported or single-source items are marked in the text. No giscus feedback had been posted, so the format is unchanged.</footer>
+</main>
+
+<script>
+/* giscus loader: one embed at a time (client.js targets the first .giscus), per-iframe resizing */
+(function(){
+  var CFG={repo:"matiasriccibrochiero/daily-brief",repoId:"R_kgDOVQx5Jg",category:"Announcements",categoryId:"DIC_kwDOVQx5Js4DJrHP",mapping:"specific",strict:"1",
+    reactionsEnabled:"1",emitMetadata:"0",inputPosition:"top",theme:"transparent_dark",lang:"en",loading:"lazy"};
+  var frames=[],heights=new Map(),queue=Promise.resolve();
+  function kebab(k){return k.replace(/[A-Z]/g,function(c){return "-"+c.toLowerCase()})}
+  window.addEventListener("message",function(e){
+    if(e.origin!=="https://giscus.app")return;
+    var d=e.data; if(!d||typeof d!=="object"||!d.giscus)return;
+    var f=null; for(var i=0;i<frames.length;i++){if(frames[i].contentWindow===e.source){f=frames[i];break}}
+    if(d.giscus.resizeHeight&&f){heights.set(f,d.giscus.resizeHeight);f.style.height=d.giscus.resizeHeight+"px"}
+    var ks=Object.keys(d.giscus);
+    if(ks.length===1&&ks[0]==="resizeHeight"){e.stopImmediatePropagation();return}
+    setTimeout(function(){heights.forEach(function(h,fr){fr.style.height=h+"px"})},0);
+  });
+  function mount(slot){
+    if(!slot||slot.getAttribute("data-mounted"))return; slot.setAttribute("data-mounted","1");
+    queue=queue.then(function(){return new Promise(function(done){
+      slot.classList.add("giscus");
+      var s=document.createElement("script"); s.src="https://giscus.app/client.js"; s.async=true; s.crossOrigin="anonymous";
+      for(var k in CFG)s.setAttribute("data-"+kebab(k),CFG[k]);
+      s.setAttribute("data-term",slot.getAttribute("data-term"));
+      s.onload=s.onerror=function(){var fr=slot.querySelector("iframe");if(fr)frames.push(fr);
+        slot.classList.remove("giscus");slot.classList.add("gdone");done()};
+      slot.parentNode.insertBefore(s,slot);
+    })});
+  }
+  document.querySelectorAll("details.fb").forEach(function(d){
+    d.addEventListener("toggle",function(){if(d.open)mount(d.querySelector(".gslot"))});
+  });
+  mount(document.getElementById("fb-brief"));
+})();
+</script>
+</body>
+</html>
