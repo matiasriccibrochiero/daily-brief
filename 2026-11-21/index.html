@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Daily Brief · Saturday · November 21, 2026</title>
+<style>
+  :root{
+    --bg:#000; --s1:#16161a; --s2:#1f1f25; --s3:#2a2a31;
+    --tx:#fff; --t2:#8a8a93; --t3:#5d5d66;
+    --blue:#3d7bff; --green:#2fd27a; --greenbg:rgba(47,210,122,.14);
+    --red:#ff5c5c; --redbg:rgba(255,92,92,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+  .app{max-width:460px;margin:0 auto;padding:12px 16px 48px}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{font-weight:600;color:#fff}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--s2);padding:1px 5px;border-radius:6px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0}
+  .me{width:36px;height:36px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .search{flex:1;margin:0 10px;height:36px;border-radius:18px;background:var(--s1);color:var(--t2);font-size:14px;display:flex;align-items:center;padding:0 14px;gap:8px}
+  .search svg{width:15px;height:15px;stroke:var(--t2)}
+  .toppill{background:var(--s1);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;color:#d6d6dc}
+  .tz{font-size:12px;color:var(--t2);font-weight:600}
+
+  /* hero balance */
+  .hero{text-align:center;padding:40px 0 28px}
+  .hero .cap{font-size:14px;color:var(--t2);font-weight:500}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:8px 0 6px}
+  .hero .dt{font-size:15px;color:var(--t2);font-weight:500}
+  .pillbtn{display:inline-block;margin-top:16px;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px}
+
+  /* actions */
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 28px;text-align:center}
+  .actions a{color:var(--tx);font-size:12px;font-weight:500;text-decoration:none}
+  .actions .ic{width:52px;height:52px;border-radius:50%;background:var(--s2);display:grid;place-items:center;margin:0 auto 8px}
+  .actions svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* chips */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;scrollbar-width:none;
+         position:sticky;top:0;background:var(--bg);z-index:5}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--s2);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;text-decoration:none}
+  .chip.on{background:#fff;color:#000}
+  .chip:hover{text-decoration:none}
+
+  /* surfaces */
+  .card{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .sec{margin:32px 0 12px;display:flex;align-items:baseline;justify-content:space-between;padding:0 4px}
+  .sec h2{font-size:22px;font-weight:700;letter-spacing:-.025em}
+  .sec .ct{font-size:13px;color:var(--t2);font-weight:500}
+  .lbl{display:inline-block;background:var(--s3);color:#d6d6dc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;letter-spacing:.01em}
+
+  .lead p{font-size:16px;line-height:1.5;color:#e9e9ee;letter-spacing:-.005em}
+  .lead p + p{margin-top:12px;color:var(--t2)}
+
+  /* balance tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .tile{background:var(--s1);border-radius:24px;padding:18px}
+  .tile .k{font-size:13px;color:var(--t2);font-weight:500}
+  .tile .v{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-top:6px}
+  .tile .s{font-size:12px;color:var(--t2);margin-top:2px}
+  .tile .s.g{color:var(--green)} .tile .s.r{color:var(--red)}
+
+  /* feature cards */
+  .feat{background:var(--s1);border-radius:28px;padding:24px 22px 22px;margin-bottom:12px}
+  .feat h3{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:14px 0 8px}
+  .by{font-size:13px;color:var(--t2);margin-bottom:16px}
+  .feat p,.story p{color:#c9c9d0;margin-bottom:12px}
+  .feat p:last-of-type,.story p:last-of-type{margin-bottom:0}
+  .take{background:var(--s2);border-radius:18px;padding:14px 16px;margin-top:16px;font-size:14px;color:#e2e2e8}
+  .take b{display:block;font-size:12px;color:var(--t2);font-weight:600;margin-bottom:2px}
+  .cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600}
+  .cta + .cta{margin-left:16px}
+
+  /* scenario list (inside card) */
+  .scen{background:var(--s2);border-radius:20px;padding:4px 16px;margin:16px 0}
+  .scen .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}
+  .scen .r + .r{box-shadow:0 -1px 0 rgba(255,255,255,.06)}
+  .scen .n{font-size:14px;font-weight:600}
+  .scen .d{font-size:12px;color:var(--t2);margin-top:1px;line-height:1.35}
+  .scen .a{font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .scen .cap{font-size:12px;color:var(--t2);padding:10px 0 4px}
+
+  /* story cards */
+  .story{background:var(--s1);border-radius:24px;padding:20px;margin-bottom:12px}
+  .story h3{font-size:19px;font-weight:700;letter-spacing:-.022em;line-height:1.22;margin-bottom:10px}
+  .story .k{font-size:12px;color:var(--t2);font-weight:600;margin-bottom:8px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stat{background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:#fff}
+
+  /* transaction list */
+  .tx{background:var(--s1);border-radius:24px;padding:6px 0;margin-bottom:12px}
+  .tx .day{font-size:13px;color:var(--t2);font-weight:600;padding:12px 20px 4px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 20px;color:var(--tx);text-decoration:none}
+  .row:hover{background:var(--s2);text-decoration:none}
+  .av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#fff}
+  .mid{flex:1;min-width:0}
+  .mid .n{font-size:15px;font-weight:600}
+  .mid .s{font-size:13px;color:var(--t2);line-height:1.35;margin-top:1px}
+  .amt{text-align:right;flex:none}
+  .amt .a{font-size:16px;font-weight:700;letter-spacing:-.02em}
+  .amt .s{font-size:12px;color:var(--t2)}
+
+  /* stocks */
+  .stk .row{cursor:default}
+  .stk .row:hover{background:none}
+  .px{font-size:13px;color:var(--t2);margin-top:1px}
+  .pct{flex:none;font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;min-width:74px;text-align:center}
+  .up{color:var(--green);background:var(--greenbg)}
+  .dn{color:var(--red);background:var(--redbg)}
+  .nt{color:#d6d6dc;background:var(--s3)}
+
+  /* ahead */
+  .ahead .row{align-items:flex-start}
+  .when{flex:none;width:48px;height:48px;border-radius:14px;background:var(--s2);text-align:center;padding-top:6px}
+  .when .m{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .when .d{font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+
+  footer{font-size:11.5px;color:var(--t3);text-align:center;padding:28px 12px 0;line-height:1.5}
+
+  @media (min-width:600px){
+    body{padding-top:24px}
+    .app{background:#0b0b0f;border-radius:40px;padding:16px 20px 40px;margin-bottom:40px}
+    .chips{background:#0b0b0f;margin:0 -20px 8px;padding-left:20px;padding-right:20px;border-radius:0}
+  }
+
+
+  
+  /* feedback (giscus) */
+  .fb{margin-top:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+  .fb summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--t2);padding:6px 12px 6px 10px;border-radius:999px;background:var(--s2)}
+  .fb summary::-webkit-details-marker{display:none}
+  .fb summary svg{width:14px;height:14px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+  .fb[open] summary svg{transform:rotate(90deg)}
+  .fb summary:hover{color:#fff}
+  .fb .gslot{margin-top:12px}
+  .gslot{min-height:120px}
+  .gslot iframe{width:100%;border:0}
+  .fbcard{margin-top:32px;border-radius:28px;padding:24px 20px}
+  .fbcard h3{font-size:24px;font-weight:800;letter-spacing:-.035em;line-height:1.15;margin:14px 0 6px}
+  .fbcard .hint{font-size:14px;color:var(--t2);line-height:1.45;margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<main class="app">
+
+  <div class="top">
+    <div class="me">MR</div>
+    <div class="toppill">Saturday · Sat 21 Nov</div>
+    <div class="tz">ART</div>
+  </div>
+
+  <section class="hero">
+    <div class="cap">Saturday edition · Weekend</div>
+    <h1>Daily Brief</h1>
+    <div class="dt">November 21, 2026 · Fri 07:00 → Sat 07:00 ART</div>
+    <span class="pillbtn">10 min read</span>
+  </section>
+
+  <nav class="actions">
+    <a href="#featured"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div>Featured</a>
+    <a href="#ai"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>Agents</a>
+    <a href="#deals"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Deals</a>
+    <a href="#markets"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>Markets</a>
+  </nav>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">S&amp;P 500, Friday close</div><div class="v num">−3.70%</div><div class="s r num">6,910.39 · in correction</div></div>
+    <div class="tile"><div class="k">Nasdaq Composite</div><div class="v num">−5.28%</div><div class="s r num">22,617.73 · −2.7% YTD</div></div>
+    <div class="tile"><div class="k">Anthropic (ANT), day two</div><div class="v num">−8.50%</div><div class="s r num">$88.91 · IPO price $83</div></div>
+    <div class="tile"><div class="k">Argentina country risk</div><div class="v num">1,071</div><div class="s r num">+140 bp · first time &gt;1,000 since Oct 2025</div></div>
+  </div>
+
+  <div class="card lead">
+    <span class="lbl">Overnight, in two lines</span>
+    <p style="margin-top:14px">The AI selloff became a rout on Friday. The S&amp;P 500 fell 3.7% and the Dow 1.9%, putting both more than 10% below their records (a correction), and the Nasdaq lost 5.3% and is now down for 2026. Nvidia fell about 14% after Reuters reported that the SEC is examining its accounting. US stocks had their worst week since at least April 2025, and the Dow its worst since March 2020.</p>
+    <p>Argentina's country risk jumped 140 points to 1,071 and the blue dollar hit a record $1,675. Two Russian missiles and a drone came down in Poland near European troop drills, and Poland's prime minister called it an "intentional provocation." The LA–Long Beach watchmen's contract expired at 05:01 ART with no deal reported. No strike had been reported either.</p>
+  </div>
+
+  <div class="chips">
+    <a class="chip on" href="#featured">Featured</a>
+    <a class="chip" href="#ai">AI &amp; agents</a>
+    <a class="chip" href="#ops">Ops &amp; commerce</a>
+    <a class="chip" href="#startups">Startups &amp; tech</a>
+    <a class="chip" href="#deals">Deals</a>
+    <a class="chip" href="#markets">Markets</a>
+    <a class="chip" href="#argentina">Argentina</a>
+    <a class="chip" href="#global">Global</a>
+    <a class="chip" href="#ahead">Ahead</a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec" id="featured"><h2>Featured</h2><span class="ct">2 stories</span></div>
+
+  <article class="feat">
+    <span class="lbl">Markets · AI trade</span>
+    <h3>The AI selloff becomes a rout: S&amp;P 500 and Dow in correction, Nasdaq negative for the year</h3>
+    <div class="by">CNBC · Reuters · Portfolio Terminal · SAAM Capital · Becerra Bursátil · Stock Analysis · Nov 20–21</div>
+    <div class="meta"><span class="stat num">VIX 35.89</span><span class="stat num">NVDA −14.0%</span><span class="stat num">Chip index −17.1% this week</span><span class="stat num">10Y 4.92%</span></div>
+    <p><strong>The session.</strong> The S&amp;P 500 fell 265.44 points (3.70%) to 6,910.39. It was the index's seventh straight loss and its lowest close since April 13, and left it 11.6% below its October 6 record (Portfolio Terminal). The Nasdaq Composite fell 5.28% to 22,617.73, which puts it down 2.7% for the year. The Dow lost 949.73 points (1.93%) to 48,147.33, and the Russell 2000 fell 2.76%. CNBC reports that the Nasdaq-100 dropped 5.6% and was briefly in bear-market territory during the day, meaning 20% below its high. The VIX volatility index closed at 35.89, up 26% and close to 40 at its intraday peak. Consumer staples were the only sector to rise: Walmart, Costco, Procter &amp; Gamble and Johnson &amp; Johnson each gained about 1% (CNBC, SAAM).</p>
+    <p><strong>What hit chips.</strong> Three things came together. First, <em>Reuters</em>, citing two people briefed on the matter, reported that SEC enforcement staff are examining possible accounting issues at Nvidia. The SEC declined to comment, and Nvidia did not respond. Nvidia closed down 14.01% (Becerra Bursátil), its seventh straight weekly decline and its longest losing streak since 2008. Second, analyst Ming-Chi Kuo said Google had cut its 2027 orders for Broadcom-designed TPU 8i chips by about 1 million units, roughly 20%. Neither company commented, and Broadcom fell about 12%. Third, AMD and Micron each fell about 13–14%. Becerra Bursátil reports the semiconductor index fell 10.7% on the day and 17.1% for the week, its worst week since 2001.</p>
+    <div class="scen">
+      <div class="cap">The week in one table (Nov 16–20)</div>
+      <div class="r"><div><div class="n">S&amp;P 500</div><div class="d">Worst week since April 2025 (CNBC)</div></div><div class="a num">−8.6%</div></div>
+      <div class="r"><div><div class="n">Dow</div><div class="d">Worst week since March 2020 (CNBC)</div></div><div class="a num">−8%</div></div>
+      <div class="r"><div><div class="n">Nasdaq-100</div><div class="d">Worst week since March 2020 (Becerra)</div></div><div class="a num">−10.4%</div></div>
+      <div class="r"><div><div class="n">Anthropic vs. IPO price</div><div class="d">Day-two low $83.05, five cents above $83</div></div><div class="a num">+7.1%</div></div>
+    </div>
+    <p><strong>Anthropic's second day.</strong> ANT opened at $89.86, below Thursday's low. It fell as far as $83.05, just five cents above its $83 IPO price, and closed at $88.91, down 8.5%. Volume was about 400 million shares (Yahoo Finance, MarketBeat). CNBC notes that its 17% first-day gain was smaller than the debuts of Circle, Figma, Cerebras and SpaceX. Seaport Research started coverage at neutral, saying the stock asks for "an incredible leap of faith."</p>
+    <p><strong>Policy noise on top.</strong> At a White House press conference, President Trump said US companies building data centers abroad would face a "tremendous tax," and added that he had not yet told his staff (see AI). Fed Governor Lisa Cook warned that waiting longer to raise rates "risks getting behind the curve." Markets still expect a 25 bp hike at the Dec 8–9 meeting. Treasuries rallied anyway: the 10-year yield fell about 12–13 bp to 4.92%. The University of Michigan's final November survey showed year-ahead inflation expectations dropping a full point to 3.7%.</p>
+    <div class="take"><b>Why it matters (analysis)</b>Thursday's drop could be read as profit-taking after the Anthropic IPO. Friday's moves were bigger and more specific. The losses centered on the companies that supply AI hardware: Nvidia, Broadcom, AMD and Micron. They followed a regulatory report on the sector's largest company and a reported cut in orders from one of its biggest buyers. Views on what comes next differ. BTIG's Jonathan Krinsky says durable market bottoms usually come after much weaker breadth and a deeper fall in Apple, which is only about 3% off its high, so he thinks more downside is likely. Capital Economics expects the S&amp;P 500 at 6,500 by end-2027. Others note that Treasuries did their job as a hedge and inflation expectations eased. Next week is shortened by Thanksgiving, which usually means thin trading. None of Friday's reports had been confirmed by the companies involved.</div>
+    <a class="cta" href="https://www.cnbc.com/2026/11/19/stock-market-today-live-updates.html">CNBC markets →</a><a class="cta" href="https://www.reuters.com/5f374b32b07b/world/us-secs-nvidia-probe-is-examining-potential-accounting-issues-sources-say-2026-11-20/">Reuters →</a><a class="cta" href="https://bbsa.com.ar/blog/cierre-de-mercados-20-noviembre-2026/">Becerra →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-ai-selloff-becomes-rout" data-term="story-2026-11-21-ai-selloff-becomes-rout"></div></details>
+  </article>
+
+  <article class="feat">
+    <span class="lbl">Geopolitics · Europe</span>
+    <h3>Russian missiles land in Poland during Europe's first Ukraine-force drill, as US envoys push a peace track</h3>
+    <div class="by">France 24 · Reuters · AFP · Axios · Ukrainska Pravda · BBC · Nov 20–21</div>
+    <div class="meta"><span class="stat">2 missiles + 1 drone</span><span class="stat">No casualties</span><span class="stat">Rutte in Warsaw Sat</span></div>
+    <p><strong>What happened.</strong> Early Friday, while Russia carried out a large strike on Ukraine, two Russian missiles and a suspected jet-powered drone came down in southeastern Poland. One Kh-101 cruise missile was confirmed in the village of Nowy Lipowiec. Nobody was hurt, and there was little or no damage (France 24, Polish prosecutors). Several thousand troops from the European "Coalition of the Willing" were nearby at Nowa Dęba, holding the first exercise of a planned multinational force for postwar Ukraine. Russian strikes killed at least eight people in Ukraine that day (Reuters).</p>
+    <p><strong>How it was read.</strong> Prime Minister Donald Tusk said "this does not look like a coincidence" and called it "an intentional provocation" tied to the drills. He also said he does not always agree with the US interpretation of such incidents, and that US personnel have access to the debris. A day earlier, Trump had told Fox News that Putin "has been landing drones in Poland, and a couple of little missiles, by mistake." The UK, Germany, France, the EU and NATO's Mark Rutte condemned the incursion. Rutte is due in Warsaw on Saturday. As of France 24's last update, the Kremlin had not commented.</p>
+    <p><strong>The diplomatic track.</strong> Calling in to Thursday's Berlin meeting, Trump told European leaders that "Putin wants to end the war" and urged Germany's Merz to phone Putin directly (Axios). Putin said for the first time that Europeans could take part in peace talks and that he would present an updated European security proposal. Moscow has also revived its 2021 demand that NATO pull forces back from Eastern Europe, Poland included. After Trump called Putin a friend, Zelensky said: "For us, he is an enemy and a killer" (Ukrainska Pravda, BBC). Another round with the Russians could take place next week, and a European official told Axios the group doubts Russia will actually allow Europe in.</p>
+    <div class="take"><b>Why it matters (analysis)</b>The incident tested the main assumption behind Washington's current approach: that Moscow is ready to deal. To Warsaw and most European capitals, missiles landing near a drill for a postwar Ukraine force look like pressure, not goodwill. The White House had called similar earlier incidents mistakes. Tusk is using the episode to argue that Poland, one of five European countries picked for future US-led talks, should be at the table. What the US says after examining the debris, and whether Russia lets Europe into the next round, will show how far apart the two readings are.</div>
+    <a class="cta" href="https://www.france24.com/en/europe/20261120-poland-says-russian-missile-hit-its-territory-during-attack-on-ukraine">France 24 →</a><a class="cta" href="https://www.axios.com/2026/11/20/trump-pushes-putin-ukraine-war-deal">Axios →</a><a class="cta" href="https://www.pravda.com.ua/eng/news/2026/11/20/8063867/">Ukrainska Pravda →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-russian-missiles-land-poland" data-term="story-2026-11-21-russian-missiles-land-poland"></div></details>
+  </article>
+
+  <!-- AI -->
+  <div class="sec" id="ai"><h2>AI &amp; agents</h2><span class="ct">4</span></div>
+
+  <article class="story">
+    <div class="k">Reuters (sources) · WSJ · Yahoo Finance · Fortune · Newsquawk · Nov 17–20</div>
+    <h3>Reuters: the SEC's Nvidia probe is looking at its accounting</h3>
+    <div class="meta"><span class="stat">SEC declined comment</span><span class="stat">10-Q delayed</span><span class="stat num">Receivables 64 days</span></div>
+    <p>On Tuesday the Wall Street Journal reported that the SEC was investigating Nvidia, including whether its disclosures misled investors. Reuters now reports, citing two people briefed on the matter, that enforcement staff are examining potential accounting issues. Neither outlet has said which issues. Several possible ones are already public. Nvidia said its detailed quarterly filing (10-Q) would come "in the coming weeks" rather than with earnings as usual, and its release mentioned an independent board committee investigation. Customers are taking 64 days to pay, the longest since 2022. In 2025 it stopped reporting Singapore revenue separately, around the time it blocked sales to Singapore-based Megaspeed, a customer US officials suspect of rerouting chips to China (Yahoo Finance, Fortune). Newsquawk notes that an inquiry of this kind is short of a formal order of investigation and well short of an enforcement action. Separately, Trump said Nvidia should let ousted CEO Jensen Huang return after "a great apology." The board has already ruled that out.</p>
+    <p><strong>Why it matters:</strong> Nvidia sits at the center of AI spending. It has fallen about 46% over seven weeks, erasing roughly $2.6 trillion in market value (Becerra Bursátil). The 10-Q is now the key document to watch.</p>
+    <a class="cta" href="https://www.reuters.com/5f374b32b07b/world/us-secs-nvidia-probe-is-examining-potential-accounting-issues-sources-say-2026-11-20/">Reuters →</a><a class="cta" href="https://finance.yahoo.com/markets/article/nvidia-extends-25-trillion-rout-as-sec-probe-reportedly-investigates-its-accounting-194254356.html">Yahoo Finance →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-reuters-sec-nvidia-probe" data-term="story-2026-11-21-reuters-sec-nvidia-probe"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">CNBC · AP · Reuters · Nov 20</div>
+    <h3>Trump says US companies that build data centers abroad will face a "tremendous tax"</h3>
+    <p>At a White House press conference, Trump said US companies would be stopped from building data centers in other countries and that "they can, but we're going to put a tremendous tax on them." He gave no mechanism, rate or timeline, and said: "I haven't even said that to my people. But I'm telling them now." Alphabet, Amazon, Microsoft, Meta and Oracle already run data centers abroad, often so they can serve customers locally or meet data-residency rules. None had commented when CNBC published. CNBC also notes its own survey finding that 64% of registered voters oppose a data center within 10 miles of their home, and only 13% support one.</p>
+    <p><strong>Why it matters:</strong> Any measure like this would cut against the main growth path for cloud providers. It is a statement for now, not a policy, but it added to Friday's pressure on AI infrastructure stocks.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/11/20/trump-data-centers-ai-companies-tax.html">CNBC →</a><a class="cta" href="https://apnews.com/article/trump-artificial-intelligence-data-centers-f1ac03b73d13445400eeed8631d9d879">AP →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-trump-says-us-companies" data-term="story-2026-11-21-trump-says-us-companies"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Ming-Chi Kuo (analyst survey) · Stock Analysis · 24/7 Wall St. · Nov 20</div>
+    <h3>Analyst: Google trims 2027 Broadcom TPU orders by about 20% and shifts volume to MediaTek</h3>
+    <p>TF International's Ming-Chi Kuo said his latest industry survey shows Google cutting 2027 shipments of the Broadcom-designed TPU 8i by about 1 million units, roughly 20%. Most of the cut falls on the pricier 8i Max ("Whalefish"). Google would ship more of the MediaTek-designed TPU 8t instead, though Kuo said the details are not final. He connects the shift to Google prioritizing compute for frontier-model training while supply chains are tight and data-center power is limited. Neither company has commented. In September, Broadcom CEO Hock Tan had said "our engagement with Google has never been stronger." Broadcom reports earnings on December 9.</p>
+    <p><strong>Why it matters:</strong> custom AI chips have been Broadcom's main growth story. This shows how a change in one hyperscaler's mix can move a company worth hundreds of billions of dollars. 24/7 Wall St. estimates Broadcom lost $191 billion in market value on the day.</p>
+    <a class="cta" href="https://stockanalysis.com/news/broadcom-falls-google-tpu-cut-mediatek/">Stock Analysis →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-analyst-google-trims-2027" data-term="story-2026-11-21-analyst-google-trims-2027"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">The Verge · Seeking Alpha · Investing.com · Caixin · Nov 19–20</div>
+    <h3>Agents reach more consumers, and Intuit says AI-driven discovery is cutting Credit Karma's growth</h3>
+    <p>OpenAI began giving a "small" number of ChatGPT Plus subscribers ($20 a month) access to Dots, its always-on agents, which until now required a plan costing $100 or more. Dots are also rolling out to all ChatGPT Business Standard users (The Verge). On the same day, Intuit fell 12.77% to $270.44 after cutting Credit Karma's fiscal 2027 revenue growth forecast to 3–7% from 11–13%. Intuit blamed higher rates and a faster-than-expected shift of consumer discovery toward AI platforms (Seeking Alpha, Investing.com). In China, Caixin reports that DeepSeek closed a second external round of about 100 billion yuan (~$15 billion) ahead of a planned listing on Shanghai's STAR Market. New investors took about 17.3%.</p>
+    <p><strong>Analysis:</strong> Credit Karma makes money by recommending financial products, so its warning is one of the first examples of a large public company saying AI assistants are hurting its revenue. The pressure falls on businesses that rely on being where consumers start a search. Analysts quoted by Seeking Alpha think the slowdown can be fixed, but slowly.</p>
+    <a class="cta" href="https://www.theverge.com/ai-artificial-intelligence/1038370/openai-is-starting-to-bring-dots-to-plus-tier-subscribers">The Verge →</a><a class="cta" href="https://seekingalpha.com/news/4675219-intuit-stock-slides-as-credit-karma-revenue-growth-outlook-resets-lower">Seeking Alpha →</a><a class="cta" href="https://www.caixinglobal.com/2026-11-20/deepseek-closes-100-billion-yuan-funding-round-102506825.html">Caixin →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-agents-reach-more-consumers" data-term="story-2026-11-21-agents-reach-more-consumers"></div></details>
+  </article>
+
+  <!-- OPS -->
+  <div class="sec" id="ops"><h2>Ops &amp; commerce</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">PMA · LA Times · Splash247 / Maritime News · Seatrade · Nov 18–21 · follow-up</div>
+    <h3>LA–Long Beach watchmen's contract expires with no deal; no strike reported yet</h3>
+    <div class="meta"><span class="stat num">~250 watchmen</span><span class="stat num">Expired 05:01 ART Sat</span><span class="stat num">85% of Long Beach cargo</span><span class="stat">110+ trade groups urge a deal</span></div>
+    <p>Follow-up from yesterday. ILWU Local 26's extension ran out at 12:01 a.m. Pacific on Saturday after a final Friday session between the union and the Pacific Maritime Association produced no agreement (Splash247 via Maritime News). As of the latest reports this brief could find, no strike had formally begun and port operations had not been suspended. The union has a strike authorization and had said it would not extend again. More than 110 US trade associations issued a joint statement Friday urging both sides to keep bargaining, warning that any backlog could take weeks or months to clear. The two sides still disagree on the basic facts. The PMA says its offer raises average full-time pay from more than $170,000 to $198,000. Local 26 president Luisa Gratz calls those figures inaccurate and says the employers ignored the union's counterproposal (Seatrade).</p>
+    <p><strong>Why it matters:</strong> the 250 watchmen work at six terminals that handle about 85% of Long Beach's cargo and 33% of Los Angeles's. If longshore workers honor a picket line, as the PMA expects, those terminals stop during the last weeks of holiday imports. Whether pickets go up is the thing to watch this weekend.</p>
+    <a class="cta" href="https://maritimenews.gr/strike-deadline-passes-at-ports-of-los-angeles-and-long-beach-as-watchmen-contract-talks-stall/">Maritime News →</a><a class="cta" href="https://www.latimes.com/business/story/2026-11-20/port-workers-could-strike-as-union-fails-to-extend-contract">LA Times →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-la-long-beach-watchmen" data-term="story-2026-11-21-la-long-beach-watchmen"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">Transportation Insight · FreightWaves · Nov 18–20</div>
+    <h3>Peak freight: rates firm before Thanksgiving, and all three parcel carriers set 2027 increases near 6%</h3>
+    <div class="meta"><span class="stat num">UPS / FedEx +5.9%</span><span class="stat num">Amazon +6.1%</span><span class="stat num">Rejections ~12.7%</span></div>
+    <p>Truckload tender rejections, the share of contracted loads carriers turn down, are holding near 12.7%, more than double the level at this point in 2023 (Transportation Insight). Van costs are rising even as fuel eases, which points to demand absorbing the fuel savings. The week after Thanksgiving has historically brought the sharpest rate pressure of peak season. UPS and FedEx have each set 5.9% general rate increases for 2027, and Amazon 6.1%, with packages of 1–5 lb rising closer to 6.5%. Both UPS and FedEx also adjusted their fuel-surcharge tables. Nearly all LTL (less-than-truckload) carriers close on Thanksgiving, and shippers are advised to tender freight by Tuesday, November 24. UPS's guaranteed Christmas ground cutoff is around December 17.</p>
+    <p><strong>Why it matters:</strong> a 6% increase that is steeper for light packages falls hardest on small-parcel e-commerce shippers, and comes just as capacity tightens for the holidays.</p>
+    <a class="cta" href="https://transportationinsight.com/resources/transportation-industry-trends-november-16-20-2026/">Transportation Insight →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-peak-freight-rates-firm" data-term="story-2026-11-21-peak-freight-rates-firm"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">DHL eCommerce survey · Nov 19</div>
+    <h3>DHL survey: 88% of Black Friday shoppers use or plan to use AI to compare prices</h3>
+    <p>DHL eCommerce's 2026 trends report surveyed 29,000 online shoppers and 5,800 merchants in 29 countries. It found that 88% of Black Friday shoppers have used AI to compare prices or plan to, and 47% have already used AI chat or assistants to browse or buy. AI-assisted shoppers were more likely to buy: 50% purchased during Black Friday, against 42% of traditional deal-seekers. On logistics, one in three shoppers is most likely to abandon a purchase at the shipping-option step, nine in ten prioritize fast, free delivery and easy returns, and 77% would abandon if they didn't trust the delivery or returns provider. These are survey figures from a company that sells delivery services.</p>
+    <a class="cta" href="https://group.dhl.com/en/media-relations/press-releases/2026/nearly-nine-in-ten-shoppers-use-or-plan-to-use-ai-to-find-the-best-price.html">DHL →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-dhl-survey-88-black" data-term="story-2026-11-21-dhl-survey-88-black"></div></details>
+  </article>
+
+  <!-- STARTUPS -->
+  <div class="sec" id="startups"><h2>Startups &amp; tech</h2><span class="ct">2</span></div>
+
+  <article class="story">
+    <div class="k">TechCrunch · Nov 20</div>
+    <h3>Super-hot rock geothermal gets its first hyperscaler deal: Google to pay over $500M for 50 MW from Quaise</h3>
+    <p>Quaise Energy says Google will pay more than $500 million for 50 megawatts from a planned project in central Oregon that taps rock about three miles down. At those depths water becomes supercritical, and one well could produce 15 MW or more. Below about 2.5 miles, Quaise plans to replace conventional drill bits with a gyrotron that vaporizes rock using millimeter-wave radiation. Rival Mazama Energy (Khosla, Gates) instead cools conventional bits with supercritical CO₂. Its CEO says its second well was drilled 80% faster than its first, and the cooling system cut drilling time by another 20%. Quaise has raised more than $270 million and Mazama $171 million (PitchBook via TechCrunch).</p>
+    <p><strong>Why it matters:</strong> power is the hard limit on new data centers. Google's premium price is a bet on an energy source that hasn't been proven commercially. The technology risk is real.</p>
+    <a class="cta" href="https://techcrunch.com/2026/11/20/super-hot-rock-geothermal-could-end-data-center-energy-woes/">TechCrunch →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-super-hot-rock-geothermal" data-term="story-2026-11-21-super-hot-rock-geothermal"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">CNBC · Nov 20</div>
+    <h3>Ubisoft sinks 13% on a holiday forecast it blames on a "particularly crowded" season</h3>
+    <p>Ubisoft forecast October–December net bookings of about €250 million, against a €361 million consensus cited by TD Cowen and €338 million a year ago. Shares fell 13.2% in European morning trading. The company blamed a "particularly crowded holiday season," which CNBC links to the launch of Take-Two's GTA VI. Fiscal first-half net bookings fell 16.5%, though second-quarter bookings of €389 million beat guidance of about €370 million.</p>
+    <p><strong>Why it matters:</strong> one giant release can pull spending away from other publishers' holiday games.</p>
+    <a class="cta" href="https://www.cnbc.com/2026/11/19/stock-market-today-live-updates.html">CNBC →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-ubisoft-sinks-13-holiday" data-term="story-2026-11-21-ubisoft-sinks-13-holiday"></div></details>
+  </article>
+
+  <!-- DEALS -->
+  <div class="sec" id="deals"><h2>Deals</h2><span class="ct">Raises &amp; follow-ups</span></div>
+  <div class="tx">
+    <div class="day">Growth &amp; venture · announced Nov 17–20</div>
+    <a class="row" href="https://www.caixinglobal.com/2026-11-20/deepseek-closes-100-billion-yuan-funding-round-102506825.html"><div class="av" style="background:#1a4f8c">D</div><div class="mid"><div class="n">DeepSeek</div><div class="s">Frontier AI lab · ~17.3% stake · STAR IPO prep</div></div><div class="amt"><div class="a num">~$15B</div><div class="s">¥100B round</div></div></a>
+    <a class="row" href="https://news.crunchbase.com/venture/biggest-startup-rounds-science-neurotech-model-ml-galvanize-therapeutics/"><div class="av" style="background:#5a1a6b">S</div><div class="mid"><div class="n">Science</div><div class="s">Brain-computer interfaces · &gt;$900M raised</div></div><div class="amt"><div class="a num">$400M</div><div class="s">Series D</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-11-20"><div class="av" style="background:#8c3a1a">M</div><div class="mid"><div class="n">Matchpoint Therapeutics</div><div class="s">Covalent small molecules · Nextech, Norwest</div></div><div class="amt"><div class="a num">$150M</div><div class="s">Series B</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-11-20"><div class="av" style="background:#1d6b5a">S</div><div class="mid"><div class="n">Seawolf Therapeutics</div><div class="s">DNA delivery · Versant, MPM, Novartis VF</div></div><div class="amt"><div class="a num">$100M</div><div class="s">Seed + A</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-11-20"><div class="av" style="background:#3a5a1a">B</div><div class="mid"><div class="n">BrightAI</div><div class="s">Physical AI for utilities · Smith Point · ~$750M val. (reported)</div></div><div class="amt"><div class="a num">$97M</div><div class="s">Growth</div></div></a>
+    <a class="row" href="https://news.crunchbase.com/venture/biggest-startup-rounds-science-neurotech-model-ml-galvanize-therapeutics/"><div class="av" style="background:#6b4a1a">V</div><div class="mid"><div class="n">Vincue</div><div class="s">Vehicle lifecycle data · Wavecrest</div></div><div class="amt"><div class="a num">$93M</div><div class="s">Growth</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-11-20"><div class="av" style="background:#1a6b4a">S</div><div class="mid"><div class="n">Sequel.io</div><div class="s">B2B video + GTM agents · Sorenson</div></div><div class="amt"><div class="a num">$15M</div><div class="s">Series B</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-11-20"><div class="av" style="background:#4a1a6b">M</div><div class="mid"><div class="n">Modern Industrials</div><div class="s">Agents for manufacturers/distributors · Glasswing</div></div><div class="amt"><div class="a num">$6M</div><div class="s">Seed</div></div></a>
+    <a class="row" href="https://crosswalk.to/crosswalk/deals/2026-11-20"><div class="av" style="background:#1f1f25">H</div><div class="mid"><div class="n">Hoplite</div><div class="s">Parallel coding agents · led by the Collisons</div></div><div class="amt"><div class="a num">$5.5M</div><div class="s">Undisclosed</div></div></a>
+    <div class="day">Follow-ups</div>
+    <a class="row" href="https://seekingalpha.com/news/4675219-intuit-stock-slides-as-credit-karma-revenue-growth-outlook-resets-lower"><div class="av" style="background:#8c3a1a">M</div><div class="mid"><div class="n">Bending Spoons → Mailchimp</div><div class="s">Intuit to use proceeds for buybacks; INTU −12.77%</div></div><div class="amt"><div class="a num">$3.68B</div><div class="s">Signed Nov 19</div></div></a>
+  </div>
+  <div class="card" style="font-size:14px;color:#c9c9d0"><strong>Private-market read-through.</strong> Crunchbase counts eight US rounds of $100 million or more this week, led by Science. Outside the US, Isomorphic Labs' $5 billion Series C (covered Nov 18) was the largest financing. Crunchbase also warns that if public tech weakness persists, "we can expect it to spill over into private markets." No new details on TPG/Corpay–BILL since signing.</div>
+
+  <!-- MARKETS -->
+  <div class="sec" id="markets"><h2>Markets</h2><span class="ct">US close Fri</span></div>
+
+  <div class="tx stk">
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">SPX</div><div class="mid"><div class="n">S&amp;P 500</div><div class="px num">6,910.39 · 7th straight loss · −11.6% from record</div></div><span class="pct dn num">−3.70%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">IXIC</div><div class="mid"><div class="n">Nasdaq Composite</div><div class="px num">22,617.73 · −2.7% YTD</div></div><span class="pct dn num">−5.28%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">DJI</div><div class="mid"><div class="n">Dow</div><div class="px num">48,147.33 · −949.73 pts</div></div><span class="pct dn num">−1.93%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">RUT</div><div class="mid"><div class="n">Russell 2000</div><div class="px num">2,581.79</div></div><span class="pct dn num">−2.76%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">VIX</div><div class="mid"><div class="n">Volatility index</div><div class="px num">35.89 · near 40 intraday</div></div><span class="pct dn num">+26.2%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">ANT</div><div class="mid"><div class="n">Anthropic, day two</div><div class="px num">$88.91 · low $83.05</div></div><span class="pct dn num">−8.50%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">NVDA</div><div class="mid"><div class="n">Nvidia</div><div class="px num">SEC accounting report · 7th weekly loss</div></div><span class="pct dn num">−14.01%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">AVGO</div><div class="mid"><div class="n">Broadcom</div><div class="px num">Kuo: Google TPU 8i cut</div></div><span class="pct dn num">≈ −12%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">AMD</div><div class="mid"><div class="n">AMD</div><div class="px num">Chip rout</div></div><span class="pct dn num">−13.25%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">INTU</div><div class="mid"><div class="n">Intuit</div><div class="px num">$270.44 · Credit Karma guide cut</div></div><span class="pct dn num">−12.77%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">US10Y</div><div class="mid"><div class="n">10-year Treasury</div><div class="px num">4.92% · safe-haven bid</div></div><span class="pct nt num">≈ −12 bp</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">BRENT</div><div class="mid"><div class="n">Brent crude, Jan settle</div><div class="px num">$92.57 / bbl · WTI Dec $83.98</div></div><span class="pct up num">+0.64%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">XAU</div><div class="mid"><div class="n">Gold, COMEX Dec settle</div><div class="px num">$3,515.40 · silver $41.07 (−7.41%)</div></div><span class="pct dn num">−4.62%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:12px">BTC</div><div class="mid"><div class="n">Bitcoin</div><div class="px num">~$58,600 Fri eve · ~$57,900 Sat</div></div><span class="pct dn num">−5.6% Fri</span></div>
+  </div>
+  <div class="card" style="font-size:14px;color:#c9c9d0"><strong>Also moving.</strong> Bitcoin fell below $60,000 for the first time since July, and ether dropped 6% to about $1,651 (CNBC). Gold is at a 14-month low as markets price in more Fed hikes (Becerra Bursátil). Oil rose slightly on the day but fell for a third straight week, with Brent down about 4%. Infobae, citing market reports, says expectations of a supply surplus are growing as Hormuz shipments recover toward pre-war levels. That assessment is unconfirmed, and tanker attacks continue (see Global). AAA puts the US average for regular gasoline at $3.69 a gallon, about 59 cents above a year ago. The dollar index was roughly flat at 103.90 (The Edge). The University of Michigan sentiment index came in at 51.5, in line with expectations. Friday sources differ on the VIX close: 35.89 per SAAM and The Edge, 38.4 per Becerra Bursátil.</div>
+
+  <!-- ARGENTINA -->
+  <div class="sec" id="argentina"><h2>Argentina</h2><span class="ct">Fri close</span></div>
+
+  <div class="tx stk">
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">RP</div><div class="mid"><div class="n">Country risk (JP Morgan)</div><div class="px num">1,071 bp · highest since Oct 24, 2025</div></div><span class="pct dn num">+140 bp</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">BLUE</div><div class="mid"><div class="n">Dólar blue</div><div class="px num">$1,675 · new record</div></div><span class="pct dn num">+$35</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">CCL</div><div class="mid"><div class="n">Contado con liquidación</div><div class="px num">$1,805.18 · gap vs wholesale 14.3%</div></div><span class="pct dn num">+3.49%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">MEP</div><div class="mid"><div class="n">Dólar MEP</div><div class="px num">$1,701.05</div></div><span class="pct dn num">+3.49%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">MAY</div><div class="mid"><div class="n">Wholesale dollar</div><div class="px num">$1,580 · nominal record · +2.4% on week</div></div><span class="pct dn num">+0.96%</span></div>
+    <div class="row"><div class="av" style="background:#1f1f25;font-size:11px">MERV</div><div class="mid"><div class="n">S&amp;P Merval</div><div class="px num">80,679 · −3.67% in dollars</div></div><span class="pct dn num">−0.31%</span></div>
+  </div>
+  <article class="story">
+    <div class="k">Becerra Bursátil · Infobae · Perfil · Nov 20</div>
+    <h3>Country risk tops 1,000 for the first time in 13 months as the dollar-bond curve inverts</h3>
+    <p>Hard-dollar bonds fell another 3.8–4.6%: AL30 −4.56% to US$47.50 and GD30 −4.18% to US$49.27. Becerra Bursátil reports that short-dated bonds now yield 3.8–4.8 points more than long ones. When the curve inverts like this, investors are pricing bonds on what they would recover in a default, and doubts center on the 2027 repayment window, about US$24.9 billion in maturities under the official financing program. Country risk closed at 1,071 (Infobae: 1,070, +135), up from 402 on July 10. The central bank (BCRA) bought nothing in the FX market, and gross reserves fell US$81 million to US$49,362 million (Infobae). The pressure came despite strong trade data: October exports hit a record US$10,061 million (+26.4% y/y), with a US$3,394 million trade surplus (INDEC via Becerra).</p>
+    <p><strong>The two readings.</strong> The government blames the oil shock and election uncertainty. Earlier in the week Economy Minister Caputo said: "No hay riesgo Milei. El riesgo país sube por el temor a que no esté Milei." Milei called talk of devaluation "una tontería" (Infobae). Consultancy 1816 notes that Milei's approval has barely moved since July while country risk has doubled, which supports the election-fear explanation. Market analysts quoted by Infobae point to local weaknesses as well: how the BCRA will build reserves, how 2027 will be financed, and economic activity down 1.7% y/y. Infobae adds that some officials see two new problems: a Supreme Court ruling striking down the prepaid-health articles of DNU 70/23, and pressure in Congress for more spending.</p>
+    <a class="cta" href="https://bbsa.com.ar/blog/cierre-de-mercados-20-noviembre-2026/">Becerra Bursátil →</a><a class="cta" href="https://www.infobae.com/economia/2026/11/20/el-riesgo-pais-salto-14-en-un-solo-dia-y-alcanzo-el-nivel-mas-alto-desde-las-elecciones-de-2025/">Infobae →</a><a class="cta" href="https://www.infobae.com/politica/2026/11/20/ruidos-en-el-mercado-el-gobierno-culpa-al-riesgo-kuka-pero-crecen-dos-preocupaciones-politicas/">Infobae (politics) →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-country-risk-tops-1" data-term="story-2026-11-21-country-risk-tops-1"></div></details>
+  </article>
+
+  <!-- GLOBAL -->
+  <div class="sec" id="global"><h2>Global</h2><span class="ct">3</span></div>
+
+  <article class="story">
+    <div class="k">Al Jazeera · Reuters · IRIB (claim) · US Treasury · Xinhua · Nov 20–21 · follow-up</div>
+    <h3>Gulf: Iran says it downed a US drone over Hormuz as both sides restate terms; Trump wants "a real deal"</h3>
+    <p>On Saturday, Iran's Revolutionary Guard said a new air-defense system shot down a US MQ-9 Reaper over the Strait of Hormuz, according to state broadcaster IRIB. The US had not confirmed this as of Al Jazeera's report. Foreign Minister Abbas Araghchi said Iran's seven conditions, which include ending the war and lifting sanctions and the naval blockade, "must be implemented for the Strait of Hormuz to reopen." He said the timetable is "flexible" and again ruled out sending Iran's 60%-enriched uranium abroad. Trump said Iran "want[s] to make a deal" but not one he can accept: "a real deal, not a fake deal." The US Treasury sanctioned four Iranians it says acted as "oil trustees" for blockade-evading sales. In Yemen, Houthi-run media said Saudi strikes killed at least 41 people in 24 hours. That figure has not been independently verified, and the Houthis claimed strikes on a Saudi power plant and port (Xinhua). Al Jazeera's live blog also reports two tankers hit by unknown projectiles off Oman.</p>
+    <p><strong>Why it matters:</strong> neither side's conditions have changed, so the strait stays a risk for oil and insurance costs. In Washington, some Democrats want to use the December 11 government funding deadline to cut money for offensive operations. Party appropriations leaders prefer to avoid a shutdown fight.</p>
+    <a class="cta" href="https://www.aljazeera.com/news/2026/11/21/irans-irgc-downs-us-drone-over-hormuz-as-efforts-to-end-war-remain-stalled">Al Jazeera →</a><a class="cta" href="https://english.news.cn/20261121/cae87d64b4fa4dc785143332959c072d/c.html">Xinhua →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-gulf-iran-says-downed" data-term="story-2026-11-21-gulf-iran-says-downed"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">UN News · ICJ · AP · Nov 19</div>
+    <h3>The world court finds a state responsible for genocide for the first time: Myanmar, against the Rohingya</h3>
+    <p>In <em>The Gambia v. Myanmar</em>, the International Court of Justice ruled that Myanmar's security forces committed genocide against the Rohingya during the 2017 "clearance operations" in northern Rakhine, and that Myanmar failed to prevent and punish it. The court cited an estimated 10,000 killed, some 700,000 who fled to Bangladesh, and nearly 400 villages partly or fully destroyed. It ordered Myanmar to pass genocide legislation, investigate and prosecute suspects, guarantee it will not happen again, allow safe and voluntary return, and compensate victims. Myanmar must report on restitution within two years. The ruling is final and cannot be appealed. UN Secretary-General Guterres called it "a powerful recognition of the Rohingya victims." The court has no enforcement power of its own, and compliance by Myanmar's military government is the open question.</p>
+    <a class="cta" href="https://news.un.org/en/story/2026/11/1168836">UN News →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-world-court-finds-state" data-term="story-2026-11-21-world-court-finds-state"></div></details>
+  </article>
+
+  <article class="story">
+    <div class="k">GOV.UK joint statement · Consilium · Nov 20</div>
+    <h3>EU and UK close deals on food checks, carbon-market linking and a youth mobility scheme</h3>
+    <p>At their second summit, in Brussels, the EU and UK concluded negotiations on three deals. A common sanitary and phytosanitary (SPS) area would remove most checks and certificates on food, animal and plant shipments from March 1, 2028. Their emissions-trading systems would be linked from January 1, 2028, so allowances can be used in either. A Youth Experience Scheme would let 100,000 people aged 18–31 from each side live, work or study in the other for up to three years, with first travel expected by January 2030. They also agreed to coordinate on supply chains such as steel and EVs. All three deals still need formal approval and ratification.</p>
+    <a class="cta" href="https://www.gov.uk/government/publications/ukeu-summit-2026-key-documents/uk-eu-summit-2026-joint-statement-html">Joint statement →</a>
+  
+    <details class="fb"><summary><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Feedback on this story</summary><div class="gslot" id="fb-eu-uk-close-deals" data-term="story-2026-11-21-eu-uk-close-deals"></div></details>
+  </article>
+
+  <!-- AHEAD -->
+  <div class="sec" id="ahead"><h2>Ahead</h2><span class="ct">ART dates</span></div>
+  <div class="tx ahead">
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">21</div></div><div class="mid"><div class="n">Rutte in Warsaw · LA–Long Beach picket watch</div><div class="s" style="white-space:normal">Watchmen's contract lapsed 05:01 ART; no strike reported at publication.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">24</div></div><div class="mid"><div class="n">LTL tender cutoff before Thanksgiving</div><div class="s" style="white-space:normal">Possible next round of US–Russia talks during the week (Axios).</div></div></div>
+    <div class="row"><div class="when"><div class="m">Nov</div><div class="d">26</div></div><div class="mid"><div class="n">US markets closed for Thanksgiving</div><div class="s" style="white-space:normal">Black Friday Nov 27, with a 1 p.m. ET early close.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Dec</div><div class="d">9</div></div><div class="mid"><div class="n">FOMC decision (Dec 8–9) · Broadcom earnings</div><div class="s" style="white-space:normal">25 bp hike broadly expected; Broadcom's first chance to address Google TPU report.</div></div></div>
+    <div class="row"><div class="when"><div class="m">Dec</div><div class="d">11</div></div><div class="mid"><div class="n">US government funding deadline</div><div class="s" style="white-space:normal">Iran war funding is part of the debate.</div></div></div>
+  </div>
+
+  <!-- giscus-feedback -->
+  <section class="card fbcard" id="feedback">
+    <span class="lbl">Feedback</span>
+    <h3>How was today's brief?</h3>
+    <p class="hint">React or leave a comment on format, depth, or topics. Feedback shapes what gets covered and how, never which side a story takes.</p>
+    <div class="gslot" id="fb-brief" data-term="brief-2026-11-21"></div>
+  </section>
+
+  <footer>Prepared for Matias Ricci · Saturday edition, Nov 21, 2026 · as of 07:00 ART (UTC−3)<br>Markets from CNBC, Portfolio Terminal, SAAM Capital, Becerra Bursátil, The Edge, Yahoo Finance, MarketBeat, Stock Analysis and 24/7 Wall St. Nvidia from Reuters, the WSJ (via Yahoo Finance), Fortune and Newsquawk. Policy from CNBC and AP. Poland and Ukraine from France 24, Reuters, AFP, Axios, Ukrainska Pravda and the BBC. AI from The Verge, Seeking Alpha, Investing.com and Caixin. Ops from the PMA, LA Times, Splash247/Maritime News, Seatrade, Transportation Insight and DHL. Startups from TechCrunch and CNBC. Deals from Crunchbase News, Crosswalk and Caixin. Argentina from Becerra Bursátil, Infobae and Perfil. Global from Al Jazeera, Reuters, the US Treasury, Xinhua, UN News and GOV.UK. Reported, single-source or conflicting items are marked in the text. No giscus feedback had been posted, so the format is unchanged.</footer>
+</main>
+
+<script>
+/* giscus loader: one embed at a time (client.js targets the first .giscus), per-iframe resizing */
+(function(){
+  var CFG={repo:"matiasriccibrochiero/daily-brief",repoId:"R_kgDOVQx5Jg",category:"Announcements",categoryId:"DIC_kwDOVQx5Js4DJrHP",mapping:"specific",strict:"1",
+    reactionsEnabled:"1",emitMetadata:"0",inputPosition:"top",theme:"transparent_dark",lang:"en",loading:"lazy"};
+  var frames=[],heights=new Map(),queue=Promise.resolve();
+  function kebab(k){return k.replace(/[A-Z]/g,function(c){return "-"+c.toLowerCase()})}
+  window.addEventListener("message",function(e){
+    if(e.origin!=="https://giscus.app")return;
+    var d=e.data; if(!d||typeof d!=="object"||!d.giscus)return;
+    var f=null; for(var i=0;i<frames.length;i++){if(frames[i].contentWindow===e.source){f=frames[i];break}}
+    if(d.giscus.resizeHeight&&f){heights.set(f,d.giscus.resizeHeight);f.style.height=d.giscus.resizeHeight+"px"}
+    var ks=Object.keys(d.giscus);
+    if(ks.length===1&&ks[0]==="resizeHeight"){e.stopImmediatePropagation();return}
+    setTimeout(function(){heights.forEach(function(h,fr){fr.style.height=h+"px"})},0);
+  });
+  function mount(slot){
+    if(!slot||slot.getAttribute("data-mounted"))return; slot.setAttribute("data-mounted","1");
+    queue=queue.then(function(){return new Promise(function(done){
+      slot.classList.add("giscus");
+      var s=document.createElement("script"); s.src="https://giscus.app/client.js"; s.async=true; s.crossOrigin="anonymous";
+      for(var k in CFG)s.setAttribute("data-"+kebab(k),CFG[k]);
+      s.setAttribute("data-term",slot.getAttribute("data-term"));
+      s.onload=s.onerror=function(){var fr=slot.querySelector("iframe");if(fr)frames.push(fr);
+        slot.classList.remove("giscus");slot.classList.add("gdone");done()};
+      slot.parentNode.insertBefore(s,slot);
+    })});
+  }
+  document.querySelectorAll("details.fb").forEach(function(d){
+    d.addEventListener("toggle",function(){if(d.open)mount(d.querySelector(".gslot"))});
+  });
+  mount(document.getElementById("fb-brief"));
+})();
+</script>
+</body>
+</html>
